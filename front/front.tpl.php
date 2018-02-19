@@ -20,7 +20,7 @@
                     <ul>
                         <li class="active"><a href="#onglet1">Accueil<span class="hoverBorder"></span></a></li>
                         <li class="item-list">
-                            <a href="#onglet2">Onglet 2<img src="arrow-down.svg" alt="arrow-down" class="dropdown-arrow"><span class="hoverBorder"></span></a>
+                            <a href="#onglet2">Onglet 2 Liste<img src="arrow-down.svg" alt="arrow-down" class="dropdown-arrow"><span class="hoverBorder"></span></a>
                             <div class="dropdown-container">
                                 <div class="triangle"></div>
                                 <ul class="dropdown-list hidden-dropdown">
