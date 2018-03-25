@@ -2,21 +2,21 @@
 
 @font-face
 {
-    font-family: "Philosopher-Regular";
-    src: url("philosopher/Philosopher-Regular.ttf");
+    font-family: "Roboto-Regular";
+    src: url("../fonts/Roboto/Roboto-Regular.ttf");
 }
 
 @font-face
 {
-    font-family: "Philosopher-Bold";
-    src: url("philosopher/Philosopher-Bold.ttf");
+    font-family: "Roboto-Bold";
+    src: url("../fonts/Roboto/Roboto-Bold.ttf");
 }
 
 *
 {
     margin: 0px;
     padding: 0px;
-    font-family: "Philosopher-Regular";
+    font-family: "Roboto-Regular";
 }
 
 header
@@ -105,6 +105,7 @@ header
                 > li
                 {
                     padding: 0px 30px;
+                    position: relative;
                     
                     @media all and (max-width: 768px)
                     {
@@ -127,6 +128,11 @@ header
 
                     &.active
                     {
+                        > a
+                        {
+                            cursor: default;
+                        }
+
                        @media all and (max-width: 768px)
                         {
                             border-radius: 0px;
@@ -177,7 +183,7 @@ header
 
                 > a
                 {
-                    font-family: "Philosopher-Bold";
+                    font-family: "Roboto-Bold";
                     text-decoration: none;
                     color: $li_text_color;
                     display: block;
@@ -215,12 +221,16 @@ header
                     transition: all 0.5s ease;
                     visibility: hidden;
                     opacity: 0;
-                    position: relative;
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: auto;
                     z-index: 1;
 
                     @media all and (max-width: 768px)
                     {
                         visibility: visible;
+                        position: relative;
                         opacity: 1;
                     }
 
@@ -239,7 +249,7 @@ header
                         border-left-width: 7px;
                         border-bottom: 12px solid $dropdown_color;
                         position: relative;
-                        right: 10px;
+                        //right: 10px;
                         margin-left: auto;
                         z-index: 1;
 
@@ -252,7 +262,7 @@ header
                     .dropdown-list
                     {
                         position: relative;
-                        width: inherit;
+                        width: auto;
                         display: flex;
                         flex-direction: column;
                         justify-content: flex-start;
@@ -263,8 +273,9 @@ header
                         {
                             background-color: $dropdown_color;
                             text-align: center;
-                            padding: 0% 25%;
+                            padding: 0px 25px;
                             width: auto;
+                            white-space: nowrap;
 
                             @media all and (max-width: 768px)
                             {
@@ -273,6 +284,9 @@ header
                             
                             > a
                             {
+                                width: auto;
+                                font-size: 10pt;
+
                                 @media all and (max-width: 768px)
                                 {
                                     font-size: 12pt;
@@ -361,7 +375,7 @@ header
 
             > p
             {
-                font-family: "Philosopher-Bold";
+                font-family: "Roboto-Bold";
                 margin-left: 10px;
                 line-height: 44px;
                 color: $li_text_color;
@@ -439,7 +453,7 @@ header
         {
             color: $li_text_color;
             font-size: 36pt;
-            font-family: "Philosopher-Regular";
+            font-family: "Roboto-Regular";
             vertical-align: middle;
             text-align: center;
             position: relative;
@@ -478,10 +492,16 @@ footer
 
 main
 {
+    .main-container
+    {
+        max-width: 1140px;
+        margin: auto;
+    }
+
     h1
     {
         font-size: 28pt;
-        font-family: "Philosopher-Bold";
+        font-family: "Roboto-Bold";
 
         @media all and (max-width: 768px)
         {
@@ -494,7 +514,7 @@ main
         text-align: left;
         margin-top: 30px;
         font-size: 18pt;
-        font-family: "Philosopher-Bold";
+        font-family: "Roboto-Bold";
 
         @media all and (max-width: 768px)
         {
@@ -506,7 +526,7 @@ main
     {
         > p
         {
-            font-family: "Philosopher-Regular";
+            font-family: "Roboto-Regular";
             text-align: justify;
             margin: 25px 0px;
             font-size: 12pt;

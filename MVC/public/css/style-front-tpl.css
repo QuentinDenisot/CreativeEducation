@@ -1,13 +1,13 @@
 @font-face {
-  font-family: "Philosopher-Regular";
-  src: url("philosopher/Philosopher-Regular.ttf"); }
+  font-family: "Roboto-Regular";
+  src: url("../fonts/Roboto/Roboto-Regular.ttf"); }
 @font-face {
-  font-family: "Philosopher-Bold";
-  src: url("philosopher/Philosopher-Bold.ttf"); }
+  font-family: "Roboto-Bold";
+  src: url("../fonts/Roboto/Roboto-Bold.ttf"); }
 * {
   margin: 0px;
   padding: 0px;
-  font-family: "Philosopher-Regular"; }
+  font-family: "Roboto-Regular"; }
 
 header {
   height: 400px;
@@ -66,7 +66,8 @@ header {
           flex-direction: column;
           max-height: unset; } }
       header .headerTop nav > ul > li {
-        padding: 0px 30px; }
+        padding: 0px 30px;
+        position: relative; }
         @media all and (max-width: 768px) {
           header .headerTop nav > ul > li {
             font-size: 16pt;
@@ -77,6 +78,8 @@ header {
         @media all and (max-width: 768px) {
           header .headerTop nav > ul > li:last-child {
             border-bottom: 1px solid #606060; } }
+        header .headerTop nav > ul > li.active > a {
+          cursor: default; }
         @media all and (max-width: 768px) {
           header .headerTop nav > ul > li.active {
             border-radius: 0px;
@@ -105,7 +108,7 @@ header {
           header .headerTop nav li .hoverBorder {
             opacity: 0; } }
       header .headerTop nav li > a {
-        font-family: "Philosopher-Bold";
+        font-family: "Roboto-Bold";
         text-decoration: none;
         color: #FFFFFF;
         display: block;
@@ -127,11 +130,15 @@ header {
         transition: all 0.5s ease;
         visibility: hidden;
         opacity: 0;
-        position: relative;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
         z-index: 1; }
         @media all and (max-width: 768px) {
           header .headerTop nav li .dropdown-container {
             visibility: visible;
+            position: relative;
             opacity: 1; } }
         header .headerTop nav li .dropdown-container:hover {
           visibility: visible;
@@ -144,7 +151,6 @@ header {
           border-left-width: 7px;
           border-bottom: 12px solid rgba(0, 0, 0, 0.5);
           position: relative;
-          right: 10px;
           margin-left: auto;
           z-index: 1; }
           @media all and (max-width: 768px) {
@@ -152,7 +158,7 @@ header {
               display: none; } }
         header .headerTop nav li .dropdown-container .dropdown-list {
           position: relative;
-          width: inherit;
+          width: auto;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
@@ -161,14 +167,18 @@ header {
           header .headerTop nav li .dropdown-container .dropdown-list > li {
             background-color: rgba(0, 0, 0, 0.5);
             text-align: center;
-            padding: 0% 25%;
-            width: auto; }
+            padding: 0px 25px;
+            width: auto;
+            white-space: nowrap; }
             @media all and (max-width: 768px) {
               header .headerTop nav li .dropdown-container .dropdown-list > li {
                 background-color: initial; } }
-            @media all and (max-width: 768px) {
-              header .headerTop nav li .dropdown-container .dropdown-list > li > a {
-                font-size: 12pt; } }
+            header .headerTop nav li .dropdown-container .dropdown-list > li > a {
+              width: auto;
+              font-size: 10pt; }
+              @media all and (max-width: 768px) {
+                header .headerTop nav li .dropdown-container .dropdown-list > li > a {
+                  font-size: 12pt; } }
             header .headerTop nav li .dropdown-container .dropdown-list > li:first-child {
               border-top-left-radius: 5px;
               border-top-right-radius: 5px; }
@@ -202,7 +212,7 @@ header {
         width: 30px;
         vertical-align: middle; }
       header .headerTop .logo-container > p {
-        font-family: "Philosopher-Bold";
+        font-family: "Roboto-Bold";
         margin-left: 10px;
         line-height: 44px;
         color: #FFFFFF; }
@@ -245,7 +255,7 @@ header {
     header .headerBottom > div {
       color: #FFFFFF;
       font-size: 36pt;
-      font-family: "Philosopher-Regular";
+      font-family: "Roboto-Regular";
       vertical-align: middle;
       text-align: center;
       position: relative;
@@ -270,9 +280,12 @@ footer {
   footer > span {
     color: #29B6F6; }
 
+main .main-container {
+  max-width: 1140px;
+  margin: auto; }
 main h1 {
   font-size: 28pt;
-  font-family: "Philosopher-Bold"; }
+  font-family: "Roboto-Bold"; }
   @media all and (max-width: 768px) {
     main h1 {
       font-size: 22pt; } }
@@ -280,12 +293,12 @@ main h2 {
   text-align: left;
   margin-top: 30px;
   font-size: 18pt;
-  font-family: "Philosopher-Bold"; }
+  font-family: "Roboto-Bold"; }
   @media all and (max-width: 768px) {
     main h2 {
       font-size: 14pt; } }
 main article > p {
-  font-family: "Philosopher-Regular";
+  font-family: "Roboto-Regular";
   text-align: justify;
   margin: 25px 0px;
   font-size: 12pt; }

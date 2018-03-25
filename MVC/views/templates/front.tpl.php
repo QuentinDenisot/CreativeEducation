@@ -5,29 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Front Homepage</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="style-front-tpl.css">
-        <link rel="stylesheet" type="text/css" href="grid.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>/public/css/style-front-tpl.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>/public/css/grid.css">
     </head>
     <body>
         <header>
-            <img src="background-img.jpg" alt="background-image">
+            <img src="<?php echo DIRNAME; ?>/public/images/background-img.jpg" alt="background-image">
             <section class="headerTop">
                 <div class="logo-container">
-                    <img src="logo.svg" alt="logo">
+                    <img src="<?php echo DIRNAME; ?>/public/images/logo.svg" alt="logo">
                     <p>CREATIVE EDUCATION</p>
                 </div>
                 <nav class="hidden-nav">
                     <ul>
                         <li class="active"><a href="#onglet1">Accueil<span class="hoverBorder"></span></a></li>
                         <li class="item-list">
-                            <a href="#onglet2">Onglet 2 Liste<img src="arrow-down.svg" alt="arrow-down" class="dropdown-arrow"><span class="hoverBorder"></span></a>
+                            <a href="#onglet2">Onglet 2 Liste<img src="<?php echo DIRNAME; ?>/public/images/arrow-down.svg" alt="arrow-down" class="dropdown-arrow"><span class="hoverBorder"></span></a>
                             <div class="dropdown-container">
                                 <div class="triangle"></div>
                                 <ul class="dropdown-list hidden-dropdown">
-                                    <li><a href="#onglet2-item1">item 1</a></li>
-                                    <li><a href="#onglet2-item2">item 2</a></li>
-                                    <li><a href="#onglet2-item3">item 3</a></li>
-                                    <li><a href="#onglet2-item4">item 4</a></li>
+                                    <li><a href="#onglet2-item1">Ajouter utilisateur</a></li>
+                                    <li><a href="#onglet2-item2">Création page</a></li>
+                                    <li><a href="#onglet2-item3">Accéder aux cours</a></li>
+                                    <li><a href="#onglet2-item4">Suppression utilisateur</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -44,13 +44,15 @@
                 </div>
             </section>
             <section class="headerBottom">
-                <div>Bienvenue, Quentin.</div>
+                <div>Bienvenue, <?php echo ucfirst(mb_strtolower($this->data['name'])); ?>.</div>
             </section>
         </header>
         <main>
-            <?php
-                include 'front-home.view.php';
-            ?>
+            <section class="main-container">
+                <?php
+                    include 'views/'.$this->v;
+                ?>
+            </section>
         </main>
         <footer>
             <?php
@@ -69,6 +71,40 @@
 
 <script>
 
+    //Set tooltip's triangle right position
+    function setTrianglePosition()
+    {
+        var nbChildren = $('nav > ul').children('li').length;
+
+        for(var i = 0; i < nbChildren; i++)
+        {
+            var li = $('nav > ul').children('li:eq(' + i +')');
+
+            if(li.hasClass('item-list'))
+            {
+                var liWidth = li.children('a').outerWidth();
+                var dropdownWidth = li.children('div.dropdown-container').outerWidth();
+                //on divise par 2 car la différence de taille entre les deux éléments se fait à gauche et à droite du <a> (car .dropdown-container est centré) 
+                //on soustrait de 2px simplement pour ajuster l'alignement entre le triangle et la flèche déroulante
+                var rightPosition = ((dropdownWidth - liWidth) / 2) - 2;
+                
+                if(rightPosition >= 0)
+                {
+                    li.children('div.dropdown-container').children('div.triangle').css('right', Math.round(rightPosition));
+                }
+                else
+                {
+                    li.children('div.dropdown-container').children('div.triangle').css('right', '50%');
+                    li.children('div.dropdown-container').children('div.triangle').css('transform', 'translateX(50%)');
+                }
+
+                console.log(liWidth);
+                console.log(dropdownWidth);
+                console.log(rightPosition);
+            }
+        }
+    }
+
     //Fixed footer on bottom
     function setFooter()
     {
@@ -86,6 +122,9 @@
 
     $(document).ready(function()
     {
+        //Calls function on page load
+        setTrianglePosition();
+
         //Calls function on page load
         setFooter();
 
