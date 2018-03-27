@@ -20,7 +20,7 @@
       }
     }
 
-    return false // explicit for ie8 (  ._.)
+    return false // ie8
   }
 
   // http://blog.alexmaccaw.com/css-transitions
@@ -50,21 +50,9 @@
 }(jQuery);
 
 
-/* ========================================================================
- * Bootstrap: collapse.js v3.3.5
- * http://getbootstrap.com/javascript/#collapse
- * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- * ======================================================================== */
-
-
 +function ($) {
   'use strict';
-
-  // COLLAPSE PUBLIC CLASS DEFINITION
-  // ================================
-
+    
   var Collapse = function (element, options) {
     this.$element      = $(element)
     this.options       = $.extend({}, Collapse.DEFAULTS, options)
@@ -214,10 +202,6 @@
     return $(target)
   }
 
-
-  // COLLAPSE PLUGIN DEFINITION
-  // ==========================
-
   function Plugin(option) {
     return this.each(function () {
       var $this   = $(this)
@@ -236,17 +220,10 @@
   $.fn.collapse.Constructor = Collapse
 
 
-  // COLLAPSE NO CONFLICT
-  // ====================
-
   $.fn.collapse.noConflict = function () {
     $.fn.collapse = old
     return this
   }
-
-
-  // COLLAPSE DATA-API
-  // =================
 
   $(document).on('click.bs.collapse.data-api', '[data-toggle="collapse"]', function (e) {
     var $this   = $(this)
@@ -262,20 +239,8 @@
 
 }(jQuery);
 
-/* ========================================================================
- * Bootstrap: dropdown.js v3.3.5
- * http://getbootstrap.com/javascript/#dropdowns
- * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- * ======================================================================== */
-
-
 +function ($) {
   'use strict';
-
-  // DROPDOWN CLASS DEFINITION
-  // =========================
 
   var backdrop = '.dropdown-backdrop'
   var toggle   = '[data-toggle="dropdown"]'
@@ -386,11 +351,7 @@
 
     $items.eq(index).trigger('focus')
   }
-
-
-  // DROPDOWN PLUGIN DEFINITION
-  // ==========================
-
+  
   function Plugin(option) {
     return this.each(function () {
       var $this = $(this)
@@ -407,17 +368,11 @@
   $.fn.dropdown.Constructor = Dropdown
 
 
-  // DROPDOWN NO CONFLICT
-  // ====================
-
   $.fn.dropdown.noConflict = function () {
     $.fn.dropdown = old
     return this
   }
 
-
-  // APPLY TO STANDARD DROPDOWN ELEMENTS
-  // ===================================
 
   $(document)
     .on('click.bs.dropdown.data-api', clearMenus)
