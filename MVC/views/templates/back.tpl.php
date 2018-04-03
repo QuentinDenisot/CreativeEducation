@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Creative Education</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <link href="<?php echo DIRNAME; ?>/public/css/dashboard.css" rel="stylesheet" />
+    <link href="<?php echo DIRNAME; ?>/public/css/grid.css" rel="stylesheet" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="sidebar" data-active-color="rose" data-background-color="black">
+            <div class="logo">
+                <a href="http://www.theosenoussaoui.fr" class="simple-text logo-mini">
+                    CT
+                </a>
+                <a href="http://www.theosenoussaoui.fr" class="simple-text logo-normal">
+                    Creative Education
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <div class="user">
+                    <div class="photo">
+                        <img src="../assets/img/faces/avatar.jpg" />
+                    </div>
+                    <div class="info">
+                        <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+                            <span>
+                                Julie Rousse
+                                <b class="caret"></b>
+                            </span>
+                        </a>
+                        <div class="clearfix"></div>
+                        <div class="collapse" id="collapseExample">
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav">
+                    <li class="active">
+                        <a href="./dashboard.html">
+                            <i class="material-icons">dashboard</i>
+                            <p> Dashboard </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#pagesExamples">
+                            <i class="material-icons">image</i>
+                            <p> Pages <strong class="caret"></strong> </p>
+                        </a>
+                        <div class="collapse" id="pagesExamples">
+                            <ul class="nav">
+                                <li>
+                                    <a href="./pages/pricing.html">
+                                        <span class="sidebar-mini"> P1 </span>
+                                        <span class="sidebar-normal">Page 1</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="./pages/rtl.html">
+                                        <span class="sidebar-mini"> P2 </span>
+                                        <span class="sidebar-normal">Page 2</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#componentsExamples">
+                            <i class="material-icons">apps</i>
+                            <p> Créer page
+                               
+                            </p>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#formsExamples">
+                            <i class="material-icons">content_paste</i>
+                            <p> Gestion
+                            </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#tablesExamples">
+                            <i class="material-icons">account_circle</i>
+                            <p> Utilisateurs
+                            </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./charts.html">
+                            <i class="material-icons">timeline</i>
+                            <p> Statistiques </p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <?php
+                include 'views/'.$this->v;
+            ?>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <p class="copyright pull-right">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+
+                        </script>
+                        <a href="http://www.theosenoussaoui.fr"> Senoussaoui Théo </a> déteste Charts.js
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+<!--   Core JS Files   -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="<?php echo DIRNAME; ?>/public/js/creative.js" type="text/javascript"></script>
+<script src="<?php echo DIRNAME; ?>/public/js/Chart.js" type="text/javascript"></script>
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+            datasets: [{
+                label: 'Nombres de pages crées',
+                data: [2, 29, 5, 5, 2, 3, 10],
+                backgroundColor: "rgba(233,30,99,0.75)"
+            }]
+        }
+    });
+
+</script>
+
+<script>
+    var ctx = document.getElementById('myChart2').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+            datasets: [{
+                label: 'Nombres d\'utilisateurs',
+                data: [12, 19, 3, 17, 6, 3, 7],
+                backgroundColor: "rgba(233,30,99,0.75)"
+            }]
+        }
+    });
+
+</script>
+
+</html>

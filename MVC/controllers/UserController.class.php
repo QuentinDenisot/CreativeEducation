@@ -28,7 +28,7 @@
 
 			$user->setFirstname($firstname);
 			$user->setLastname($lastname);
-			$user->setemail($email);
+			$user->setemail($email));
 			$user->setPwd($password);
 			$user->setStatus($status);
 			$user->setToken("iue6484zgfi65sgv89csGVIUZEG8645");
