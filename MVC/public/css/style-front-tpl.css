@@ -280,27 +280,30 @@ footer {
   footer > span {
     color: #29B6F6; }
 
-main .main-container {
-  max-width: 1140px;
-  margin: auto; }
-main h1 {
-  font-size: 28pt;
-  font-family: "Roboto-Bold"; }
-  @media all and (max-width: 768px) {
-    main h1 {
-      font-size: 22pt; } }
-main h2 {
-  text-align: left;
-  margin-top: 30px;
-  font-size: 18pt;
-  font-family: "Roboto-Bold"; }
-  @media all and (max-width: 768px) {
-    main h2 {
-      font-size: 14pt; } }
-main article > p {
-  font-family: "Roboto-Regular";
-  text-align: justify;
-  margin: 25px 0px;
-  font-size: 12pt; }
+main {
+  height: fit-content; }
+  main .main-container {
+    max-width: 1140px;
+    margin: auto;
+    position: relative; }
+  main h1 {
+    font-size: 28pt;
+    font-family: "Roboto-Bold"; }
+    @media all and (max-width: 768px) {
+      main h1 {
+        font-size: 22pt; } }
+  main h2 {
+    text-align: left;
+    margin-top: 30px;
+    font-size: 18pt;
+    font-family: "Roboto-Bold"; }
+    @media all and (max-width: 768px) {
+      main h2 {
+        font-size: 14pt; } }
+  main article > p {
+    font-family: "Roboto-Regular";
+    text-align: justify;
+    margin: 25px 0px;
+    font-size: 12pt; }
 
 /*# sourceMappingURL=style-front-tpl.css.map */
