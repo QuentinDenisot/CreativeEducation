@@ -3,30 +3,29 @@
     {
         public function indexAction($params)
         {
-            //Gérer la connexion ici
-
-            //$name = $_SESSION['username'];
-
-            /*$v = new View('front-home', 'front');
-            //$v->assign('name', $name);
-            $v->assign('name', 'Quentin');*/
-
             $v = new View("auth-login", "auth");
         }
 
         public function loginAction($params)
         {
-            if(empty(array_filter($params)))
+            if(count($params['POST']) != count(array_filter($params['POST'])) || empty($params['POST']))
             {
-                $v = new View("auth-login", "auth"); 
+                $v = new View("auth-login", "auth");
+            }
+            else
+            {
+                $v = new View("front-home", "front");
+                $v->assign('name', 'Quentin');
+                /*print_r($params['POST']);
+                echo count($params['POST']).' '.count(array_filter($params['POST']));*/
             }
         }
 
         public function registerAction($params)
         {
-            if(empty(array_filter($params)))
+            if(count($params['POST']) != count(array_filter($params['POST'])) || empty($params['POST']))
             {
-                $v = new View("auth-register", "auth"); 
+                $v = new View("auth-register", "auth");
             }
         }
 

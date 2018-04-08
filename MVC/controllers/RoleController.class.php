@@ -19,8 +19,8 @@
 
             $role = new Role;
 
-            $role->setRoleName($role);
-            $role->setRoleAuthorizations($authorizations);
+            $role->setName($role);
+            $role->setAuthorizations($authorizations);
 
             $role->save();
         }

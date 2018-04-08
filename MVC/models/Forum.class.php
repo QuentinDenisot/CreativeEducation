@@ -1,5 +1,5 @@
 <?php
-    class User extends BaseSQL
+    class Forum extends BaseSQL
     {
         protected $id = null;
         protected $firstname;
@@ -58,40 +58,5 @@
             {
                 die("Veuillez préciser un email");
             }
-        }
-
-        public function getId()
-        {
-            return $this->id;
-        }
-
-        public function getFirstname()
-        {
-            return $this->firstname;
-        }
-
-        public function getLastname()
-        {
-            return $this->lastname;
-        }
-
-        public function getEmail()
-        {
-            return $this->email;
-        }
-
-        public function getPassword()
-        {
-            return $this->pwd;
-        }
-
-        public function getStatus()
-        {
-            return $this->status;
-        }
-
-        public function getToken()
-        {
-            return $this->token;
         }
     }
