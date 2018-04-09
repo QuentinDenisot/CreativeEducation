@@ -1,9 +1,9 @@
 <?php
-    class User extends BaseSQL
+
+class Role extends BaseSQL
     {
         protected $id = null;
         protected $name;
-        protected $authorizations;
 
         public function __construct()
         {
@@ -20,11 +20,6 @@
             return $this->name;
         }
 
-        public function setAuthorizations($authorizations)
-        {
-            return $this->authorizations;
-        }
-
         public function getId()
         {
             return $this->id;
@@ -35,8 +30,4 @@
             return $this->name;
         }
 
-        public function getAuthorizations()
-        {
-            return $this->authorizations;
-        }
     }

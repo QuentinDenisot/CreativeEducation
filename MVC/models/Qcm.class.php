@@ -12,6 +12,8 @@ class Qcm extends BaseSQL
     public function __construct()
     {
         parent::__construct();
+        $this->acces = [];
+        $this->questions = [];
     }
 
     public function getId(){

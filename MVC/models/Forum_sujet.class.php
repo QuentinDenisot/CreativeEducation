@@ -12,6 +12,8 @@ class Forum_sujet extends BaseSQL
     public function __construct()
     {
         parent::__construct();
+        $this->reponse = [];
+        $this->acces = [];
     }
 
     public function getId(){

@@ -12,6 +12,8 @@ class Forum_categorie extends BaseSQL
     public function __construct()
     {
         parent::__construct();
+        $this->acces = [];
+        $this->sujets = [];
     }
 
     public function getId(){

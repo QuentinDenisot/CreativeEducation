@@ -11,6 +11,7 @@ class Qcm_question extends BaseSQL
     public function __construct()
     {
         parent::__construct();
+        $this->reponses = [];
     }
 
     public function getId(){
