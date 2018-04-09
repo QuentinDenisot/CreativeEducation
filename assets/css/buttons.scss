@@ -1,0 +1,156 @@
+/*********************/
+/**     BOUTONS     **/
+/*********************/
+
+.btn:active:focus,
+.btn:focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px
+}
+
+.btn:focus,
+.btn:hover {
+    color: #333;
+    text-decoration: none
+}
+
+.btn:active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+}
+
+.btn {
+    border: none;
+    border-radius: 3px;
+    position: relative;
+    padding: 12px 30px;
+    margin: 10px 1px;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    will-change: box-shadow, transform;
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn::-moz-focus-inner {
+    border: 0;
+}
+
+.btn {
+    box-shadow: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12);
+}
+
+.btn,
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn:active:focus,
+.btn:active:hover {
+    background-color: #999999;
+    color: #FFFFFF;
+}
+
+.btn:focus,
+.btn:active,
+.btn:hover {
+    box-shadow: 0 14px 26px -12px rgba(153, 153, 153, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(153, 153, 153, 0.2);
+}
+
+.btn:disabled,
+.btn:disabled:hover,
+.btn:disabled:focus,
+.btn:disabled:active {
+    box-shadow: none;
+}
+
+.btn.btn-white,
+.btn.btn-white:focus,
+.btn.btn-white:hover {
+    background-color: #FFFFFF;
+    color: #999999;
+}
+
+.btn:focus,
+.btn:active,
+.btn:active:focus {
+    outline: 0;
+}
+
+.btn.btn-round {
+    border-radius: 30px;
+}
+
+.btn.btn-just-icon {
+    font-size: 20px;
+    padding: 11px 11px;
+    line-height: 1em;
+}
+
+.btn.btn-just-icon i {
+    width: 20px;
+}
+
+.btn .material-icons {
+    vertical-align: middle;
+    font-size: 17px;
+    top: -1px;
+    position: relative;
+}
+
+button,
+input {
+    margin: 0;
+    font: inherit;
+    color: inherit
+}
+
+button {
+    overflow: visible
+}
+
+button {
+    text-transform: none
+}
+
+button {
+    -webkit-appearance: button;
+    cursor: pointer
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    padding: 0;
+    border: 0
+}
+
+.btn.btn-rose:focus,
+.btn.btn-rose:active,
+.btn.btn-rose:hover,
+    {
+    box-shadow: 0 14px 26px -12px rgba(233, 30, 99, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(233, 30, 99, 0.2);
+}
+
+.btn.btn-rose,
+.btn.btn-rose:hover,
+.btn.btn-rose:focus,
+.btn.btn-rose:active,
+.btn.btn-rose.active,
+.btn.btn-rose:active:focus,
+.btn.btn-rose:active:hover,
+.btn.btn-rose.active:focus,
+.btn.btn-rose.active:hover {
+    background-color: #e91e63;
+    color: #FFFFFF;
+}
+
+.btn-rose {
+    font-size: 12px;
+}
+
+/*********************/
+/**** FIN BOUTONS ****/
+/*********************/
