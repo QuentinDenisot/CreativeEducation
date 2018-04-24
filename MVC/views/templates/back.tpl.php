@@ -21,7 +21,7 @@
         <div class="sidebar" data-active-color="rose" data-background-color="black">
             <div class="logo">
                 <a href="http://www.theosenoussaoui.fr" class="simple-text logo-mini">
-                    CT
+                    CE
                 </a>
                 <a href="http://www.theosenoussaoui.fr" class="simple-text logo-normal">
                     Creative Education
@@ -36,7 +36,6 @@
                         <a data-toggle="collapse" href="#collapseExample" class="collapsed">
                             <span>
                                 Julie Rousse
-                                <b class="caret"></b>
                             </span>
                         </a>
                         <div class="clearfix"></div>
@@ -53,21 +52,33 @@
                     </li>
                     <li>
                         <a data-toggle="collapse" href="#pagesExamples">
-                            <i class="material-icons">image</i>
-                            <p> Pages <strong class="caret"></strong> </p>
+                            <i class="material-icons">content_paste</i>
+                            <p> Gestion<strong class="caret"></strong> </p>
                         </a>
                         <div class="collapse" id="pagesExamples">
                             <ul class="nav">
                                 <li>
-                                    <a href="./pages/pricing.html">
-                                        <span class="sidebar-mini"> P1 </span>
-                                        <span class="sidebar-normal">Page 1</span>
+                                    <a href="#">
+                                        <span class="sidebar-mini"> P </span>
+                                        <span class="sidebar-normal">Pages</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="./pages/rtl.html">
-                                        <span class="sidebar-mini"> P2 </span>
-                                        <span class="sidebar-normal">Page 2</span>
+                                    <a href="#">
+                                        <span class="sidebar-mini"> R </span>
+                                        <span class="sidebar-normal">Rôles</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sidebar-mini"> U </span>
+                                        <span class="sidebar-normal">Utilisateurs</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sidebar-mini"> C </span>
+                                        <span class="sidebar-normal">Cours</span>
                                     </a>
                                 </li>
                             </ul>
@@ -83,23 +94,15 @@
 
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#formsExamples">
-                            <i class="material-icons">content_paste</i>
-                            <p> Gestion
-                            </p>
-                        </a>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#tablesExamples">
-                            <i class="material-icons">account_circle</i>
-                            <p> Utilisateurs
-                            </p>
+                        <a href="./charts.html">
+                            <i class="material-icons">timeline</i>
+                            <p> Statistiques </p>
                         </a>
                     </li>
                     <li>
                         <a href="./charts.html">
-                            <i class="material-icons">timeline</i>
-                            <p> Statistiques </p>
+                            <i class="material-icons">book</i>
+                            <p> Documentation </p>
                         </a>
                     </li>
                 </ul>
@@ -109,18 +112,18 @@
             <?php
                 include 'views/'.$this->v;
             ?>
-            <footer class="footer">
-                <div class="container-fluid">
-                    <p class="copyright pull-right">
-                        &copy;
-                        <script>
-                            document.write(new Date().getFullYear())
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <p class="copyright pull-right">
+                            &copy;
+                            <script>
+                                document.write(new Date().getFullYear())
 
-                        </script>
-                        <a href="http://www.theosenoussaoui.fr"> Senoussaoui Théo </a> déteste Charts.js
-                    </p>
-                </div>
-            </footer>
+                            </script>
+                            <a href="http://www.theosenoussaoui.fr"> Senoussaoui Théo </a> déteste Charts.js
+                        </p>
+                    </div>
+                </footer>
         </div>
     </div>
 </body>
