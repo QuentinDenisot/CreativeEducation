@@ -1248,6 +1248,7 @@ th {
     padding: 7px 0;
     font-size: 14px;
     line-height: 1.428571429;
+    width: 100%;
 }
 
 .form-horizontal .checkbox {
@@ -1367,14 +1368,14 @@ label.control-label {
 
 .form-group label {
     font-size: 14px;
-    line-height: 1.428571429;
+    line-height: 1.4;
     color: #AAAAAA;
     font-weight: 400;
 }
 
 .form-group label.control-label {
     font-size: 11px;
-    line-height: 1.0714285718;
+    line-height: 1.05;
     color: #AAAAAA;
     font-weight: 400;
     margin: 16px 0 0 0;
@@ -1383,7 +1384,7 @@ label.control-label {
 .form-group.label-floating label.control-label {
     top: -7px;
     font-size: 14px;
-    line-height: 1.428571429;
+    line-height: 1.4;
 }
 
 .card .form-horizontal .label-on-left {
@@ -1413,4 +1414,11 @@ label.control-label {
 .form-horizontal .form-control[type="password"] {
     padding-top: 8px;
     padding-bottom: 6px;
+}
+
+.form-button-center {
+       text-align: center;
+}
+.label-floating {
+    
 }

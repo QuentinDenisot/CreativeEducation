@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <ul class="nav">
-                    <li>
+                    <li class="active">
                         <a href="./dashboard.html">
                             <i class="material-icons">dashboard</i>
                             <p> Dashboard </p>
@@ -53,21 +53,33 @@
                     </li>
                     <li>
                         <a data-toggle="collapse" href="#pagesExamples">
-                            <i class="material-icons">image</i>
-                            <p> Pages <strong class="caret"></strong> </p>
+                            <i class="material-icons">content_paste</i>
+                            <p> Gestion<strong class="caret"></strong> </p>
                         </a>
                         <div class="collapse" id="pagesExamples">
                             <ul class="nav">
                                 <li>
-                                    <a href="./pages/pricing.html">
-                                        <span class="sidebar-mini"> P1 </span>
-                                        <span class="sidebar-normal">Page 1</span>
+                                    <a href="#">
+                                        <span class="sidebar-mini"> P </span>
+                                        <span class="sidebar-normal">Pages</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="./pages/rtl.html">
-                                        <span class="sidebar-mini"> P2 </span>
-                                        <span class="sidebar-normal">Page 2</span>
+                                    <a href="#">
+                                        <span class="sidebar-mini"> R </span>
+                                        <span class="sidebar-normal">Rôles</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sidebar-mini"> U </span>
+                                        <span class="sidebar-normal">Utilisateurs</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sidebar-mini"> C </span>
+                                        <span class="sidebar-normal">Cours</span>
                                     </a>
                                 </li>
                             </ul>
@@ -83,23 +95,15 @@
 
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#formsExamples">
-                            <i class="material-icons">content_paste</i>
-                            <p> Gestion
-                            </p>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a data-toggle="collapse" href="#tablesExamples">
-                            <i class="material-icons">account_circle</i>
-                            <p> Utilisateurs
-                            </p>
+                        <a href="./charts.html">
+                            <i class="material-icons">timeline</i>
+                            <p> Statistiques </p>
                         </a>
                     </li>
                     <li>
                         <a href="./charts.html">
-                            <i class="material-icons">timeline</i>
-                            <p> Statistiques </p>
+                            <i class="material-icons">book</i>
+                            <p> Documentation </p>
                         </a>
                     </li>
                 </ul>
@@ -130,27 +134,53 @@
                                     <h4 class="card-title">Formulaire de modification</h4>
                                     <form class="form-horizontal">
                                         <div class="row">
-                                            <label class="col-md-2 label-on-left">E-mail</label>
+                                            <label class="col-md-2 label-on-left">Nom</label>
                                             <div class="col-md-10">
-                                                <div class="form-group label-floating is-empty">
+                                                <div class="form-group is-empty">
                                                     <label class="control-label"></label>
-                                                    <input type="email" class="form-control">
+                                                    <input type="email" class="form-control" placeholder="Nom de la personne.">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <label class="col-md-2 label-on-left"></label>
+                                            <label class="col-md-2 label-on-left">Prénom</label>
                                             <div class="col-md-10">
-                                                <div class="form-group label-floating is-empty">
+                                                <div class="form-group is-empty">
+                                                    <label class="control-label"></label>
+                                                    <input type="email" class="form-control" placeholder="Prénom de la personne.">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-2 label-on-left">Adresse e-mail</label>
+                                            <div class="col-md-10">
+                                                <div class="form-group is-empty">
+                                                    <label class="control-label"></label>
+                                                    <input type="email" class="form-control" placeholder="Adresse mail de la personne.">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-2 label-on-left">Rôle</label>
+                                            <div class="col-md-10">
+                                                <div class="form-group is-empty">
+                                                    <label class="control-label"></label>
+                                                    <input type="email" class="form-control" placeholder="Rôle de la personne.">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-2 label-on-left">Mot de passe</label>
+                                            <div class="col-md-10">
+                                                <div class="form-group is-empty">
                                                     <label class="control-label"></label>
                                                     <input type="password" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <label class="col-md-3"></label>
-                                            <div class="col-md-9">
-                                                <div class="form-group form-button">
+                                            <div class="col-md-12">
+                                                <div class="form-group form-button form-button-center">
                                                     <button type="submit" class="btn btn-fill btn-rose">Valider les modifications</button>
                                                 </div>
                                             </div>
