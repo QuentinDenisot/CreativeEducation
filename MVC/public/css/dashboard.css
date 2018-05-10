@@ -800,6 +800,11 @@ button::-moz-focus-inner {
     vertical-align: middle;
 }
 
+.table > tbody > tr > td.td-actions > form
+{
+    display: inline-block;
+}
+
 .table > tbody > tr {
     position: relative;
 }

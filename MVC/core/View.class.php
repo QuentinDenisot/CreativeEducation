@@ -26,6 +26,11 @@
 			$this->data[$key] = $value;
 		}
 
+		public function addModal($modal, $config, $errors = [])
+		{
+			include "views/modals/".$modal.".mdl.php";
+		}
+
 		public function __destruct()
 		{
 			global $c, $a;

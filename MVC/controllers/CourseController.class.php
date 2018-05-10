@@ -1,19 +1,19 @@
 <?php
-    class RoleController
+    class CourseController
     {
         public function indexAction($params)
         {
-            $v = new View("back-roles", "back");
+            $v = new View("back-courses", "back");
         }
 
         public function addAction($params)
         {
             /*récupération des variables POST*/
-
-            //->nom du rôle
+            
+            //->nom de la page
             $name = $params['POST'][0];
-            //->liste des autorisations du rôle
-            $authorizations = $params['POST'][1];
+            //->liste des rôles qui auront accès à la page
+            $roleAccess = $params['POST'][1];
             
             /*=-Déclaration + instanciation de l'objet et exécution de la méthode-=*/
 
@@ -33,12 +33,12 @@
         public function deleteAction($params)
         {
             /*récupération des variables POST*/
-            //->id du role à supprimer
+            //->id du cours à supprimer
             $id = $params['URL'][0];
 
             $queryConditions = [
                 'select'=>[
-                    'role.*'
+                    'course.*'
                 ],
                 'join'=>[
                     'inner_join'=>[],
@@ -46,7 +46,7 @@
                     'right_join'=>[]
                 ],
                 'where'=>[
-                    'clause'=>'role.id = '.$id,
+                    'clause'=>'course.id = '.$id,
                     'and'=>[],
                     'or'=>[]
                 ],
@@ -80,12 +80,12 @@
                 ]
             ];
 
-            $role = new Role;
+            $course = new Course;
 
-            $targetedRole = $role->getAll($queryConditions);
-            $targetedRole[0]->setStatus('0');
-            $targetedRole[0]->save();
+            $targetedCourse = $course->getAll($queryConditions);
+            $targetedCourse[0]->setStatus('0');
+            $targetedCourse[0]->save();
 
-            header('Location: '.DIRNAME.'role/index');
+            header('Location: '.DIRNAME.'course/index');
         }   
     }

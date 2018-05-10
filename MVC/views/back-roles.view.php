@@ -20,145 +20,41 @@
                             <i class="material-icons">assignment</i>
                         </div>
                         <div class="card-content">
-                            <h4 class="card-title">Utilisateurs</h4>
+                            <h4 class="card-title">Rôles</h4>
 
                             <div class="ripple-container"></div>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="text-primary">
-                                        <th>Name</th>
-                                        <th>Country</th>
-                                        <th>City</th>
-                                        <th>Salary</th>
+                                        <th>Libellé</th>
+                                        <th>Statut</th>
                                         <th>Actions</th>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Mason Porter</td>
-                                            <td>Chile</td>
-                                            <td>Gloucester</td>
-                                            <td class="text-primary">$78,615</td>
-                                            <td class="td-actions">
-                                                <button type="button" class="btn btn-action btn-blue">
-                                                          <i class="material-icons"><a href ="gestion_users_single.html">build</a></i>
-                                                        </button>
-                                                <button type="button" class="btn btn-action btn-red">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mason Porter</td>
-                                            <td>Chile</td>
-                                            <td>Gloucester</td>
-                                            <td class="text-primary">$78,615</td>
-                                            <td class="td-actions">
-                                                <button type="button" class="btn btn-action btn-blue">
-                                                          <i class="material-icons"><a href ="gestion_users_single.html">build</a></i>
-                                                        </button>
-                                                <button type="button" class="btn btn-action btn-red">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mason Porter</td>
-                                            <td>Chile</td>
-                                            <td>Gloucester</td>
-                                            <td class="text-primary">$78,615</td>
-                                            <td class="td-actions">
-                                                <button type="button" class="btn btn-action btn-blue">
-                                                          <i class="material-icons"><a href ="gestion_users_single.html">build</a></i>
-                                                        </button>
-                                                <button type="button" class="btn btn-action btn-red">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mason Porter</td>
-                                            <td>Chile</td>
-                                            <td>Gloucester</td>
-                                            <td class="text-primary">$78,615</td>
-                                            <td class="td-actions">
-                                                <button type="button" class="btn btn-action btn-blue">
-                                                          <i class="material-icons"><a href ="gestion_users_single.html">build</a></i>
-                                                        </button>
-                                                <button type="button" class="btn btn-action btn-red">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mason Porter</td>
-                                            <td>Chile</td>
-                                            <td>Gloucester</td>
-                                            <td class="text-primary">$78,615</td>
-                                            <td class="td-actions">
-                                                <button type="button" class="btn btn-action btn-blue">
-                                                          <i class="material-icons"><a href ="gestion_users_single.html">build</a></i>
-                                                        </button>
-                                                <button type="button" class="btn btn-action btn-red">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mason Porter</td>
-                                            <td>Chile</td>
-                                            <td>Gloucester</td>
-                                            <td class="text-primary">$78,615</td>
-                                            <td class="td-actions">
-                                                <button type="button" class="btn btn-action btn-blue">
-                                                          <i class="material-icons"><a href ="gestion_users_single.html">build</a></i>
-                                                        </button>
-                                                <button type="button" class="btn btn-action btn-red">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mason Porter</td>
-                                            <td>Chile</td>
-                                            <td>Gloucester</td>
-                                            <td class="text-primary">$78,615</td>
-                                            <td class="td-actions">
-                                                <button type="button" class="btn btn-action btn-blue">
-                                                          <i class="material-icons"><a href ="gestion_users_single.html">build</a></i>
-                                                        </button>
-                                                <button type="button" class="btn btn-action btn-red">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mason Porter</td>
-                                            <td>Chile</td>
-                                            <td>Gloucester</td>
-                                            <td class="text-primary">$78,615</td>
-                                            <td class="td-actions">
-                                                <button type="button" class="btn btn-action btn-blue">
-                                                          <i class="material-icons"><a href ="gestion_users_single.html">build</a></i>
-                                                        </button>
-                                                <button type="button" class="btn btn-action btn-red">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mason Porter</td>
-                                            <td>Chile</td>
-                                            <td>Gloucester</td>
-                                            <td class="text-primary">$78,615</td>
-                                            <td class="td-actions">
-                                                <button type="button" class="btn btn-action btn-blue">
-                                                          <i class="material-icons"><a href ="gestion_users_single.html">build</a></i>
-                                                        </button>
-                                                <button type="button" class="btn btn-action btn-red">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                            </td>
-                                        </tr>
+                                        <?php
+                                            $roleObject = new Role;
+                                            $roleArray = $roleObject->getAll();
+
+                                            foreach($roleArray as $role): ?>
+                                            
+                                                <tr>
+                                                    <td><?php echo $role->getName(); ?></td>
+                                                    <td><?php echo $role->getStatus(); ?></td>
+                                                    <td class="td-actions">
+                                                        <form action="#">
+                                                            <button class="btn btn-action btn-blue">
+                                                                <i class="material-icons">build</i>
+                                                            </button>
+                                                        </form>
+                                                        <form action="<?php echo DIRNAME.'role/delete/'.$role->getId(); ?>">
+                                                            <button class="btn btn-action btn-red">
+                                                                <i class="material-icons">close</i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            
+                                            <?php endforeach; ?>
                                     </tbody>
                                 </table>
                                 <p class="pull-right">

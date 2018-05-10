@@ -16,7 +16,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  align-items: stretch; }
+  align-items: stretch;
+  position: relative; }
   @media all and (max-width: 768px) {
     .row .col-xs {
       width: 99%; } }

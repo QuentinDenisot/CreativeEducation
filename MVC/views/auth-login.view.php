@@ -5,7 +5,7 @@
                 Se connecter
             </div>
         </div>
-        <form method="POST" action="<?php echo DIRNAME; ?>index/login">
+        <!--<form method="POST" action="<?php //echo DIRNAME; ?>index/login">
             <div class="form-row">
                 <i class="material-icons">account_circle</i>
                 <input type="text" name="accountName" placeholder="Nom de compte">
@@ -22,6 +22,9 @@
                     </span>
                 </button>
             </div>
-        </form>
+        </form>-->
+
+        <?php $this->addModal("form-icons", $config, $errors); ?>
+
     </div>
 </div>

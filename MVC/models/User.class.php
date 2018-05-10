@@ -4,10 +4,14 @@
         protected $id = null;
         protected $firstname;
         protected $lastname;
-        protected $email;
         protected $pwd;
+        protected $email;
         protected $status;
         protected $token;
+        /*protected $profilePicPath;
+        protected $insertedDate;
+        protected $updatedDate;*/
+        protected $id_role;
 
         public function __construct()
         {
@@ -29,14 +33,14 @@
             $this->lastname = strtoupper(trim($lastname));
         }
 
-        public function setEmail($email)
-        {
-            $this->email = strtolower($email);
-        }
-
         public function setPwd($pwd)
         {
             $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
+        }
+
+        public function setEmail($email)
+        {
+            $this->email = strtolower($email);
         }
 
         public function setStatus($status)
@@ -60,6 +64,16 @@
             }
         }
 
+        public function setProfilePicPath($profilePicPath = null)
+        {
+            $this->profilePicPath = $profilePicPath;
+        }
+
+        public function setId_role($id_role = 0)
+        {
+            $this->id_role = $id_role;
+        }
+
         public function getId()
         {
             return $this->id;
@@ -75,14 +89,14 @@
             return $this->lastname;
         }
 
-        public function getEmail()
-        {
-            return $this->email;
-        }
-
         public function getPassword()
         {
             return $this->pwd;
+        }
+
+        public function getEmail()
+        {
+            return $this->email;
         }
 
         public function getStatus()
@@ -93,5 +107,81 @@
         public function getToken()
         {
             return $this->token;
+        }
+
+        public function getProfilePicPath()
+        {
+            return $this->profilePicPath;
+        }
+
+        public function getInsertedDate()
+        {
+            return $this->insertedDate;
+        }
+
+        public function getUpdatedDate()
+        {
+            return $this->updatedDate;
+        }
+
+        public function getId_role()
+        {
+            return $this->id_role;
+        }
+
+        public function addForm()
+        {
+            return [
+                "config" => [
+                                "method" => "POST",
+                                "action" => "user/add",
+                                "button" => "AJOUTER"
+                            ],
+                "icon" => [
+                            "account_circle",
+                            "account_circle",
+                            "lock_outline",
+                            "drafts",
+                            "drafts",
+                            "keyboard_arrow_right"
+                        ],
+                "input" => [
+                    "firstname" => [
+                                        "type" => "text",
+                                        "placeholder" => "Prénom",
+                                        "required" => true,
+                                        "minString" => 2,
+                                        "maxString" => 100
+                                    ],
+                    "lastname" => [
+                                        "type" => "text",
+                                        "placeholder" => "Nom",
+                                        "required" => true,
+                                        "minString" => 2,
+                                        "maxString" => 100
+                                    ],
+                    "password" => [
+                                    "type" => "password",
+                                    "placeholder" => "Mot de passe",
+                                    "required" => true,
+                                    "minString" => 2,
+                                    "maxString" => 100
+                                ],
+                    "email" => [
+                                    "type" => "text",
+                                    "placeholder" => "Adresse mail",
+                                    "required" => true,
+                                    "minString" => 2,
+                                    "maxString" => 100
+                                ],
+                    "status" => [
+                                    "type" => "text",
+                                    "placeholder" => "Statut",
+                                    "required" => true,
+                                    "minString" => 2,
+                                    "maxString" => 100
+                                ]   
+                    ]
+            ];
         }
     }

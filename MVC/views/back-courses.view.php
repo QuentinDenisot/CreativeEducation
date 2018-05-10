@@ -20,41 +20,37 @@
                             <i class="material-icons">assignment</i>
                         </div>
                         <div class="card-content">
-                            <h4 class="card-title">Utilisateurs</h4>
+                            <h4 class="card-title">Cours</h4>
 
                             <div class="ripple-container"></div>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="text-primary">
-                                        <th>Nom</th>
-                                        <th>Prénom</th>
-                                        <th>Email</th>
-                                        <th>Date d'inscription</th>
+                                        <th>Titre</th>
                                         <th>Statut</th>
-                                        <th>Rôle</th>
+                                        <th>Date d'ajout</th>
+                                        <th>Créateur</th>
                                         <th>Actions</th>
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $userObject = new User;
-                                            $userArray = $userObject->getAll();
+                                            $courseObject = new Course;
+                                            $courseArray = $courseObject->getAll();
 
-                                            foreach($userArray as $user): ?>
+                                            foreach($courseArray as $course): ?>
                                             
                                                 <tr>
-                                                    <td><?php echo $user->getLastname(); ?></td>
-                                                    <td><?php echo $user->getFirstname(); ?></td>
-                                                    <td><?php echo $user->getEmail(); ?></td>
-                                                    <td><?php echo $user->getInsertedDate(); ?></td>
-                                                    <td><?php echo $user->getStatus(); ?></td>
-                                                    <td><?php echo $user->getId_role(); ?></td>
+                                                    <td><?php echo $course->getTitle(); ?></td>
+                                                    <td><?php echo $course->getStatus(); ?></td>
+                                                    <td><?php echo $course->getInsertedDate(); ?></td>
+                                                    <td><?php echo $course->getId_user(); ?></td>
                                                     <td class="td-actions">
                                                         <form action="#">
                                                             <button class="btn btn-action btn-blue">
                                                                 <i class="material-icons">build</i>
                                                             </button>
                                                         </form>
-                                                        <form action="<?php echo DIRNAME.'user/delete/'.$user->getId(); ?>">
+                                                        <form action="<?php echo DIRNAME.'course/delete/'.$course->getId(); ?>">
                                                             <button class="btn btn-action btn-red">
                                                                 <i class="material-icons">close</i>
                                                             </button>
@@ -63,7 +59,6 @@
                                                 </tr>
                                             
                                             <?php endforeach; ?>
-
                                     </tbody>
                                 </table>
                                 <p class="pull-right">
