@@ -4,12 +4,12 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Authentification</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="<?php echo DIRNAME; ?>/public/js/auth-template.js"></script>
         <link rel="icon" type="image/png" href="<?php echo DIRNAME; ?>/public/images/favicon.png">
         <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>/public/css/style-auth-tpl.css">
         <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>/public/css/grid.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="<?php echo DIRNAME; ?>/public/js/auth-template.js"></script>
     </head>
     <body>
         <img src="<?php echo DIRNAME; ?>/public/images/background-img.jpg" alt="background-image">

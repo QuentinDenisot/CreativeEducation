@@ -1,4 +1,11 @@
 <?php
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+
+    require 'C:/wamp/www'.DIRNAME.'public/PHPMailer/src/Exception.php';
+    require 'C:/wamp/www'.DIRNAME.'public/PHPMailer/src/PHPMailer.php';
+    require 'C:/wamp/www'.DIRNAME.'public/PHPMailer/src/SMTP.php';
+
     class User extends BaseSQL
     {
         protected $id = null;
@@ -48,20 +55,9 @@
             $this->status = $status;
         }
 
-        public function setToken($token = null)
+        public function setToken()
         {
-            if($token)
-            {
-                $this->token = $token;    
-            }
-            elseif(!empty($this->email))
-            {
-                $this->token = substr(sha1("SijMfzD5796".substr(time(), 5).uniqid()."onlmk"), 2, 10);
-            }
-            else
-            {
-                die("Veuillez préciser un email");
-            }
+            $this->token = substr(sha1("SijMfzD5796".substr(time(), 5).uniqid()."onlmk"), 10, 20);
         }
 
         public function setProfilePicPath($profilePicPath = null)
@@ -127,6 +123,124 @@
         public function getId_role()
         {
             return $this->id_role;
+        }
+
+        public function sendMail($subject, $body)
+        {
+            $mail = new PHPMailer(true);
+            $mail->SMTPOptions = array( 'ssl' => array( 'verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true ) );
+            try
+            {
+                //Server settings
+                //$mail->SMTPDebug = 4;
+                $mail->isSMTP();
+                $mail->Host = 'tls://smtp.gmail.com:587';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'contact.creativeeducation@gmail.com';
+                $mail->Password = 'tot-*32fRe';
+                $mail->setFrom('contact.creativeeducation@gmail.com', 'Support CreativeEducation');
+                $mail->addAddress($this->getEmail());
+
+                //Content
+                $mail->isHTML(true);
+                $mail->Subject = $subject;
+                $mail->Body = $body;
+
+                $mail->send();
+            }
+            catch(Exception $e)
+            {
+                echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+            }
+        }
+
+        public function isConnected()
+        {
+            //vérification existence session
+            if(isset($_SESSION['user']['id']))
+            {
+                //récupération utilisateur en cours
+                $queryConditions = [
+                    "select"=>[
+                        "user.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"user.id = '".$_SESSION['user']['id']."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $user = new User();
+                $targetedUser = $user->getAll($queryConditions);
+
+                //si récupération utilisateur effectuée
+                if(count($targetedUser) == 1)
+                {
+                    $token = $_SESSION['user']['token'];
+
+                    //comparaison token en session et token bdd
+                    if($targetedUser[0]->getToken() == $token)
+                    {
+                        //mise à jour token bdd
+                        $targetedUser[0]->setToken();
+                        $targetedUser[0]->save();
+
+                        //mise à jour token session
+                        $_SESSION['user']['token'] = $targetedUser[0]->getToken();
+
+                        return true;
+                    }
+                    //si token bdd et session différents : utilisateur non connecté
+                    else
+                    {
+                        return false;
+                    }
+                }
+                //si pas de récupération : utilisateur non connecté
+                else
+                {
+                    return false;
+                }
+            }
+            //si pas de session : utilisateur non connecté
+            else
+            {
+                return false;
+            }
         }
 
         public function addForm()

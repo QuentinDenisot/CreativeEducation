@@ -21,10 +21,12 @@
 
         public function loginAction($params)
         {
-            //si session existante on renvoie vers la page d'accueil
-            if(isset($_SESSION['user']))
+            $user = new User();
+
+            //si utilisateur connecté on renvoie vers la page d'accueil
+            if($user->isConnected())
             {
-                header('Location: '.DIRNAME.'index/home');
+                header('Location: '.DIRNAME.'index/home'); 
             }
             //sinon affichage page login
             else
@@ -77,7 +79,7 @@
                         ]
                     ];
 
-                    $user = new User;
+                    $user = new User();
                     $targetedUser = $user->getAll($queryConditions);
 
                     //si l'utilisateur est trouvé et que le mot de passe est correct
@@ -89,6 +91,10 @@
                             //si le rôle de l'utilisateur n'est pas "en attente d'attribution de rôle" : connexion
                             if($targetedUser[0]->getId_role() != 3)
                             {
+                                //mise à jour token bdd de l'utilisateur
+                                $targetedUser[0]->setToken();
+                                $targetedUser[0]->save();
+
                                 $_SESSION['user']['id'] = $targetedUser[0]->getId();
                                 $_SESSION['user']['firstname'] = $targetedUser[0]->getFirstname();
                                 $_SESSION['user']['lastname'] = $targetedUser[0]->getLastname();
@@ -100,8 +106,16 @@
                                 $_SESSION['user']['updatedDate'] = $targetedUser[0]->getUpdatedDate();
                                 $_SESSION['user']['id_role'] = $targetedUser[0]->getId_role();
 
-                                //redirection vers la page d'accueil
-                                header('Location: '.DIRNAME.'index/home');
+                                //redirection vers le dashboard pour l'admin
+                                if($targetedUser[0]->getId_role() == 1)
+                                {
+                                    header('Location: '.DIRNAME.'index/dashboard');
+                                }
+                                //redirection vers la page d'accueil pour les apprenants et professeurs
+                                elseif($targetedUser[0]->getId_role() == 2 || $targetedUser[0]->getId_role() == 4)
+                                {
+                                    header('Location: '.DIRNAME.'index/home');
+                                }
                             }
                             //affichage message erreur
                             else
@@ -144,10 +158,12 @@
 
         public function registerAction($params)
         {
-            //si session existante on renvoie vers la page d'accueil
-            if(isset($_SESSION['user']))
+            $user = new User();
+
+            //si utilisateur connecté on renvoie vers la page d'accueil
+            if($user->isConnected())
             {
-                header('Location: '.DIRNAME.'index/home');
+                header('Location: '.DIRNAME.'index/home'); 
             }
             //sinon affichage page register
             else
@@ -213,7 +229,7 @@
                             ]
                         ];
 
-                        $user = new User;
+                        $user = new User();
                         $targetedUser = $user->getAll($queryConditions);
 
                         //si l'adresse email est déjà utilisée : erreur
@@ -232,15 +248,18 @@
                             $v->assign("config", $form);
                             $v->assign("errors", "Inscription terminée, veuillez consulter vos mails");
 
-                            $user = new User;
+                            $user = new User();
                             $user->setFirstname($params['POST']['firstname']);
                             $user->setLastname($params['POST']['lastname']);
                             $user->setPwd($params['POST']['password']);
                             $user->setemail($params['POST']['email']);
                             $user->setStatus('1');
-                            $user->setToken("iue6484zgfi65sgv89csGVIUZEG8645");
+                            $user->setToken();
                             $user->setId_role('5');
                             $user->save();
+
+                            //envoi de mail
+                            $user->sendMail('Validation de votre compte CreativeEducation', 'test');
                         }
                     }
                 }
@@ -270,8 +289,10 @@
 
         public function homeAction($params)
         {
-            //si session existante on affiche la page d'accueil
-            if(isset($_SESSION['user']))
+            $user = new User();
+
+            //si utilisateur connecté on renvoie vers la page d'accueil
+            if($user->isConnected())
             {
                 $v = new View("front-home", "front");
                 $v->assign('name', $_SESSION['user']['firstname']);
@@ -285,7 +306,18 @@
 
         public function dashboardAction($params)
         {
+            $user = new User();
 
+            //si utilisateur connecté on renvoie vers la page d'accueil
+            if($user->isConnected() && $_SESSION['user']['id_role'] == 1)
+            {
+                $v = new View('back-dashboard', 'back');
+            }
+            //sinon on renvoie vers la page de login
+            else
+            {
+                header('Location: '.DIRNAME.'index/login');
+            }
         }
 
         public function frontAction($params)
