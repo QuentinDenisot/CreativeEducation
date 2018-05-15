@@ -32,7 +32,6 @@
 
         public function deleteAction($params)
         {
-            /*récupération des variables POST*/
             //->id du role à supprimer
             $id = $params['URL'][0];
 

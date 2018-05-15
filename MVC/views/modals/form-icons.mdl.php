@@ -23,12 +23,22 @@
 
     <?php endforeach; ?>
 
-    <pre>
-        <?php print_r($errors);?>
-    </pre>
+    <?php if(is_array($errors) && count($errors) > 0):
+
+        foreach($errors as $error): ?>
+
+            <div class="form-error"><?php echo '• '.$error; ?></div>
+
+        <?php endforeach;
+
+    elseif($errors != ''): ?>
+
+        <div class="form-error"><?php echo $errors; ?></div>
+
+    <?php endif; ?>
 
     <div class="form-row">
-        <button class="btn btn-rose">
+        <button name="button" value="sendForm" class="btn btn-rose">
             <?php echo $config['config']['button']; ?>
             <span class="btn-label btn-label-right">
                 <i class="material-icons"><?php echo $config['icon'][$maxIdx]; ?></i>

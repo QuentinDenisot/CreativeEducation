@@ -5,31 +5,31 @@
         {
             return [
                 "config" => [
-                                "method" => "POST",
-                                "action" => "index/login",
-                                "button" => "CONNEXION"
-                            ],
+                    "method" => "POST",
+                    "action" => "index/login",
+                    "button" => "CONNEXION"
+                ],
                 "icon" => [
-                            "account_circle",
-                            "lock_outline",
-                            "keyboard_arrow_right"
-                        ],
+                    "drafts",
+                    "lock_outline",
+                    "keyboard_arrow_right"
+                ],
                 "input" => [
-                    "accountName" => [
-                                        "type" => "text",
-                                        "placeholder" => "Nom de compte",
-                                        "required" => true,
-                                        "minString" => 2,
-                                        "maxString" => 100
-                                    ],
+                    "email" => [
+                        "type" => "email",
+                        "placeholder" => "Adresse mail",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100
+                    ],
                     "password" => [
-                                    "type" => "password",
-                                    "placeholder" => "Mot de passe",
-                                    "required" => true,
-                                    "minString" => 2,
-                                    "maxString" => 100
-                                ]
+                        "type" => "password",
+                        "placeholder" => "Mot de passe",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100
                     ]
+                ]
             ];
         }
 
@@ -37,39 +37,56 @@
         {
             return [
                 "config" => [
-                                "method" => "POST",
-                                "action" => "index/register",
-                                "button" => "INSCRIPTION"
-                            ],
+                    "method" => "POST",
+                    "action" => "index/register",
+                    "button" => "INSCRIPTION"
+                ],
                 "icon" => [
-                            "account_circle",
-                            "drafts",
-                            "lock_outline",
-                            "keyboard_arrow_right"
-                        ],
+                    "account_circle",
+                    "account_circle",
+                    "drafts",
+                    "lock_outline",
+                    "check_circle_outline",
+                    "keyboard_arrow_right"
+                ],
                 "input" => [
-                    "accountName" => [
-                                        "type" => "text",
-                                        "placeholder" => "Nom de compte",
-                                        "required" => true,
-                                        "minString" => 2,
-                                        "maxString" => 100
-                                    ],
+                    "firstname" => [
+                        "type" => "text",
+                        "placeholder" => "Prénom",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100
+                    ],
+                    "lastname" => [
+                        "type" => "text",
+                        "placeholder" => "Nom",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100
+                    ],
                     "email" => [
-                                    "type" => "text",
-                                    "placeholder" => "Adresse mail",
-                                    "required" => true,
-                                    "minString" => 2,
-                                    "maxString" => 100
-                                ],
+                        "type" => "email",
+                        "placeholder" => "Adresse mail",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100
+                    ],
                     "password" => [
-                                    "type" => "password",
-                                    "placeholder" => "Mot de passe",
-                                    "required" => true,
-                                    "minString" => 2,
-                                    "maxString" => 100
-                                ]
+                        "type" => "password",
+                        "placeholder" => "Mot de passe",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100
+                    ],
+                    "passwordConfirm" => [
+                        "type" => "password",
+                        "placeholder" => "Confirmation mot de passe",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100,
+                        "confirm" => "password"
                     ]
+                ]
             ];
         }
     }

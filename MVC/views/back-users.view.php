@@ -17,7 +17,7 @@
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="card">
                         <div class="card-header card-header-icon" data-background-color="rose">
-                            <i class="material-icons">assignment</i>
+                            <i class="material-icons">contacts</i>
                         </div>
                         <div class="card-content">
                             <h4 class="card-title">Utilisateurs</h4>
@@ -49,7 +49,7 @@
                                                     <td><?php echo $user->getStatus(); ?></td>
                                                     <td><?php echo $user->getId_role(); ?></td>
                                                     <td class="td-actions">
-                                                        <form action="#">
+                                                        <form action="<?php echo DIRNAME.'user/update/'.$user->getId(); ?>">
                                                             <button class="btn btn-action btn-blue">
                                                                 <i class="material-icons">build</i>
                                                             </button>

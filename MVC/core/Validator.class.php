@@ -5,37 +5,37 @@
         {
             $errorsMsg = [];
 
-            foreach ($form["input"] as $name => $config)
-            {    
+            foreach($form["input"] as $name => $config)
+            {
                 if(isset($config["confirm"]) && $params[$name] !== $params[$config["confirm"]])
                 {
-                    $errorsMsg[] = $name." doit être identique à ".$config["confirm"];
+                    $errorsMsg[] = "<b>".$config['placeholder']."</b> doit être identique à <b>".$form['input'][$config["confirm"]]['placeholder']."</b>";
                 }
                 elseif(!isset($config["confirm"]))
                 {
                     if($config["type"] == "email" && !self::checkEmail($params[$name]))
                     {    
-                        $errorsMsg[] = "L'email n'est pas valide";
+                        $errorsMsg[] = "<b>".$config['placeholder']."</b> n'est pas valide";
                     }
                     elseif($config["type"] == "password" && !self::checkPwd($params[$name]))
                     {
-                        $errorsMsg[] = "Le mot de passe est incorrect (6 à 12, min, maj, chiffres)";
+                        $errorsMsg[] = "<b>".$config['placeholder']."</b> est incorrect (6 à 12, min, maj, chiffres)";
                     }
                 }
 
                 if(isset($config["required"]) && !self::minLength($params[$name], 1))
                 {
-                    $errorsMsg[] = $name." doit faire plus de 1 caractère";
+                    $errorsMsg[] = "<b>".$config['placeholder']."</b> doit faire plus de 1 caractère";
                 }
 
                 if(isset($config["minString"]) && !self::minLength($params[$name], $config["minString"]))
                 {
-                    $errorsMsg[] = $name." doit faire plus de ".$config["minString"]." caractères";
+                    $errorsMsg[] = "<b>".$config['placeholder']."</b> doit faire plus de ".$config["minString"]." caractères";
                 }
 
                 if(isset($config["maxString"]) && !self::maxLength($params[$name], $config["maxString"]))
                 {
-                    $errorsMsg[] = $name." doit faire moins de ".$config["maxString"]." caractères";
+                    $errorsMsg[] = "<b>".$config['placeholder']."</b> doit faire moins de ".$config["maxString"]." caractères";
                 }
             }
 

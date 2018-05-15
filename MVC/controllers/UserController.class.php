@@ -42,12 +42,11 @@
 
 		public function updateAction($params)
 		{
-
+			$v = new View("back-form", "back");
 		}
 
 		public function deleteAction($params)
 		{
-			/*récupération des variables POST*/
             //->id du user à supprimer
             $id = $params['URL'][0];
 

@@ -89,7 +89,7 @@
             return $this->lastname;
         }
 
-        public function getPassword()
+        public function getPwd()
         {
             return $this->pwd;
         }
