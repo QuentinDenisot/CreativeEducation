@@ -108,23 +108,20 @@
                 </ul>
             </div>
         </div>
-        <div class="main-panel">
-            <?php
-                include 'views/'.$this->v;
-            ?>
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <p class="copyright pull-right">
-                            &copy;
-                            <script>
-                                document.write(new Date().getFullYear())
-
-                            </script>
-                            <a href="http://www.theosenoussaoui.fr"> Senoussaoui Théo </a> déteste Charts.js
-                        </p>
-                    </div>
-                </footer>
-        </div>
+        <?php
+            include 'views/'.$this->v;
+        ?>
+        <footer class="footer">
+            <div class="container-fluid">
+                <p class="copyright pull-right">
+                    &copy;
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script>
+                    <a href="http://www.theosenoussaoui.fr"> Senoussaoui Théo </a> déteste Charts.js
+                </p>
+            </div>
+        </footer>
     </div>
 </body>
 <!--   Core JS Files   -->
