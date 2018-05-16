@@ -139,10 +139,9 @@
                         <div class="card-header card-header-icon" data-background-color="rose">
                             <i class="material-icons">data_usage</i>
                         </div>
-                        <div class="card">
-                            <div class="card-content">
-                                <canvas id="myChart"></canvas>
-                            </div>
+
+                        <div class="card-content">
+                            <canvas id="myChart"></canvas>
                         </div>
                     </div>
 
