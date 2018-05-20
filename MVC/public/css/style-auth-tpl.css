@@ -226,7 +226,7 @@ body main {
             flex-direction: row;
             justify-content: center;
             align-items: stretch; }
-            body main .main-container .form-container > .form-main > form > .form-row:not(:last-child) {
+            body main .main-container .form-container > .form-main > form > .form-row:not(:last-child):not(.captcha) {
               margin-bottom: 15px;
               height: 24px;
               width: 60%; }
@@ -249,6 +249,11 @@ body main {
               body main .main-container .form-container > .form-main > form > .form-row > input:focus {
                 border-color: #EC407A;
                 transition: border-color 0.3s ease; }
+          body main .main-container .form-container > .form-main > form > .captcha {
+            margin-bottom: 15px; }
+            body main .main-container .form-container > .form-main > form > .captcha > img {
+              border: 1px solid #999999;
+              border-radius: 3px; }
           body main .main-container .form-container > .form-main > form > .form-error {
             width: 80%;
             margin: auto;

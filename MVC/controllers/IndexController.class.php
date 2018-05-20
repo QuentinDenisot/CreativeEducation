@@ -180,6 +180,7 @@
                         $v = new View("auth-register", "auth");
                         $v->assign("config", $form);
                         $v->assign("errors", $errors);
+                        /*print_r($params['POST']);*/
                     }
                     //sinon on renvoie sur la même page avec message de succès + on enregistre l'utilisateur
                     else

@@ -3,8 +3,10 @@
     {
         public static function validate($form, $params)
         {
+            //initialisation tableau erreurs
             $errorsMsg = [];
 
+            //parcours des inputs
             foreach($form["input"] as $name => $config)
             {
                 if(isset($config["confirm"]) && $params[$name] !== $params[$config["confirm"]])
@@ -36,6 +38,14 @@
                 if(isset($config["maxString"]) && !self::maxLength($params[$name], $config["maxString"]))
                 {
                     $errorsMsg[] = "<b>".$config['placeholder']."</b> doit faire moins de ".$config["maxString"]." caractères";
+                }
+
+                if($name == 'captcha')
+                {
+                    if($params[$name] != $_SESSION['captcha'])
+                    {
+                        $errorsMsg[] = "<b>".$config['placeholder']."</b> est incorrect";
+                    }
                 }
             }
 

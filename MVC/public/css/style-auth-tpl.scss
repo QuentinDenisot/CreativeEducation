@@ -365,7 +365,7 @@ body
                             justify-content: center;
                             align-items: stretch;
 
-                            &:not(:last-child)
+                            &:not(:last-child):not(.captcha)
                             {
                                 margin-bottom: 15px;
                                 height: 24px;
@@ -405,6 +405,17 @@ body
                                     border-color: #EC407A;
                                     transition: border-color 0.3s ease;
                                 }
+                            }
+                        }
+
+                        > .captcha
+                        {
+                            margin-bottom: 15px;
+                            
+                            > img
+                            {
+                                border: 1px solid #999999;
+                                border-radius: 3px;
                             }
                         }
 

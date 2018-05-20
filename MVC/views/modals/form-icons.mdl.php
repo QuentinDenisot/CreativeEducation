@@ -2,9 +2,15 @@
         
     <?php $idx = -1; ?>
 
-    <?php foreach($config['input'] as $name => $params): ?>
+    <?php foreach($config['input'] as $name => $params):
     
-        <?php if($params['type'] == 'text' || $params['type'] == 'email' || $params['type'] == "password"):
+        if($name == "captcha"):
+
+            continue;
+
+        endif;
+
+        if($params['type'] == 'text' || $params['type'] == 'email' || $params['type'] == 'password'):
 
             $idx++;
             $maxIdx = count($config['icon']) - 1; ?>
@@ -12,18 +18,36 @@
             <div class="form-row">
                 <i class="material-icons"><?php echo $config['icon'][$idx]; ?></i>
                 <input 
-                    type="<?php echo $params["type"];?>" 
+                    type="<?php echo $params['type'];?>" 
                     name="<?php echo $name;?>"
-                    placeholder="<?php echo $params["placeholder"];?>"
-                    <?php echo (isset($params["required"]))?"required='required'":""; ?>
+                    placeholder="<?php echo $params['placeholder'];?>"
+                    <?php echo (isset($params['required']))?"required='required'":""; ?>
                 >
             </div>
 
-        <?php endif; ?>
+        <?php endif;
 
-    <?php endforeach; ?>
+    endforeach;
 
-    <?php if(is_array($errors) && count($errors) > 0):
+    if($config['captcha']): ?>
+
+        <div class="form-row captcha">
+            <img src="<?php echo DIRNAME.'public/captcha/captcha.php'; ?>">
+        </div>
+
+        <div class="form-row">
+            <i class="material-icons"><?php echo $config['icon'][$maxIdx - 1]; ?></i>
+            <input 
+                type="<?php echo $config['input']['captcha']['type']; ?>" 
+                name="<?php echo $name;?>"
+                placeholder="<?php echo $config['input']['captcha']['placeholder'];?>"
+                <?php echo (isset($config['input']['captcha']['required']))?"required='required'":""; ?>
+            >
+        </div>
+
+    <?php endif;
+
+    if(is_array($errors) && count($errors) > 0):
 
         foreach($errors as $error): ?>
 

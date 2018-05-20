@@ -29,7 +29,8 @@
                         "minString" => 2,
                         "maxString" => 100
                     ]
-                ]
+                ],
+                "captcha" => false
             ];
         }
 
@@ -47,6 +48,7 @@
                     "drafts",
                     "lock_outline",
                     "check_circle_outline",
+                    "spellcheck",
                     "keyboard_arrow_right"
                 ],
                 "input" => [
@@ -85,8 +87,14 @@
                         "minString" => 2,
                         "maxString" => 100,
                         "confirm" => "password"
+                    ],
+                    "captcha" => [
+                        "type" => "text",
+                        "placeholder" => "Code de sécurité",
+                        "required" => true,
                     ]
-                ]
+                ],
+                "captcha" => true
             ];
         }
     }

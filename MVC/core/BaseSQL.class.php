@@ -10,6 +10,7 @@
             try
             {
                 $this->pdo = new PDO(DBDRIVER.":host=".DBHOST.";dbname=".DBNAME, DBUSER, DBPWD);
+                $this->pdo->exec("SET CHARACTER SET utf8");
             }
             catch(Exception $e)
             {

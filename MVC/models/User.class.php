@@ -2,9 +2,9 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
-    require 'C:/wamp/www'.DIRNAME.'public/PHPMailer/src/Exception.php';
-    require 'C:/wamp/www'.DIRNAME.'public/PHPMailer/src/PHPMailer.php';
-    require 'C:/wamp/www'.DIRNAME.'public/PHPMailer/src/SMTP.php';
+    require 'D:/wamp/www'.DIRNAME.'public/PHPMailer/src/Exception.php';
+    require 'D:/wamp/www'.DIRNAME.'public/PHPMailer/src/PHPMailer.php';
+    require 'D:/wamp/www'.DIRNAME.'public/PHPMailer/src/SMTP.php';
 
     class User extends BaseSQL
     {
@@ -32,12 +32,12 @@
 
         public function setFirstname($firstname)
         {
-            $this->firstname = ucfirst(strtoupper(trim($firstname)));
+            $this->firstname = ucfirst(mb_strtoupper(trim($firstname)));
         }
 
         public function setLastname($lastname)
         {
-            $this->lastname = strtoupper(trim($lastname));
+            $this->lastname = mb_strtoupper(trim($lastname));
         }
 
         public function setPwd($pwd)

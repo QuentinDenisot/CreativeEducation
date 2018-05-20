@@ -42,10 +42,10 @@
                                             foreach($userArray as $user): ?>
                                             
                                                 <tr>
-                                                    <td><?php echo $user->getLastname(); ?></td>
-                                                    <td><?php echo $user->getFirstname(); ?></td>
+                                                    <td><?php echo Helpers::cleanLastname($user->getLastname()); ?></td>
+                                                    <td><?php echo Helpers::cleanFirstname($user->getFirstname()); ?></td>
                                                     <td><?php echo $user->getEmail(); ?></td>
-                                                    <td><?php echo $user->getInsertedDate(); ?></td>
+                                                    <td><?php echo Helpers::europeanDateFormat($user->getInsertedDate()); ?></td>
                                                     <td><?php echo $user->getStatus(); ?></td>
                                                     <td><?php echo $user->getId_role(); ?></td>
                                                     <td class="td-actions">
