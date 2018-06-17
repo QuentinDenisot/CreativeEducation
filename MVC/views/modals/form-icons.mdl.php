@@ -1,4 +1,5 @@
-<form method="<?php echo $config['config']['method']?>" action="<?php echo DIRNAME.$config['config']['action']; ?>">
+<form method="<?php echo $config['config']['method']?>" 
+      action="<?php echo ($config['config']['action'] != '')?DIRNAME.$config['config']['action']:''; ?>">
         
     <?php $idx = -1; ?>
 

@@ -26,7 +26,7 @@
             //si utilisateur connecté on renvoie vers la page d'accueil
             if($user->isConnected())
             {
-                header('Location: '.DIRNAME.'index/home'); 
+                header('Location: '.DIRNAME.'index/home');
             }
             //sinon affichage page login
             else
@@ -124,6 +124,7 @@
                                 $v = new View("auth-login", "auth");
                                 $v->assign("config", $form);
                                 $v->assign("errors", "Compte en attente d'attribution de rôle");
+                                $alert = new Alert("Compte en attente d'attribution de rôle", 'info');
                             }
                         }
                         //affichage message erreur
@@ -133,6 +134,7 @@
                             $v = new View("auth-login", "auth");
                             $v->assign("config", $form);
                             $v->assign("errors", "Compte en attente de validation mail");
+                            $alert = new Alert('Compte en attente de validation mail', 'info');
                         }
                         
                     }
@@ -143,6 +145,7 @@
                         $v = new View("auth-login", "auth");
                         $v->assign("config", $form);
                         $v->assign("errors", "Identifiants incorrects, veuillez réessayer");
+                        $alert = new Alert('Identifiants incorrects, veuillez réessayer', 'error');
                     }
                 }
                 //si aucun champ n'est envoyé via post (accès à la page pour la 1ère fois)
@@ -163,7 +166,7 @@
             //si utilisateur connecté on renvoie vers la page d'accueil
             if($user->isConnected())
             {
-                header('Location: '.DIRNAME.'index/home'); 
+                header('Location: '.DIRNAME.'index/home');
             }
             //sinon affichage page register
             else
@@ -180,7 +183,12 @@
                         $v = new View("auth-register", "auth");
                         $v->assign("config", $form);
                         $v->assign("errors", $errors);
-                        /*print_r($params['POST']);*/
+
+                        //alerts
+                        foreach($errors as $error)
+                        {
+                            $alert = new Alert($error, 'error');
+                        }
                     }
                     //sinon on renvoie sur la même page avec message de succès + on enregistre l'utilisateur
                     else
@@ -234,7 +242,7 @@
                         $targetedUser = $user->getAll($queryConditions);
 
                         //si l'adresse email est déjà utilisée : erreur
-                        if(count($targetedUser) > 0)
+                        if(count($targetedUser) == 1)
                         {
                             $form = Auth::registerForm();
                             $v = new View("auth-register", "auth");
@@ -310,7 +318,7 @@
             $user = new User();
 
             //si utilisateur connecté on renvoie vers la page d'accueil
-            if($user->isConnected() && $_SESSION['user']['id_role'] == 1)
+            if($user->isConnected() && $user->isAdmin())
             {
                 $v = new View('back-dashboard', 'back');
             }
@@ -321,6 +329,104 @@
             }
         }
 
+        public function validateMailAction($params)
+        {
+            $idUser = $params['URL'][0];
+            $token = $params['URL'][1];
+
+            //si les paramètres sont passés dans l'url, on continue
+            if(!empty($idUser) && !empty($token))
+            {
+                //récupération user
+                $queryConditions = [
+                    "select"=>[
+                        "`user`.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`user`.`id` = ".$idUser,
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $user = new User();
+                $targetedUser = $user->getAll($queryConditions);
+
+                //si user trouvé, on continue
+                if(count($targetedUser) == 1)
+                {
+                    //vérification que le user ait bien le rôle "en attente de validation mail"
+                    if($targetedUser[0]->getId_role() == 5)
+                    {
+                        //vérification correspondance token
+                        if($targetedUser[0]->getToken() == $token)
+                        {
+                            //on change le rôle du user, il passe à "en attente de validation de rôle"
+                            $targetedUser[0]->setId_role(3);
+                            $targetedUser[0]->save();
+
+                            echo 'Vérification mail effectuée avec succès';
+                        }
+                        //redirection sur la page de login si token pas correspondant
+                        else
+                        {
+                            //bouton pour renvoyer un mail de confirmation
+                            header('Location: '.DIRNAME.'index/login');
+                        }
+                    }
+                    //redirection sur la page de login si pas le bon rôle
+                    else
+                    {
+                        header('Location: '.DIRNAME.'index/login');
+                    }
+                }
+                //retour sur la page de login si aucun user correspondant
+                else
+                {
+                    header('Location: '.DIRNAME.'index/login');
+                }
+            }
+            //retour sur la page de login si les paramètres ne sont pas tous renseignés
+            else
+            {
+                header('Location: '.DIRNAME.'index/login');
+            }
+        }
+
+        //inutile
         public function frontAction($params)
         {
             $v = new View('front-home', 'front');

@@ -1,16 +1,4 @@
 <div class="main-panel">
-    <!-- <nav class="navbar navbar-transparent navbar-absolute">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                </div>
-            </nav> -->
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -34,18 +22,15 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $courseObject = new Course;
-                                            $courseArray = $courseObject->getAll();
-
                                             foreach($courseArray as $course): ?>
                                             
                                                 <tr>
                                                     <td><?php echo $course->getTitle(); ?></td>
                                                     <td><?php echo $course->getStatus(); ?></td>
-                                                    <td><?php echo $course->getInsertedDate(); ?></td>
+                                                    <td><?php echo helpers::europeanDateFormat($course->getInsertedDate()); ?></td>
                                                     <td><?php echo $course->getId_user(); ?></td>
                                                     <td class="td-actions">
-                                                        <form action="#">
+                                                        <form action="<?php echo DIRNAME.'course/show/'.$course->getId(); ?>">
                                                             <button class="btn btn-action btn-blue">
                                                                 <i class="material-icons">build</i>
                                                             </button>

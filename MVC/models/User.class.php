@@ -170,7 +170,7 @@
                         "right_join"=>[]
                     ],
                     "where"=>[
-                        "clause"=>"user.id = '".$_SESSION['user']['id']."'",
+                        "clause"=>"`user`.`id` = '".$_SESSION['user']['id']."'",
                         "and"=>[],
                         "or"=>[]
                     ],
@@ -243,6 +243,134 @@
             }
         }
 
+        public function isAdmin()
+        {
+            //vérification existence session
+            if(isset($_SESSION['user']['id']))
+            {
+                //récupération utilisateur en cours
+                $queryConditions = [
+                    "select"=>[
+                        "user.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`user`.`id` = '".$_SESSION['user']['id']."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $user = new User();
+                $targetedUser = $user->getAll($queryConditions);
+
+                //si récupération utilisateur effectuée
+                if(count($targetedUser) == 1)
+                {
+                    //vérification que l'id_role du user connecté est bien 1 (admin)
+                    if($targetedUser[0]->getId_role() == 1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                //si pas de récupération : utilisateur non connecté
+                else
+                {
+                    return false;
+                }
+            }
+            //si pas de session : utilisateur non connecté
+            else
+            {
+                return false;
+            }
+        }
+
+        public function updateUserForm()
+        {
+            return [
+                "config" => [
+                    "method" => "POST",
+                    "action" => "",
+                    "button" => "VALIDER LES MODIFICATIONS"
+                ],
+                "label" => [
+                    "Prénom",
+                    "Nom",
+                    "Adresse e-mail",
+                    "Rôle"
+                ],
+                "input" => [
+                    "firstname" => [
+                        "type" => "text",
+                        "placeholder" => "Prénom",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100
+                    ],
+                    "lastname" => [
+                        "type" => "text",
+                        "placeholder" => "Nom",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100
+                    ],
+                    "email" => [
+                        "type" => "email",
+                        "placeholder" => "Adresse mail",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100
+                    ],
+                    "role" => [
+                        "type" => "text",
+                        "placeholder" => "Rôle",
+                        "required" => true,
+                        "minString" => 1,
+                        "maxString" => 100
+                    ]
+                ],
+                "captcha" => false
+            ];
+        }
+
+        //inutile
         public function addForm()
         {
             return [

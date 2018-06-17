@@ -1,16 +1,4 @@
 <div class="main-panel">
-    <!-- <nav class="navbar navbar-transparent navbar-absolute">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                </div>
-            </nav> -->
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -21,6 +9,10 @@
                         </div>
                         <div class="card-content">
                             <h4 class="card-title">Formulaire de modification</h4>
+                            
+                            <?php $this->addModal("form", $config, $errors, $fieldValues); ?>
+
+                            <!--
                             <form class="form-horizontal">
                                 <div class="row">
                                     <label class="col-md-2 label-on-left">Nom</label>
@@ -75,6 +67,7 @@
                                     </div>
                                 </div>
                             </form>
+                            -->
                         </div>
                     </div>
                 </div>

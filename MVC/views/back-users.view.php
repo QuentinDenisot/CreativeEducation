@@ -1,16 +1,4 @@
 <div class="main-panel">
-    <!-- <nav class="navbar navbar-transparent navbar-absolute">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                </div>
-            </nav> -->
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -36,9 +24,6 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $userObject = new User;
-                                            $userArray = $userObject->getAll();
-
                                             foreach($userArray as $user): ?>
                                             
                                                 <tr>

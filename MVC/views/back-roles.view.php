@@ -1,16 +1,4 @@
 <div class="main-panel">
-    <!-- <nav class="navbar navbar-transparent navbar-absolute">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                </div>
-            </nav> -->
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -32,16 +20,13 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $roleObject = new Role;
-                                            $roleArray = $roleObject->getAll();
-
                                             foreach($roleArray as $role): ?>
                                             
                                                 <tr>
                                                     <td><?php echo $role->getName(); ?></td>
                                                     <td><?php echo $role->getStatus(); ?></td>
                                                     <td class="td-actions">
-                                                        <form action="#">
+                                                        <form action="<?php echo DIRNAME.'role/show/'.$role->getId(); ?>">
                                                             <button class="btn btn-action btn-blue">
                                                                 <i class="material-icons">build</i>
                                                             </button>

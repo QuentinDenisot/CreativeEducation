@@ -26,7 +26,7 @@
 			$this->data[$key] = $value;
 		}
 
-		public function addModal($modal, $config, $errors = [])
+		public function addModal($modal, $config, $errors = [], $fieldValues = null)
 		{
 			include "views/modals/".$modal.".mdl.php";
 		}

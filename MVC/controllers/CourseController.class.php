@@ -3,7 +3,10 @@
     {
         public function indexAction($params)
         {
+            $course = new Course;
+            $courseArray = $course->getAll();
             $v = new View("back-courses", "back");
+            $v->assign('courseArray', $courseArray);
         }
 
         public function addAction($params)

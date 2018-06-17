@@ -3,7 +3,10 @@
     {
         public function indexAction($params)
         {
+            $role = new Role;
+            $roleArray = $role->getAll();
             $v = new View("back-roles", "back");
+            $v->assign('roleArray', $roleArray);
         }
 
         public function addAction($params)

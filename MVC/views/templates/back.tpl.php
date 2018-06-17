@@ -30,12 +30,12 @@
             <div class="sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="../assets/img/faces/avatar.jpg" />
+                        <img src="<?php echo DIRNAME.$_SESSION['user']['profilePicPath']; ?>">
                     </div>
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" class="collapsed">
                             <span>
-                                Julie Rousse
+                                <?php echo helpers::cleanFirstname($_SESSION['user']['firstname']).' '.helpers::cleanLastname($_SESSION['user']['lastname']); ?>
                             </span>
                         </a>
                         <div class="clearfix"></div>
@@ -44,39 +44,39 @@
                     </div>
                 </div>
                 <ul class="nav">
-                    <li class="active">
-                        <a href="./dashboard.html">
+                    <li class="<?php echo ($a == 'dashboardAction')?'active':''; ?>">
+                        <a href="<?php echo DIRNAME.'index/dashboard'; ?>">
                             <i class="material-icons">dashboard</i>
                             <p> Dashboard </p>
                         </a>
                     </li>
-                    <li>
+                    <li class="<?php echo ($c == 'UserController' || $c == 'RoleController' || $c == 'CourseController')?'active':''; ?>">
                         <a data-toggle="collapse" href="#pagesExamples">
                             <i class="material-icons">content_paste</i>
                             <p> Gestion<strong class="caret"></strong> </p>
                         </a>
                         <div class="collapse" id="pagesExamples">
                             <ul class="nav">
-                                <li>
+                                <!--<li>
                                     <a href="#">
                                         <span class="sidebar-mini"> P </span>
                                         <span class="sidebar-normal">Pages</span>
                                     </a>
-                                </li>
+                                </li>-->
                                 <li>
-                                    <a href="#">
+                                    <a href="<?php echo DIRNAME.'role'; ?>">
                                         <span class="sidebar-mini"> R </span>
                                         <span class="sidebar-normal">Rôles</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="<?php echo DIRNAME.'user'; ?>">
                                         <span class="sidebar-mini"> U </span>
                                         <span class="sidebar-normal">Utilisateurs</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="<?php echo DIRNAME.'course'; ?>">
                                         <span class="sidebar-mini"> C </span>
                                         <span class="sidebar-normal">Cours</span>
                                     </a>
