@@ -324,6 +324,61 @@
 
         public function updateUserForm()
         {
+            //récupération de tous les rôles pour alimenter la liste déroulante
+            $queryConditions = [
+                "select"=>[
+                    "role.*"
+                ],
+                "join"=>[
+                    "inner_join"=>[],
+                    "left_join"=>[],
+                    "right_join"=>[]
+                ],
+                "where"=>[
+                    "clause"=>"`role`.`status` = '1'",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "and"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "or"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "group_by"=>[],
+                "having"=>[
+                    "clause"=>"",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "order_by"=>[
+                    "asc"=>[
+                        "`role`.`name`"
+                    ],
+                    "desc"=>[]
+                ],
+                "limit"=>[
+                    "offset"=>"",
+                    "range"=>""
+                ]
+            ];
+
+            $role = new Role();
+            $roles = $role->getAll($queryConditions);
+
+            foreach($roles as $role)
+            {
+                $options[$role->getId()] = $role->getName();
+            }
+
             return [
                 "config" => [
                     "method" => "POST",
@@ -357,13 +412,21 @@
                         "required" => true,
                         "minString" => 2,
                         "maxString" => 100
-                    ],
+                    ]/*,
                     "role" => [
                         "type" => "text",
                         "placeholder" => "Rôle",
                         "required" => true,
                         "minString" => 1,
                         "maxString" => 100
+                    ]*/
+                ],
+                "select" => [
+                    "role" => [
+                        "placeholder" => "Rôle",
+                        "emptyOption" => false,
+                        "options" => $options,
+                        "required" => true
                     ]
                 ],
                 "captcha" => false

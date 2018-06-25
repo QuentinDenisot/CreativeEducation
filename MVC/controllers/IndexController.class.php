@@ -267,8 +267,65 @@
                             $user->setId_role('5');
                             $user->save();
 
+                            //récupération de l'id du user depuis email
+                            $queryConditions = [
+                                "select"=>[
+                                    "user.*"
+                                ],
+                                "join"=>[
+                                    "inner_join"=>[],
+                                    "left_join"=>[],
+                                    "right_join"=>[]
+                                ],
+                                "where"=>[
+                                    "clause"=>"LOWER(user.email) = '".strtolower($params['POST']['email'])."'",
+                                    "and"=>[],
+                                    "or"=>[]
+                                ],
+                                "and"=>[
+                                    [
+                                        "clause"=>"",
+                                        "and"=>[],
+                                        "or"=>[]
+                                    ]
+                                ],
+                                "or"=>[
+                                    [
+                                        "clause"=>"",
+                                        "and"=>[],
+                                        "or"=>[]
+                                    ]
+                                ],
+                                "group_by"=>[],
+                                "having"=>[
+                                    "clause"=>"",
+                                    "and"=>[],
+                                    "or"=>[]
+                                ],
+                                "order_by"=>[
+                                    "asc"=>[],
+                                    "desc"=>[]
+                                ],
+                                "limit"=>[
+                                    "offset"=>"",
+                                    "range"=>""
+                                ]
+                            ];
+
+                            $idUser = new User();
+                            $targetedUser = $idUser->getAll($queryConditions)[0];
+
+                            //création de l'url sur laquelle on va être renvoyé en cliquant sur le bouton dans le mail (action + id du user + son token)
+                            $url = SERVERNAME.DIRNAME.'index/validateMail/'.$targetedUser->getId().'/'.$user->getToken();
+
+                            //récupération du fichier 
+                            $content = file_get_contents('views/mail.php');
+
+                            //remplacement de la chaine
+                            $content = str_replace('{%%url%%}', $url, $content);
+
                             //envoi de mail
-                            $user->sendMail('Validation de votre compte CreativeEducation', 'test');
+                            $user->sendMail('Validation de votre compte CreativeEducation', $content);
                         }
                     }
                 }

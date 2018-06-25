@@ -77,11 +77,11 @@ function addAlert(content, type)
     //animation apparition div
     $(alertDiv).slideDown(500, function()
     {
-        //timer qui permet de fermer automatiquement les alerts au bout de 5 secondes
+        //timer qui permet de fermer automatiquement les alerts au bout de 10 secondes
         setTimeout(function()
         {
             closeAlert($(alertDiv));
-        }, 5000)
+        }, 10000)
     });
 }
 

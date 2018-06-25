@@ -1,6 +1,5 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
@@ -15,14 +14,14 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-
 <body>
     <div class="wrapper">
         <div class="sidebar" data-active-color="rose" data-background-color="black">
             <div class="logo">
-                <a href="http://www.theosenoussaoui.fr" class="simple-text logo-mini">
+                <!-- <a href="http://www.theosenoussaoui.fr" class="simple-text logo-mini">
                     CE
-                </a>
+                </a> -->
+                <img src="<?php echo DIRNAME.'public/images/logo.svg'; ?>" alt="logo">
                 <a href="http://www.theosenoussaoui.fr" class="simple-text logo-normal">
                     Creative Education
                 </a>

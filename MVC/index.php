@@ -33,8 +33,11 @@
     $uriExploded = explode("/", $uri[0]);
 
     //"index" si la clé n'existe pas, c'est à dire s'il n'y a ni contrôlleur ni action dans l'url :
-    $c = (empty($uriExploded[0]))?"index":$uriExploded[0];
-    $a = (empty($uriExploded[1]))?"index":$uriExploded[1];
+    $c = (empty($uriExploded[0])) ? "index" : $uriExploded[0];
+    $a = (empty($uriExploded[1])) ? "index" : $uriExploded[1];
+
+    //si l'action est un nombre on place un underscore devant juste devant (pour $a = '404', l'action = '_404Action' -> norme de nommage des fonctions php)
+    $a = (is_numeric(substr($a, 0, 1))) ? '_'.$a : $a;
 
     //Controller : NomController
     $c = ucfirst(strtolower($c))."Controller";
@@ -71,15 +74,18 @@
             }
             else
             {
-                die("L'action ".$a." n'existe pas.");
+                //die("L'action ".$a." n'existe pas.");
+                header('Location: '.DIRNAME.'error/404');
             }
         }
         else
         {
-            die("Le contrôleur ".$c." n'existe pas.");
+            //die("Le contrôleur ".$c." n'existe pas.");
+            header('Location: '.DIRNAME.'error/404');
         }
     }
     else
     {
-        die("Le fichier ".$c." n'existe pas.");
+        //die("Le fichier ".$c." n'existe pas.");
+        header('Location: '.DIRNAME.'error/404');
     }

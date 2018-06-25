@@ -17,10 +17,9 @@
             $maxIdx = count($config['label']) - 1; ?>
             
             <div class="row">
-                <label class="col-md-2 label-on-left"><?php echo $config['label'][$idx]; ?></label>
+                <label class="col-md-2 label-on-left"><?php echo $params['placeholder']; ?></label>
                 <div class="col-md-10">
                     <div class="form-group is-empty">
-                        <label class="control-label"></label>
                         <input 
                             type="<?php echo $params['type'];?>" 
                             name="<?php echo $name;?>" 
@@ -36,6 +35,39 @@
         <?php endif;
 
     endforeach;
+
+    if(isset($config['select'])):
+
+        foreach($config['select'] as $name => $params): ?>
+
+            <div class="row">
+                <label class="col-md-2 label-on-left"><?php echo $params['placeholder']; ?></label>
+                <div class="col-md-10">
+                    <div class="form-group is-empty">
+                        <select name="<?php echo $name; ?>" class="form-control">
+                            
+                            <?php if($params['emptyOption']): ?>
+
+                                <option value=""></option>
+
+                            <?php endif; ?>
+
+                            <?php foreach($params['options'] as $id => $value):
+
+                                $selected = ($id == $fieldValues[$name]) ? ' selected ' : ''; ?>
+
+                                <option value="<?php echo $id; ?>"<?php echo $selected; ?>><?php echo $value; ?></option>
+
+                            <?php endforeach; ?>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        <?php endforeach;
+
+    endif;
 
     if($config['captcha']): ?>
 

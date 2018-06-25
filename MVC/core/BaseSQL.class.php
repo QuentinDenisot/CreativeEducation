@@ -14,7 +14,8 @@
             }
             catch(Exception $e)
             {
-                die("Erreur SQL : ".$e->getMessage());
+                //die("Erreur SQL : ".$e->getMessage());
+                header('Location: '.DIRNAME.'error/500');
             }
 
             $this->table = strtolower(get_called_class());
