@@ -26,7 +26,7 @@
                                                     <td><?php echo $role->getName(); ?></td>
                                                     <td><?php echo $role->getStatus(); ?></td>
                                                     <td class="td-actions">
-                                                        <form action="<?php echo DIRNAME.'role/show/'.$role->getId(); ?>">
+                                                        <form action="<?php echo DIRNAME.'role/update/'.$role->getId(); ?>">
                                                             <button class="btn btn-action btn-blue">
                                                                 <i class="material-icons">build</i>
                                                             </button>

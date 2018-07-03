@@ -39,4 +39,27 @@
         {
             return $this->status;
         }
+
+        public function updateRoleForm()
+        {
+            return [
+                "config" => [
+                    "method" => "POST",
+                    "action" => ""
+                ],
+                "input" => [
+                    "name" => [
+                        "type" => "text",
+                        "placeholder" => "Nom",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100
+                    ]
+                ],
+                "button" => [
+                    "text" => "VALIDER LES MODIFICATIONS"
+                ],
+                "captcha" => false
+            ];
+        }
     }

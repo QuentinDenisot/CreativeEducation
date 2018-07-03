@@ -6,13 +6,7 @@
             return [
                 "config" => [
                     "method" => "POST",
-                    "action" => "index/login",
-                    "button" => "CONNEXION"
-                ],
-                "icon" => [
-                    "drafts",
-                    "lock_outline",
-                    "keyboard_arrow_right"
+                    "action" => "index/login"
                 ],
                 "input" => [
                     "email" => [
@@ -20,15 +14,21 @@
                         "placeholder" => "Adresse mail",
                         "required" => true,
                         "minString" => 2,
-                        "maxString" => 100
+                        "maxString" => 100,
+                        "icon" => "drafts"
                     ],
                     "password" => [
                         "type" => "password",
                         "placeholder" => "Mot de passe",
                         "required" => true,
                         "minString" => 2,
-                        "maxString" => 100
+                        "maxString" => 100,
+                        "icon" => "lock_outline"
                     ]
+                ],
+                "button" => [
+                    "text" => "CONNEXION",
+                    "icon" => "keyboard_arrow_right"
                 ],
                 "captcha" => false
             ];
@@ -39,17 +39,7 @@
             return [
                 "config" => [
                     "method" => "POST",
-                    "action" => "index/register",
-                    "button" => "INSCRIPTION"
-                ],
-                "icon" => [
-                    "account_circle",
-                    "account_circle",
-                    "drafts",
-                    "lock_outline",
-                    "check_circle_outline",
-                    "spellcheck",
-                    "keyboard_arrow_right"
+                    "action" => "index/register"
                 ],
                 "input" => [
                     "firstname" => [
@@ -57,28 +47,32 @@
                         "placeholder" => "Prénom",
                         "required" => true,
                         "minString" => 2,
-                        "maxString" => 100
+                        "maxString" => 100,
+                        "icon" => "account_circle"
                     ],
                     "lastname" => [
                         "type" => "text",
                         "placeholder" => "Nom",
                         "required" => true,
                         "minString" => 2,
-                        "maxString" => 100
+                        "maxString" => 100,
+                        "icon" => "account_circle"
                     ],
                     "email" => [
                         "type" => "email",
                         "placeholder" => "Adresse mail",
                         "required" => true,
                         "minString" => 2,
-                        "maxString" => 100
+                        "maxString" => 100,
+                        "icon" => "drafts"
                     ],
                     "password" => [
                         "type" => "password",
                         "placeholder" => "Mot de passe",
                         "required" => true,
                         "minString" => 2,
-                        "maxString" => 100
+                        "maxString" => 100,
+                        "icon" => "lock_outline"
                     ],
                     "passwordConfirm" => [
                         "type" => "password",
@@ -86,13 +80,19 @@
                         "required" => true,
                         "minString" => 2,
                         "maxString" => 100,
-                        "confirm" => "password"
+                        "confirm" => "password",
+                        "icon" => "check_circle_outline"
                     ],
                     "captcha" => [
                         "type" => "text",
                         "placeholder" => "Code de sécurité",
                         "required" => true,
+                        "icon" => "spellcheck"
                     ]
+                ],
+                "button" => [
+                    "text" => "INSCRIPTION",
+                    "icon" => "keyboard_arrow_right"
                 ],
                 "captcha" => true
             ];

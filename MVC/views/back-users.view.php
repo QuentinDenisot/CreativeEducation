@@ -51,6 +51,18 @@
 
                                     </tbody>
                                 </table>
+
+                                <?php
+                                    $user = new User();
+                                    $table = $user->userListTable();
+                                    $config = $table;
+
+                                    $this->addModal('table', $config);
+                                    echo '<pre>';
+                                    print_r($table);
+                                    echo '</pre>';
+                                ?>
+
                                 <p class="pull-right">
                                     <!--                                            <button class="btn btn-rose">
                                                 VOIR PLUS

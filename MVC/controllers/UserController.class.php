@@ -32,11 +32,6 @@
 		public function showAction($params)
 		{
 			
-
-			/*$v->assign('lastname', $targetedUser[0]->getLastname());
-			$v->assign('firstname', $targetedUser[0]->getFirstname());
-			$v->assign('email', $targetedUser[0]->getEmail());
-			$v->assign('role', $targetedUser[0]->getId_role());*/
 		}
 
 		public function addAction($params)
@@ -79,7 +74,6 @@
             		//si tous les champs sont remplis
 	                if(!empty($params['POST']))
 	                {
-	                	//print_r($params['POST']);
 	                	$form = $user->updateUserForm();
 	                	$errors = Validator::validate($form, $params['POST']);
 
@@ -90,6 +84,12 @@
 	                        $v->assign("config", $form);
 	                        $v->assign("errors", $errors);
 	                        $v->assign("fieldValues", $params['POST']);
+
+	                        //alerts
+	                        foreach($errors as $error)
+	                        {
+	                            $alert = new Alert($error, 'error');
+	                        }
 	                    }
 	                    //sinon on renvoie sur la même page avec message de succès + on met à jour l'utilisateur
 	                    else
@@ -157,8 +157,10 @@
 							//affichage message succès
 							$v = new View("back-update", "back");
 	                        $v->assign("config", $form);
-	                        $v->assign("errors", 'La modification de l\'utilisateur a été prise en compte');
+	                        $v->assign("errors", '');
 	                        $v->assign("fieldValues", $params['POST']);
+
+	                        $alert = new Alert("Modification effectuée", 'success');
 	                    }
 	                }
 	                else

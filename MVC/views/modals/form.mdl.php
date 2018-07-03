@@ -1,7 +1,5 @@
 <form method="<?php echo $config['config']['method']?>" 
       action="<?php echo ($config['config']['action'] != '')?DIRNAME.$config['config']['action']:''; ?>" class="form-horizontal">
-        
-    <?php $idx = -1; ?>
 
     <?php foreach($config['input'] as $name => $params):
     
@@ -11,10 +9,7 @@
 
         endif;
 
-        if($params['type'] == 'text' || $params['type'] == 'email' || $params['type'] == 'password'):
-
-            $idx++;
-            $maxIdx = count($config['label']) - 1; ?>
+        if($params['type'] == 'text' || $params['type'] == 'email' || $params['type'] == 'password'): ?>
             
             <div class="row">
                 <label class="col-md-2 label-on-left"><?php echo $params['placeholder']; ?></label>
@@ -95,28 +90,12 @@
             </div>
         </div>
 
-    <?php endif;
-
-    // ADAPTER ÉGALEMENT LES ERREURS EN ATTENDANT DE LE FAIRE EN JQUERY
-
-    if(is_array($errors) && count($errors) > 0):
-
-        foreach($errors as $error): ?>
-
-            <div class="form-error"><?php echo '• '.$error; ?></div>
-
-        <?php endforeach;
-
-    elseif($errors != ''): ?>
-
-        <div class="form-error"><?php echo $errors; ?></div>
-
     <?php endif; ?>
 
     <div class="row">
         <div class="col-md-12">
             <div class="form-group form-button form-button-center">
-                <button name="button" type="submit" class="btn btn-fill btn-rose"><?php echo $config['config']['button']; ?></button>
+                <button name="button" type="submit" class="btn btn-fill btn-rose"><?php echo $config['button']['text']; ?></button>
             </div>
         </div>
     </div>

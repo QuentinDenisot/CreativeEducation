@@ -382,14 +382,7 @@
             return [
                 "config" => [
                     "method" => "POST",
-                    "action" => "",
-                    "button" => "VALIDER LES MODIFICATIONS"
-                ],
-                "label" => [
-                    "Prénom",
-                    "Nom",
-                    "Adresse e-mail",
-                    "Rôle"
+                    "action" => ""
                 ],
                 "input" => [
                     "firstname" => [
@@ -412,14 +405,7 @@
                         "required" => true,
                         "minString" => 2,
                         "maxString" => 100
-                    ]/*,
-                    "role" => [
-                        "type" => "text",
-                        "placeholder" => "Rôle",
-                        "required" => true,
-                        "minString" => 1,
-                        "maxString" => 100
-                    ]*/
+                    ]
                 ],
                 "select" => [
                     "role" => [
@@ -429,7 +415,50 @@
                         "required" => true
                     ]
                 ],
+                "button" => [
+                    "text" => "VALIDER LES MODIFICATIONS"
+                ],
                 "captcha" => false
+            ];
+        }
+
+        public function userListTable()
+        {
+            //récupération de tous les users
+            $user = new User();
+            $users = $user->getAll();
+
+            //création tableau à forunir au modal
+            $arrayUsers = [];
+
+            foreach($users as $user)
+            {
+                $idUser = $user->getId();
+                $arrayUsers[$idUser]['lastname'] = Helpers::cleanLastname($user->getLastname());
+                $arrayUsers[$idUser]['firstname'] = Helpers::cleanFirstname($user->getFirstname());
+                $arrayUsers[$idUser]['email'] = $user->getEmail();
+                $arrayUsers[$idUser]['insertedDate'] = Helpers::europeanDateFormat($user->getInsertedDate());
+                $arrayUsers[$idUser]['status'] = $user->getStatus();
+                $arrayUsers[$idUser]['id_role'] = $user->getId_role();
+                $arrayUsers[$idUser]['actions']['edit']['path'] = 'user/update/'.$user->getId();
+                $arrayUsers[$idUser]['actions']['edit']['icon'] = 'build';
+                $arrayUsers[$idUser]['actions']['delete']['path'] = 'user/delete/'.$user->getId();
+                $arrayUsers[$idUser]['actions']['delete']['icon'] = 'close';
+            }
+
+            return $arrayUsers;
+
+            return [
+                "thead" => [
+                    "Nom",
+                    "Prénom",
+                    "Email",
+                    "Date d'inscription",
+                    "Statut",
+                    "Rôle",
+                    "Actions"
+                ],
+                "content" => $arrayUsers
             ];
         }
 

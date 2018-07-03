@@ -30,7 +30,7 @@
                                                     <td><?php echo helpers::europeanDateFormat($course->getInsertedDate()); ?></td>
                                                     <td><?php echo $course->getId_user(); ?></td>
                                                     <td class="td-actions">
-                                                        <form action="<?php echo DIRNAME.'course/show/'.$course->getId(); ?>">
+                                                        <form action="<?php echo DIRNAME.'course/update/'.$course->getId(); ?>">
                                                             <button class="btn btn-action btn-blue">
                                                                 <i class="material-icons">build</i>
                                                             </button>

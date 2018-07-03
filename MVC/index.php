@@ -16,6 +16,10 @@
 
     spl_autoload_register("myAutoloader");
 
+    //affichage des erreurs
+    /*error_reporting(E_ALL);
+    ini_set('display_errors', 1);*/
+
     /*permet de décoder l'url, exemple : /Cours%20PHP/MVC%20v2/user/add?id=2 -> /Cours PHP/MVC v2/user/add?id=2
       et de récupérer la partie /user/add?id=2 si elle est présente*/
       
@@ -51,11 +55,11 @@
 
     $uriExploded = array_values($uriExploded);
 
-    $params =   [
-                    "POST" => $_POST,
-                    "GET" => $_GET,
-                    "URL" => $uriExploded
-                ];
+    $params = [
+        "POST" => $_POST,
+        "GET" => $_GET,
+        "URL" => $uriExploded
+    ];
 
     //vérification de l'existence du fichier
     if(file_exists("controllers/".$c.".class.php"))

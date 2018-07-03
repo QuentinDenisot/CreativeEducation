@@ -1,7 +1,5 @@
 <form method="<?php echo $config['config']['method']?>" 
       action="<?php echo ($config['config']['action'] != '')?DIRNAME.$config['config']['action']:''; ?>">
-        
-    <?php $idx = -1; ?>
 
     <?php foreach($config['input'] as $name => $params):
     
@@ -11,13 +9,10 @@
 
         endif;
 
-        if($params['type'] == 'text' || $params['type'] == 'email' || $params['type'] == 'password'):
-
-            $idx++;
-            $maxIdx = count($config['icon']) - 1; ?>
+        if($params['type'] == 'text' || $params['type'] == 'email' || $params['type'] == 'password'): ?>
             
             <div class="form-row">
-                <i class="material-icons"><?php echo $config['icon'][$idx]; ?></i>
+                <i class="material-icons"><?php echo $params['icon']; ?></i>
                 <input 
                     type="<?php echo $params['type'];?>" 
                     name="<?php echo $name;?>"
@@ -37,7 +32,7 @@
         </div>
 
         <div class="form-row">
-            <i class="material-icons"><?php echo $config['icon'][$maxIdx - 1]; ?></i>
+            <i class="material-icons"><?php echo $params['icon']; ?></i>
             <input 
                 type="<?php echo $config['input']['captcha']['type']; ?>" 
                 name="<?php echo $name;?>"
@@ -64,9 +59,9 @@
 
     <div class="form-row">
         <button name="button" value="sendForm" class="btn btn-rose">
-            <?php echo $config['config']['button']; ?>
+            <?php echo $config['button']['text']; ?>
             <span class="btn-label btn-label-right">
-                <i class="material-icons"><?php echo $config['icon'][$maxIdx]; ?></i>
+                <i class="material-icons"><?php echo $config['button']['icon']; ?></i>
             </span>
         </button>
     </div>

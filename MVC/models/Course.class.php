@@ -84,4 +84,90 @@
         {
             return $this->id_user;
         }
+
+        public function updateCourseForm()
+        {
+            //récupération de tous les status pour alimenter la liste déroulante
+            $queryConditions = [
+                "select"=>[
+                    "status.*"
+                ],
+                "join"=>[
+                    "inner_join"=>[],
+                    "left_join"=>[],
+                    "right_join"=>[]
+                ],
+                "where"=>[
+                    "clause"=>"`status`.`id` != '-1'",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "and"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "or"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "group_by"=>[],
+                "having"=>[
+                    "clause"=>"",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "order_by"=>[
+                    "asc"=>[
+                        "`status`.`name`"
+                    ],
+                    "desc"=>[]
+                ],
+                "limit"=>[
+                    "offset"=>"",
+                    "range"=>""
+                ]
+            ];
+
+            $status = new Status();
+            $statuses = $status->getAll($queryConditions);
+
+            foreach($statuses as $status)
+            {
+                $options[$status->getId()] = $status->getName();
+            }
+
+            return [
+                "config" => [
+                    "method" => "POST",
+                    "action" => ""
+                ],
+                "input" => [
+                    "title" => [
+                        "type" => "text",
+                        "placeholder" => "Titre",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 250
+                    ]
+                ],
+                "select" => [
+                    "status" => [
+                        "placeholder" => "Statut",
+                        "emptyOption" => false,
+                        "options" => $options,
+                        "required" => true
+                    ]
+                ],
+                "button" => [
+                    "text" => "VALIDER LES MODIFICATIONS"
+                ],
+                "captcha" => false
+            ];
+        }
     }
