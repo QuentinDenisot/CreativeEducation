@@ -12,9 +12,12 @@
             	if($user->isAdmin())
             	{
             		$userArray = $user->getAll();
-					//vérifier que l'utilisateur soit connecté avant de le renvoyer sur la page d'accueil
+            		//tableau des users
+            		$table = $user->userListTable();
+
 					$v = new View("back-users", "back");
 					$v->assign('userArray', $userArray);
+					$v->assign('config', $table);
             	}
             	//sinon on le renvoie la home
             	else

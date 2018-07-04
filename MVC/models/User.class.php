@@ -442,11 +442,11 @@
                 $arrayUsers[$idUser]['id_role'] = $user->getId_role();
                 $arrayUsers[$idUser]['actions']['edit']['path'] = 'user/update/'.$user->getId();
                 $arrayUsers[$idUser]['actions']['edit']['icon'] = 'build';
+                $arrayUsers[$idUser]['actions']['edit']['color'] = 'blue';
                 $arrayUsers[$idUser]['actions']['delete']['path'] = 'user/delete/'.$user->getId();
                 $arrayUsers[$idUser]['actions']['delete']['icon'] = 'close';
+                $arrayUsers[$idUser]['actions']['delete']['color'] = 'red';
             }
-
-            return $arrayUsers;
 
             return [
                 "thead" => [
