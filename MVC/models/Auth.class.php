@@ -30,7 +30,8 @@
                     "text" => "CONNEXION",
                     "icon" => "keyboard_arrow_right"
                 ],
-                "captcha" => false
+                "captcha" => false,
+                "forgotPassword" => true
             ];
         }
 
@@ -95,6 +96,67 @@
                     "icon" => "keyboard_arrow_right"
                 ],
                 "captcha" => true
+            ];
+        }
+
+        public static function forgottenPasswordForm()
+        {
+            return [
+                "config" => [
+                    "method" => "POST",
+                    "action" => "index/forgottenPassword"
+                ],
+                "input" => [
+                    "email" => [
+                        "type" => "email",
+                        "placeholder" => "Adresse mail",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100,
+                        "icon" => "drafts"
+                    ]
+                ],
+                "button" => [
+                    "text" => "ENVOYER",
+                    "icon" => "keyboard_arrow_right"
+                ],
+                "captcha" => false,
+                "forgotPassword" => false
+            ];
+        }
+
+        public static function renewPasswordForm()
+        {
+            return [
+                "config" => [
+                    "method" => "POST",
+                    "action" => ""
+                ],
+                "input" => [
+                    "password" => [
+                        "type" => "password",
+                        "placeholder" => "Mot de passe",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100,
+                        "icon" => "lock_outline"
+                    ],
+                    "passwordConfirm" => [
+                        "type" => "password",
+                        "placeholder" => "Confirmation mot de passe",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100,
+                        "confirm" => "password",
+                        "icon" => "check_circle_outline"
+                    ]
+                ],
+                "button" => [
+                    "text" => "ENREGISTRER",
+                    "icon" => "keyboard_arrow_right"
+                ],
+                "captcha" => false,
+                "forgotPassword" => false
             ];
         }
     }

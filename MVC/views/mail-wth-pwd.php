@@ -242,6 +242,12 @@
                                                                                 <td colspan="2" align="center" style="padding: 20px 10px 10px 0; margin: 0; font-size:14px ; color:#3c3c3b; font-family: Arial, Helvetica, sans-serif; line-height: 20px;mso-line-height-rule: exactly;text-align: center"><span>Il vous reste seulement une &eacute;tape avant de pouvoir profiter de notre plateforme d'enseignement.</span></td>
                                                                             </tr>
                                                                             <tr>
+                                                                                <td colspan="2" align="center" style="padding: 20px 10px 10px 0; margin: 0; font-size:14px ; color:#3c3c3b; font-family: Arial, Helvetica, sans-serif; line-height: 20px;mso-line-height-rule: exactly;text-align: center"><span>Votre mot de passe : {%%password%%}</span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td colspan="2" align="center" style="padding: 20px 10px 10px 0; margin: 0; font-size:14px ; color:#3c3c3b; font-family: Arial, Helvetica, sans-serif; line-height: 20px;mso-line-height-rule: exactly;text-align: center"><span>Vous pourrez le modifier ult&eacute;rieurement.</span></td>
+                                                                            </tr>
+                                                                            <tr>
                                                                                 <td colspan="2" align="center" valign="top" bgcolor="#ffffff" style="padding-top: 20px;">
                                                                                     <table border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin: 0;">
                                                                                         <tbody>

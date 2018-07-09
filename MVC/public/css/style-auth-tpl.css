@@ -249,11 +249,35 @@ body main {
               body main .main-container .form-container > .form-main > form > .form-row > input:focus {
                 border-color: #EC407A;
                 transition: border-color 0.3s ease; }
+            body main .main-container .form-container > .form-main > form > .form-row > select {
+              color: #999999;
+              vertical-align: middle;
+              outline: none;
+              border: 0px;
+              border-bottom: 1px solid #999999;
+              flex: 1; }
+              body main .main-container .form-container > .form-main > form > .form-row > select > option:first-child {
+                color: #999999; }
+              body main .main-container .form-container > .form-main > form > .form-row > select > option:not(:first-child) {
+                color: #333333; }
+              body main .main-container .form-container > .form-main > form > .form-row > select:focus {
+                border-color: #EC407A;
+                transition: border-color 0.3s ease; }
           body main .main-container .form-container > .form-main > form > .captcha {
             margin-bottom: 15px; }
             body main .main-container .form-container > .form-main > form > .captcha > img {
               border: 1px solid #999999;
               border-radius: 3px; }
+          body main .main-container .form-container > .form-main > form > .forgotPassword {
+            justify-content: left;
+            padding-left: 34px; }
+            body main .main-container .form-container > .form-main > form > .forgotPassword > a {
+              color: #29B6F6;
+              font-size: 0.75em;
+              height: fit-content;
+              position: relative;
+              top: 100%;
+              transform: translateY(-100%); }
           body main .main-container .form-container > .form-main > form > .form-error {
             width: 80%;
             margin: auto;

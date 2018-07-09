@@ -11,40 +11,52 @@
             {
                 if(isset($config["confirm"]) && $params[$name] !== $params[$config["confirm"]])
                 {
-                    $errorsMsg[] = "<b>".$config['placeholder']."</b> doit être identique à <b>".$form['input'][$config["confirm"]]['placeholder']."</b>";
+                    $errorsMsg[] = $config['placeholder']." doit être identique à ".$form['input'][$config["confirm"]]['placeholder']."";
                 }
                 elseif(!isset($config["confirm"]))
                 {
                     if($config["type"] == "email" && !self::checkEmail($params[$name]))
                     {    
-                        $errorsMsg[] = "<b>".$config['placeholder']."</b> n'est pas valide";
+                        $errorsMsg[] = $config['placeholder']." n'est pas valide";
                     }
                     elseif($config["type"] == "password" && !self::checkPwd($params[$name]))
                     {
-                        $errorsMsg[] = "<b>".$config['placeholder']."</b> est incorrect (6 à 12, min, maj, chiffres)";
+                        $errorsMsg[] = $config['placeholder']." est incorrect (6 à 12, min, maj, chiffres)";
                     }
                 }
 
                 if(isset($config["required"]) && !self::minLength($params[$name], 1))
                 {
-                    $errorsMsg[] = "<b>".$config['placeholder']."</b> doit faire plus de 1 caractère";
+                    $errorsMsg[] = $config['placeholder']." doit faire plus de 1 caractère";
                 }
 
                 if(isset($config["minString"]) && !self::minLength($params[$name], $config["minString"]))
                 {
-                    $errorsMsg[] = "<b>".$config['placeholder']."</b> doit faire plus de ".$config["minString"]." caractères";
+                    $errorsMsg[] = $config['placeholder']." doit faire plus de ".$config["minString"]." caractères";
                 }
 
                 if(isset($config["maxString"]) && !self::maxLength($params[$name], $config["maxString"]))
                 {
-                    $errorsMsg[] = "<b>".$config['placeholder']."</b> doit faire moins de ".$config["maxString"]." caractères";
+                    $errorsMsg[] = $config['placeholder']." doit faire moins de ".$config["maxString"]." caractères";
                 }
 
                 if($name == 'captcha')
                 {
                     if($params[$name] != $_SESSION['captcha'])
                     {
-                        $errorsMsg[] = "<b>".$config['placeholder']."</b> est incorrect";
+                        $errorsMsg[] = $config['placeholder']." est incorrect";
+                    }
+                }
+            }
+
+            //parcours des selects
+            if(isset($form['select']))
+            {
+                foreach($form['select'] as $name => $config)
+                {
+                    if(isset($config["required"]) && $config["required"] && !self::minLength($params[$name], 1))
+                    {
+                        $errorsMsg[] = $config['placeholder']." est requis";
                     }
                 }
             }

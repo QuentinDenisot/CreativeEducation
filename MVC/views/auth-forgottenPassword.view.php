@@ -2,7 +2,7 @@
     <div class="form-main">
         <div class="form-top">
             <div class="form-legend">
-                S'enregistrer
+                Renouvelez votre mot de passe
             </div>
         </div>
 

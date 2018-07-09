@@ -1,5 +1,7 @@
 <form method="<?php echo $config['config']['method']?>" 
-      action="<?php echo ($config['config']['action'] != '')?DIRNAME.$config['config']['action']:''; ?>" class="form-horizontal">
+      action="<?php echo ($config['config']['action'] != '') ? DIRNAME.$config['config']['action'] : ''; ?>"
+      enctype="<?php echo (isset($config['config']['enctype'])) ? $config['config']['enctype'] : 'application/x-www-form-urlencoded'; ?>"
+      class="form-horizontal">
 
     <?php foreach($config['input'] as $name => $params):
     
@@ -19,8 +21,24 @@
                             type="<?php echo $params['type'];?>" 
                             name="<?php echo $name;?>" 
                             class="form-control" 
-                            <?php echo (isset($params['required']))?"required='required'":"";
-                                  echo (isset($fieldValues))?' value="'.$fieldValues[$name].'" ':""; ?>
+                            <?php echo (isset($params['required'])) ? "required='required'" : "";
+                                  echo (isset($fieldValues)) ? ' value="'.$fieldValues[$name].'" ' : ""; ?>
+
+                        >
+                    </div>
+                </div>
+            </div>
+
+        <?php elseif($params['type'] == 'file'): ?>
+
+            <div class="row">
+                <label class="col-md-2 label-on-left"><?php echo $params['placeholder']; ?></label>
+                <div class="col-md-10">
+                    <div class="form-group is-empty">
+                        <input 
+                            type="<?php echo $params['type'];?>" 
+                            name="<?php echo $name;?>" 
+                            <?php echo (isset($params['required'])) ? "required='required'" : ""; ?>
 
                         >
                     </div>
@@ -56,6 +74,28 @@
                             <?php endforeach; ?>
 
                         </select>
+                    </div>
+                </div>
+            </div>
+
+        <?php endforeach;
+
+    endif;
+
+    if(isset($config['textarea'])):
+
+        foreach($config['textarea'] as $name => $params): ?>
+
+            <div class="row">
+                <label class="col-md-2 label-on-left"><?php echo $params['placeholder']; ?></label>
+                <div class="col-md-10">
+                    <div class="form-group is-empty">
+                        <textarea
+                            name="<?php echo $name; ?>"
+                            rows="<?php echo $params['rows']; ?>"
+                            class="form-control"
+                            <?php echo (isset($params['required'])) ? "required='required'" : "";
+                                  echo (isset($fieldValues)) ? ' value="'.$fieldValues[$name].'" ' : ""; ?>></textarea>
                     </div>
                 </div>
             </div>

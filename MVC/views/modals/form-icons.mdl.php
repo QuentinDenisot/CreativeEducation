@@ -1,5 +1,7 @@
 <form method="<?php echo $config['config']['method']?>" 
-      action="<?php echo ($config['config']['action'] != '')?DIRNAME.$config['config']['action']:''; ?>">
+      action="<?php echo ($config['config']['action'] != '') ? DIRNAME.$config['config']['action'] : ''; ?>"
+      enctype="<?php echo (isset($config['config']['enctype'])) ? $config['config']['enctype'] : 'application/x-www-form-urlencoded'; ?>"
+      class="form-horizontal">
 
     <?php foreach($config['input'] as $name => $params):
     
@@ -17,13 +19,72 @@
                     type="<?php echo $params['type'];?>" 
                     name="<?php echo $name;?>"
                     placeholder="<?php echo $params['placeholder'];?>"
-                    <?php echo (isset($params['required']))?"required='required'":""; ?>
+                    <?php echo (isset($params['required'])) ? "required='required'" : "";
+                          echo (isset($fieldValues)) ? ' value="'.$fieldValues[$name].'" ' : ""; ?>
                 >
+            </div>
+
+        <?php elseif($params['type'] == 'file'): ?>
+
+            <div class="form-row">
+                <i class="material-icons"><?php echo $params['icon']; ?></i>
+                <input 
+                    type="<?php echo $params['type'];?>" 
+                    name="<?php echo $name;?>"
+                    placeholder="<?php echo $params['placeholder'];?>"
+                    <?php echo (isset($params['required']))?"required='required'":"";
+                          echo (isset($fieldValues))?' value="'.$fieldValues[$name].'" ':""; ?>
+                >
+            </div>
+
+            <div class="row">
+                <label class="col-md-2 label-on-left"><?php echo $params['placeholder']; ?></label>
+                <div class="col-md-10">
+                    <div class="form-group is-empty">
+                        <input 
+                            type="<?php echo $params['type'];?>" 
+                            name="<?php echo $name;?>" 
+                            <?php echo (isset($params['required'])) ? "required='required'" : ""; ?>
+
+                        >
+                    </div>
+                </div>
             </div>
 
         <?php endif;
 
     endforeach;
+
+    if(isset($config['select'])):
+
+        foreach($config['select'] as $name => $params): ?>
+
+            <div class="form-row">
+                <i class="material-icons"><?php echo $params['icon']; ?></i>
+                <select name="<?php echo $name; ?>">
+
+                    <option value="" selected disabled><?php echo $params['placeholder']; ?></option>
+
+                    <?php if($params['emptyOption']): ?>
+
+                        <option value=""></option>
+
+                    <?php endif; ?>
+
+                    <?php foreach($params['options'] as $id => $value):
+
+                        $selected = ($id == $fieldValues[$name]) ? ' selected ' : ''; ?>
+
+                        <option value="<?php echo $id; ?>"<?php echo $selected; ?>><?php echo $value; ?></option>
+
+                    <?php endforeach; ?>
+
+                </select>
+            </div>
+
+        <?php endforeach;
+
+    endif;
 
     if($config['captcha']): ?>
 
@@ -32,7 +93,7 @@
         </div>
 
         <div class="form-row">
-            <i class="material-icons"><?php echo $params['icon']; ?></i>
+            <i class="material-icons"><?php echo $config['input']['captcha']['icon']; ?></i>
             <input 
                 type="<?php echo $config['input']['captcha']['type']; ?>" 
                 name="<?php echo $name;?>"
@@ -43,19 +104,15 @@
 
     <?php endif;
 
-    if(is_array($errors) && count($errors) > 0):
+    if(isset($config['forgotPassword']) && $config['forgotPassword']): ?>
 
-        foreach($errors as $error): ?>
-
-            <div class="form-error"><?php echo '• '.$error; ?></div>
-
-        <?php endforeach;
-
-    elseif($errors != ''): ?>
-
-        <div class="form-error"><?php echo $errors; ?></div>
+        <div class="form-row forgotPassword">
+            <a href="<?php echo DIRNAME.'index/forgottenPassword'; ?>">Mot de passe oublié ?</a>
+        </div>
 
     <?php endif; ?>
+
+
 
     <div class="form-row">
         <button name="button" value="sendForm" class="btn btn-rose">

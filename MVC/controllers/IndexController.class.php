@@ -16,6 +16,7 @@
                 $v = new View("auth-login", "auth");
                 $v->assign("config", $form);
                 $v->assign("errors", '');
+                $v->assign("fieldValues", null);
             }
         }
 
@@ -124,6 +125,7 @@
                                 $v = new View("auth-login", "auth");
                                 $v->assign("config", $form);
                                 $v->assign("errors", "Compte en attente d'attribution de rôle");
+                                $v->assign("fieldValues", null);
                                 $alert = new Alert("Compte en attente d'attribution de rôle", 'info');
                             }
                         }
@@ -134,6 +136,7 @@
                             $v = new View("auth-login", "auth");
                             $v->assign("config", $form);
                             $v->assign("errors", "Compte en attente de validation mail");
+                            $v->assign("fieldValues", null);
                             $alert = new Alert('Compte en attente de validation mail', 'info');
                         }
                         
@@ -145,6 +148,7 @@
                         $v = new View("auth-login", "auth");
                         $v->assign("config", $form);
                         $v->assign("errors", "Identifiants incorrects, veuillez réessayer");
+                        $v->assign("fieldValues", $params['POST']);
                         $alert = new Alert('Identifiants incorrects, veuillez réessayer', 'error');
                     }
                 }
@@ -155,6 +159,7 @@
                     $v = new View("auth-login", "auth");
                     $v->assign("config", $form);
                     $v->assign("errors", '');
+                    $v->assign("fieldValues", null);
                 }
             }
         }
@@ -183,6 +188,7 @@
                         $v = new View("auth-register", "auth");
                         $v->assign("config", $form);
                         $v->assign("errors", $errors);
+                        $v->assign("fieldValues", $params['POST']);
 
                         //alerts
                         foreach($errors as $error)
@@ -248,6 +254,8 @@
                             $v = new View("auth-register", "auth");
                             $v->assign("config", $form);
                             $v->assign("errors", "Adresse mail déjà utilisée");
+                            $v->assign("fieldValues", $params['POST']);
+                            $alert = new Alert("Adresse mail déjà utilisée", 'error');
                         }
                         //sinon succès
                         else
@@ -256,6 +264,7 @@
                             $v = new View("auth-register", "auth");
                             $v->assign("config", $form);
                             $v->assign("errors", "Inscription terminée, veuillez consulter vos mails");
+                            $alert = new Alert("Inscription terminée, veuillez consulter vos mails", 'success');
 
                             $user = new User();
                             $user->setFirstname($params['POST']['firstname']);
@@ -321,7 +330,7 @@
                             //récupération du fichier 
                             $content = file_get_contents('views/mail.php');
 
-                            //remplacement de la chaine
+                            //remplacement de la chaine pour l'url de redirection
                             $content = str_replace('{%%url%%}', $url, $content);
 
                             //envoi de mail
@@ -336,6 +345,7 @@
                     $v = new View("auth-register", "auth");
                     $v->assign("config", $form);
                     $v->assign("errors", '');
+                    $v->assign("fieldValues", null);
                 }
             }
         }
@@ -455,7 +465,17 @@
                             $targetedUser[0]->setId_role(3);
                             $targetedUser[0]->save();
 
-                            echo 'Vérification mail effectuée avec succès';
+                            //echo 'Vérification mail effectuée avec succès';
+                            //on renvoie vers la page de login, que l'utilisateur soit connecté ou non
+
+                            $form = Auth::loginForm();
+                            $v = new View("auth-login", "auth");
+                            $v->assign("config", $form);
+                            $v->assign("errors", '');
+                            $v->assign("fieldValues", null);
+
+                            $alert = new Alert("Validation effectuée avec succès", 'success');
+                            $alert = new Alert("Vous aurez bientôt accès à la plateforme", 'success');
                         }
                         //redirection sur la page de login si token pas correspondant
                         else
@@ -483,7 +503,306 @@
             }
         }
 
-        //inutile
+        public function forgottenPasswordAction($params)
+        {
+            //si tous les champs sont remplis
+            if(!empty($params['POST']))
+            {
+                $form = Auth::forgottenPasswordForm();
+                $errors = Validator::validate($form, $params['POST']);
+
+                //s'il y a des erreurs avec les données saisies dans le formulaire on les affiche
+                if(!empty($errors))
+                {
+                    $v = new View("auth-forgottenPassword", "auth");
+                    $v->assign("config", $form);
+                    $v->assign("errors", $errors);
+                    $v->assign("fieldValues", $params['POST']);
+
+                    //alerts
+                    foreach($errors as $error)
+                    {
+                        $alert = new Alert($error, 'error');
+                    }
+                }
+                //sinon on renvoie sur la même page avec message de succès + on envoie le mail de renouvellement du mdp (si compte existant)
+                else
+                {
+                    //vérification existence adresse mail
+                    $queryConditions = [
+                        "select"=>[
+                            "user.*"
+                        ],
+                        "join"=>[
+                            "inner_join"=>[],
+                            "left_join"=>[],
+                            "right_join"=>[]
+                        ],
+                        "where"=>[
+                            "clause"=>"LOWER(user.email) = '".strtolower($params['POST']['email'])."'",
+                            "and"=>[],
+                            "or"=>[]
+                        ],
+                        "and"=>[
+                            [
+                                "clause"=>"",
+                                "and"=>[],
+                                "or"=>[]
+                            ]
+                        ],
+                        "or"=>[
+                            [
+                                "clause"=>"",
+                                "and"=>[],
+                                "or"=>[]
+                            ]
+                        ],
+                        "group_by"=>[],
+                        "having"=>[
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ],
+                        "order_by"=>[
+                            "asc"=>[],
+                            "desc"=>[]
+                        ],
+                        "limit"=>[
+                            "offset"=>"",
+                            "range"=>""
+                        ]
+                    ];
+
+                    $user = new User();
+                    $targetedUser = $user->getAll($queryConditions);
+
+                    //si l'adresse mail existe on peut envoyer le mail de renouvellement
+                    if(count($targetedUser) == 1)
+                    {
+                        $form = Auth::forgottenPasswordForm();
+                        $v = new View("auth-forgottenPassword", "auth");
+                        $v->assign("config", $form);
+                        $v->assign("errors", "Mail de renouvellement envoyé avec succès");
+                        $v->assign("fieldValues", $params['POST']);
+                        $alert = new Alert("Mail de renouvellement envoyé avec succès", 'success');
+
+                        //récupération de l'id du user depuis email
+                        $queryConditions = [
+                            "select"=>[
+                                "user.*"
+                            ],
+                            "join"=>[
+                                "inner_join"=>[],
+                                "left_join"=>[],
+                                "right_join"=>[]
+                            ],
+                            "where"=>[
+                                "clause"=>"LOWER(user.email) = '".strtolower($params['POST']['email'])."'",
+                                "and"=>[],
+                                "or"=>[]
+                            ],
+                            "and"=>[
+                                [
+                                    "clause"=>"",
+                                    "and"=>[],
+                                    "or"=>[]
+                                ]
+                            ],
+                            "or"=>[
+                                [
+                                    "clause"=>"",
+                                    "and"=>[],
+                                    "or"=>[]
+                                ]
+                            ],
+                            "group_by"=>[],
+                            "having"=>[
+                                "clause"=>"",
+                                "and"=>[],
+                                "or"=>[]
+                            ],
+                            "order_by"=>[
+                                "asc"=>[],
+                                "desc"=>[]
+                            ],
+                            "limit"=>[
+                                "offset"=>"",
+                                "range"=>""
+                            ]
+                        ];
+
+                        $user = new User();
+                        $targetedUser = $user->getAll($queryConditions)[0];
+
+                        //création de l'url sur laquelle on va être renvoyé en cliquant sur le bouton dans le mail (action + id du user + son token)
+                        $url = SERVERNAME.DIRNAME.'index/renewPassword/'.$targetedUser->getId().'/'.$targetedUser->getToken();
+
+                        //récupération du fichier 
+                        $content = file_get_contents('views/mail-renew-pwd.php');
+
+                        //remplacement de la chaine pour l'url de redirection
+                        $content = str_replace('{%%url%%}', $url, $content);
+
+                        //envoi de mail
+                        $targetedUser->sendMail('Renouvellement de votre mot de passe sur CreativeEducation', $content);
+                    }
+                    //si l'adresse email n'existe pas : on ne peut pas renouveler le mail d'un compte inexisant, donc erreur
+                    else
+                    {
+                        $form = Auth::forgottenPasswordForm();
+                        $v = new View("auth-forgottenPassword", "auth");
+                        $v->assign("config", $form);
+                        $v->assign("errors", "Compte inexistant");
+                        $v->assign("fieldValues", $params['POST']);
+                        $alert = new Alert("Compte inexistant", 'error');
+                    }
+                }
+            }
+            //si aucun champ n'est envoyé via post (accès à la page pour la 1ère fois)
+            else
+            {
+                $form = Auth::forgottenPasswordForm();
+                $v = new View("auth-forgottenPassword", "auth");
+                $v->assign("config", $form);
+                $v->assign("errors", '');
+                $v->assign("fieldValues", null);
+            }
+        }
+
+        public function renewPasswordAction($params)
+        {
+            $idUser = $params['URL'][0];
+            $token = $params['URL'][1];
+
+            //si les paramètres sont passés dans l'url, on continue
+            if(!empty($idUser) && !empty($token))
+            {
+                //récupération user
+                $queryConditions = [
+                    "select"=>[
+                        "`user`.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`user`.`id` = ".$idUser,
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $user = new User();
+                $targetedUser = $user->getAll($queryConditions);
+
+                //si user trouvé, on continue
+                if(count($targetedUser) == 1)
+                {
+                    //vérification correspondance token
+                    if($targetedUser[0]->getToken() == $token)
+                    {
+                        //si tous les champs sont remplis
+                        if(!empty($params['POST']))
+                        {
+                            $form = Auth::renewPasswordForm();
+                            $errors = Validator::validate($form, $params['POST']);
+
+                            //s'il y a des erreurs avec les données saisies dans le formulaire on les affiche
+                            if(!empty($errors))
+                            {
+                                $v = new View("auth-renewPassword", "auth");
+                                $v->assign("config", $form);
+                                $v->assign("errors", $errors);
+                                $v->assign("fieldValues", $params['POST']);
+
+                                //alerts
+                                foreach($errors as $error)
+                                {
+                                    $alert = new Alert($error, 'error');
+                                }
+                            }
+                            //sinon on renvoie sur la même page avec message de succès + on enregistre le nouveau mot de passe de l'utilisateur
+                            else
+                            {
+                                /*$form = Auth::renewPasswordForm();
+                                $v = new View("auth-renewPassword", "auth");
+                                $v->assign("config", $form);
+                                $v->assign("errors", "Mot de passe renouvelé avec succès");
+                                $v->assign("fieldValues", $params['POST']);*/
+
+                                $form = Auth::loginForm();
+                                $v = new View("auth-login", "auth");
+                                $v->assign("config", $form);
+                                $v->assign("errors", '');
+                                $v->assign("fieldValues", null);
+
+                                $alert = new Alert("Mot de passe renouvelé avec succès", 'success');
+
+                                $targetedUser[0]->setPwd($params['POST']['password']);
+                                $targetedUser[0]->save();
+                            }
+                        }
+                        //si aucun champ n'est envoyé via post (accès à la page pour la 1ère fois)
+                        else
+                        {
+                            $form = Auth::renewPasswordForm();
+                            $v = new View("auth-renewPassword", "auth");
+                            $v->assign("config", $form);
+                            $v->assign("errors", '');
+                            $v->assign("fieldValues", null);
+                        }
+                    }
+                    //redirection sur la page de login si token pas correspondant
+                    else
+                    {
+                        //bouton pour renvoyer un mail de confirmation
+                        header('Location: '.DIRNAME.'index/login');
+                    }
+                }
+                //retour sur la page de login si les paramètres ne sont pas tous renseignés
+                else
+                {
+                    header('Location: '.DIRNAME.'index/login');
+                }
+            }
+            //retour sur la page de login si les paramètres ne sont pas tous renseignés
+            else
+            {
+                header('Location: '.DIRNAME.'index/login');
+            }
+        }
+
+        //↓↓↓inutile↓↓↓
         public function frontAction($params)
         {
             $v = new View('front-home', 'front');

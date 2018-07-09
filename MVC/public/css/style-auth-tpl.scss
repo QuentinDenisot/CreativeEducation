@@ -392,12 +392,37 @@ body
                                 outline: none;
                                 border: 0px;
                                 border-bottom: 1px solid #999999;
-                                
                                 flex: 1;
 
                                 &::placeholder
                                 {
                                     color: #999999;
+                                }
+
+                                &:focus
+                                {
+                                    border-color: #EC407A;
+                                    transition: border-color 0.3s ease;
+                                }
+                            }
+
+                            > select
+                            {
+                                color: #999999;
+                                vertical-align: middle;
+                                outline: none;
+                                border: 0px;
+                                border-bottom: 1px solid #999999;
+                                flex: 1;
+
+                                > option:first-child
+                                {
+                                    color: #999999;
+                                }
+
+                                > option:not(:first-child)
+                                {
+                                    color: #333333;
                                 }
 
                                 &:focus
@@ -416,6 +441,22 @@ body
                             {
                                 border: 1px solid #999999;
                                 border-radius: 3px;
+                            }
+                        }
+
+                        > .forgotPassword
+                        {
+                            justify-content: left;
+                            padding-left: 34px;
+
+                            & > a
+                            {
+                                color: #29B6F6;
+                                font-size: 0.75em;
+                                height: fit-content;
+                                position: relative;
+                                top: 100%;
+                                transform: translateY(-100%);
                             }
                         }
 

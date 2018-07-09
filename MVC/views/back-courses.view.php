@@ -5,7 +5,7 @@
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="card">
                         <div class="card-header card-header-icon" data-background-color="rose">
-                            <i class="material-icons">assignment</i>
+                            <i class="material-icons">class</i>
                         </div>
                         <div class="card-content">
                             <h4 class="card-title">Cours</h4>

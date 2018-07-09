@@ -52,19 +52,117 @@
                             <p> Dashboard </p>
                         </a>
                     </li>
-                    <li class="<?php echo ($c == 'UserController' || $c == 'RoleController' || $c == 'CourseController')?'active':''; ?>">
+                    <li class="<?php echo ($c == 'UserController')?'active':''; ?>">
+                        <a data-toggle="collapse" href="#user-menu">
+                            <i class="material-icons">supervised_user_circle</i>
+                            <p>Utilisateurs<strong class="caret"></strong> </p>
+                        </a>
+                        <div class="collapse" id="user-menu">
+                            <ul class="nav">
+                                <li>
+                                    <a href="<?php echo DIRNAME.'user'; ?>">
+                                        <span class="sidebar-mini">
+                                            <i class="material-icons">list</i>
+                                        </span>
+                                        <span class="sidebar-normal">Liste</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo DIRNAME.'user/add'; ?>">
+                                        <span class="sidebar-mini">
+                                            <i class="material-icons">add_circle</i>
+                                        </span>
+                                        <span class="sidebar-normal">Ajout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="<?php echo ($c == 'CourseController')?'active':''; ?>">
+                        <a data-toggle="collapse" href="#course-menu">
+                            <i class="material-icons">class</i>
+                            <p>Cours<strong class="caret"></strong> </p>
+                        </a>
+                        <div class="collapse" id="course-menu">
+                            <ul class="nav">
+                                <li>
+                                    <a href="<?php echo DIRNAME.'course'; ?>">
+                                        <span class="sidebar-mini">
+                                            <i class="material-icons">list</i>
+                                        </span>
+                                        <span class="sidebar-normal">Liste</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo DIRNAME.'course/add'; ?>">
+                                        <span class="sidebar-mini">
+                                            <i class="material-icons">add_circle</i>
+                                        </span>
+                                        <span class="sidebar-normal">Ajout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="<?php echo ($c == 'RoleController')?'active':''; ?>">
+                        <a data-toggle="collapse" href="#role-menu">
+                            <i class="material-icons">assignment</i>
+                            <p>Rôles<strong class="caret"></strong> </p>
+                        </a>
+                        <div class="collapse" id="role-menu">
+                            <ul class="nav">
+                                <li>
+                                    <a href="<?php echo DIRNAME.'role'; ?>">
+                                        <span class="sidebar-mini">
+                                            <i class="material-icons">list</i>
+                                        </span>
+                                        <span class="sidebar-normal">Liste</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo DIRNAME.'role/add'; ?>">
+                                        <span class="sidebar-mini">
+                                            <i class="material-icons">add_circle</i>
+                                        </span>
+                                        <span class="sidebar-normal">Ajout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="<?php echo ($c == 'PageController')?'active':''; ?>">
+                        <a data-toggle="collapse" href="#page-menu">
+                            <i class="material-icons">apps</i>
+                            <p>Pages<strong class="caret"></strong> </p>
+                        </a>
+                        <div class="collapse" id="page-menu">
+                            <ul class="nav">
+                                <li>
+                                    <a href="<?php echo DIRNAME.'page'; ?>">
+                                        <span class="sidebar-mini">
+                                            <i class="material-icons">list</i>
+                                        </span>
+                                        <span class="sidebar-normal">Liste</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo DIRNAME.'page/add'; ?>">
+                                        <span class="sidebar-mini">
+                                            <i class="material-icons">add_circle</i>
+                                        </span>
+                                        <span class="sidebar-normal">Ajout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- <li class="<?php echo ($c == 'UserController' || $c == 'RoleController' || $c == 'CourseController')?'active':''; ?>">
                         <a data-toggle="collapse" href="#pagesExamples">
                             <i class="material-icons">content_paste</i>
                             <p> Gestion<strong class="caret"></strong> </p>
                         </a>
                         <div class="collapse" id="pagesExamples">
                             <ul class="nav">
-                                <!--<li>
-                                    <a href="#">
-                                        <span class="sidebar-mini"> P </span>
-                                        <span class="sidebar-normal">Pages</span>
-                                    </a>
-                                </li>-->
                                 <li>
                                     <a href="<?php echo DIRNAME.'role'; ?>">
                                         <span class="sidebar-mini"> R </span>
@@ -85,28 +183,19 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#componentsExamples">
-                            <i class="material-icons">apps</i>
-                            <p> Créer page
-                               
-                            </p>
-                        </a>
-
-                    </li>
+                    </li> -->
                     <li>
                         <a href="./charts.html">
                             <i class="material-icons">timeline</i>
-                            <p> Statistiques </p>
+                            <p>Statistiques</p>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="./charts.html">
                             <i class="material-icons">book</i>
                             <p> Documentation </p>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>

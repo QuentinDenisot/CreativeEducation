@@ -11,7 +11,42 @@
 
         public function addAction($params)
         {
+            $user = new User();
 
+            //vérification user connecté
+            if($user->isConnected())
+            {
+                //vérification user admin
+                if($user->isAdmin())
+                {
+                    //si tous les champs sont remplis
+                    if(!empty($params['POST']))
+                    {
+
+                    }
+                    //sinon, premier chargement de la page
+                    else
+                    {
+                        $course = new Course();
+                        $form = $course->addCourseForm();
+                        
+                        $v = new View("back-add", "back");
+                        $v->assign("config", $form);
+                        $v->assign("errors", '');
+                        $v->assign("fieldValues", null);
+                    }
+                }
+                //sinon on le renvoie la home
+                else
+                {
+                    header('Location: '.DIRNAME.'index/home');
+                }
+            }
+            //sinon on renvoie vers la page de login
+            else
+            {
+                header('Location: '.DIRNAME.'index/login');
+            }
         }
 
         public function updateAction($params)

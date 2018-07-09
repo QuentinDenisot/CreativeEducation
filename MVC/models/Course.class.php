@@ -85,6 +85,48 @@
             return $this->id_user;
         }
 
+        public function addCourseForm()
+        {
+            return [
+                "config" => [
+                    "method" => "POST",
+                    "action" => "",
+                    "enctype" => "multipart/form-data"
+                ],
+                "input" => [
+                    "title" => [
+                        "type" => "text",
+                        "placeholder" => "Titre",
+                        "required" => true,
+                        "minString" => 5,
+                        "maxString" => 250
+                    ],
+                    "file" => [
+                        "type" => "file",
+                        "placeholder" => "Fichier (.pdf, .txt, < 5 Mo)",
+                        "required" => true,
+                        "extensions" => [
+                            "txt",
+                            "pdf"
+                        ]
+                    ]
+                ],
+                "textarea" => [
+                    "description" => [
+                        "placeholder" => "Description",
+                        "required" => true,
+                        "minString" => 5,
+                        "maxString" => 500,
+                        "rows" => 1
+                    ]
+                ],
+                "button" => [
+                    "text" => "AJOUTER"
+                ],
+                "captcha" => false
+            ];
+        }
+
         public function updateCourseForm()
         {
             //récupération de tous les status pour alimenter la liste déroulante
@@ -154,14 +196,6 @@
                         "required" => true,
                         "minString" => 2,
                         "maxString" => 250
-                    ]
-                ],
-                "select" => [
-                    "status" => [
-                        "placeholder" => "Statut",
-                        "emptyOption" => false,
-                        "options" => $options,
-                        "required" => true
                     ]
                 ],
                 "button" => [

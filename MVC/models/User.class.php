@@ -151,6 +151,7 @@
             catch(Exception $e)
             {
                 echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+                $alert = new Alert("Le mail n'a pas pu être envoyé", 'error');
             }
         }
 
@@ -322,6 +323,110 @@
             }
         }
 
+        public function addUserForm()
+        {
+            //récupération des rôles que l'on peut attribuer lors de la création d'un nouvel utilisateur (apprenant / professeur)
+            $queryConditions = [
+                "select"=>[
+                    "role.*"
+                ],
+                "join"=>[
+                    "inner_join"=>[],
+                    "left_join"=>[],
+                    "right_join"=>[]
+                ],
+                "where"=>[
+                    "clause"=>"`role`.`id` = '2'",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "and"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "or"=>[
+                    [
+                        "clause"=>"`role`.`id` = '4'",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "group_by"=>[],
+                "having"=>[
+                    "clause"=>"",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "order_by"=>[
+                    "asc"=>[
+                        "`role`.`name`"
+                    ],
+                    "desc"=>[]
+                ],
+                "limit"=>[
+                    "offset"=>"",
+                    "range"=>""
+                ]
+            ];
+
+            $role = new Role();
+            $roles = $role->getAll($queryConditions);
+
+            foreach($roles as $role)
+            {
+                $options[$role->getId()] = $role->getName();
+            }
+
+            return [
+                "config" => [
+                    "method" => "POST",
+                    "action" => ""
+                ],
+                "input" => [
+                    "firstname" => [
+                        "type" => "text",
+                        "placeholder" => "Prénom",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100,
+                        "icon" => "account_circle"
+                    ],
+                    "lastname" => [
+                        "type" => "text",
+                        "placeholder" => "Nom",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100,
+                        "icon" => "account_circle"
+                    ],
+                    "email" => [
+                        "type" => "email",
+                        "placeholder" => "Adresse mail",
+                        "required" => true,
+                        "minString" => 2,
+                        "maxString" => 100,
+                        "icon" => "drafts"
+                    ]
+                ],
+                "select" => [
+                    "role" => [
+                        "placeholder" => "Rôle",
+                        "emptyOption" => true,
+                        "options" => $options,
+                        "required" => true
+                    ]
+                ],
+                "button" => [
+                    "text" => "Ajouter",
+                    "icon" => "keyboard_arrow_right"
+                ],
+                "captcha" => false
+            ];
+        }
+
         public function updateUserForm()
         {
             //récupération de tous les rôles pour alimenter la liste déroulante
@@ -459,63 +564,6 @@
                     "Actions"
                 ],
                 "content" => $arrayUsers
-            ];
-        }
-
-        //inutile
-        public function addForm()
-        {
-            return [
-                "config" => [
-                                "method" => "POST",
-                                "action" => "user/add",
-                                "button" => "AJOUTER"
-                            ],
-                "icon" => [
-                            "account_circle",
-                            "account_circle",
-                            "lock_outline",
-                            "drafts",
-                            "drafts",
-                            "keyboard_arrow_right"
-                        ],
-                "input" => [
-                    "firstname" => [
-                                        "type" => "text",
-                                        "placeholder" => "Prénom",
-                                        "required" => true,
-                                        "minString" => 2,
-                                        "maxString" => 100
-                                    ],
-                    "lastname" => [
-                                        "type" => "text",
-                                        "placeholder" => "Nom",
-                                        "required" => true,
-                                        "minString" => 2,
-                                        "maxString" => 100
-                                    ],
-                    "password" => [
-                                    "type" => "password",
-                                    "placeholder" => "Mot de passe",
-                                    "required" => true,
-                                    "minString" => 2,
-                                    "maxString" => 100
-                                ],
-                    "email" => [
-                                    "type" => "text",
-                                    "placeholder" => "Adresse mail",
-                                    "required" => true,
-                                    "minString" => 2,
-                                    "maxString" => 100
-                                ],
-                    "status" => [
-                                    "type" => "text",
-                                    "placeholder" => "Statut",
-                                    "required" => true,
-                                    "minString" => 2,
-                                    "maxString" => 100
-                                ]   
-                    ]
             ];
         }
     }
