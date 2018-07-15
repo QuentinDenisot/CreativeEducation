@@ -1,7 +1,7 @@
 <?php
     class Validator
     {
-        public static function validate($form, $params)
+        public static function validate($form, $paramsPost, $paramsFiles = null)
         {
             //initialisation tableau erreurs
             $errorsMsg = [];
@@ -9,43 +9,87 @@
             //parcours des inputs
             foreach($form["input"] as $name => $config)
             {
-                if(isset($config["confirm"]) && $params[$name] !== $params[$config["confirm"]])
+                if(isset($config["confirm"]) && $paramsPost[$name] !== $paramsPost[$config["confirm"]])
                 {
                     $errorsMsg[] = $config['placeholder']." doit être identique à ".$form['input'][$config["confirm"]]['placeholder']."";
                 }
                 elseif(!isset($config["confirm"]))
                 {
-                    if($config["type"] == "email" && !self::checkEmail($params[$name]))
+                    if($config["type"] == "email" && !self::checkEmail($paramsPost[$name]))
                     {    
                         $errorsMsg[] = $config['placeholder']." n'est pas valide";
                     }
-                    elseif($config["type"] == "password" && !self::checkPwd($params[$name]))
+                    elseif($config["type"] == "password" && !self::checkPwd($paramsPost[$name]))
                     {
                         $errorsMsg[] = $config['placeholder']." est incorrect (6 à 12, min, maj, chiffres)";
                     }
                 }
 
-                if(isset($config["required"]) && !self::minLength($params[$name], 1))
+                //gestion required pour les input qui ne sont pas de type file
+                if($config['type'] != 'file' && isset($config["required"]) && $config["required"] && !self::minLength($paramsPost[$name], 1))
                 {
                     $errorsMsg[] = $config['placeholder']." doit faire plus de 1 caractère";
                 }
+                //gestion pour les input file
+                elseif($config['type'] == 'file' && isset($config["required"]) && $config["required"])
+                {
+                    if(isset($paramsFiles))
+                    {
+                        if($paramsFiles[$name]['size'] == 0 || $paramsFiles[$name]['error'] == 4)
+                        {
+                            $errorsMsg[] = $config['placeholder']." est vide"; 
+                        }
+                    }
+                    else
+                    {
+                        $errorsMsg[] = $config['placeholder']." est vide";
+                    }
+                }
 
-                if(isset($config["minString"]) && !self::minLength($params[$name], $config["minString"]))
+                if(isset($config["minString"]) && !self::minLength($paramsPost[$name], $config["minString"]))
                 {
                     $errorsMsg[] = $config['placeholder']." doit faire plus de ".$config["minString"]." caractères";
                 }
 
-                if(isset($config["maxString"]) && !self::maxLength($params[$name], $config["maxString"]))
+                if(isset($config["maxString"]) && !self::maxLength($paramsPost[$name], $config["maxString"]))
                 {
                     $errorsMsg[] = $config['placeholder']." doit faire moins de ".$config["maxString"]." caractères";
                 }
 
+                //vérification captcha saisi
                 if($name == 'captcha')
                 {
-                    if($params[$name] != $_SESSION['captcha'])
+                    if($paramsPost[$name] != $_SESSION['captcha'])
                     {
                         $errorsMsg[] = $config['placeholder']." est incorrect";
                     }
+                }
+
+                //vérification extensions autorisées + taille autorisée
+                if($config['type'] == 'file')
+                {
+                    if(isset($paramsFiles))
+                    {
+                        $file = $paramsFiles[$name];
+                        $filename = $file['name'];
+                        $filenameTmp = $file['tmp_name'];
+                        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+                        $size = $file['size'];
+
+                        if($size > $config['maxBytes'] || $file['error'] === UPLOAD_ERR_INI_SIZE)
+                        {
+                            $errorsMsg[] = $config['placeholder']." est trop volumineux";
+                        }
+
+                        if(!in_array($extension, $config['extensions']))
+                        {
+                            $errorsMsg[] = $config['placeholder']." ne possède pas la bonne extension";
+                        }
+                    }
+                    /*else
+                    {
+                        $errorsMsg[] = $config['placeholder']." est vide";
+                    }*/
                 }
             }
 
@@ -54,7 +98,7 @@
             {
                 foreach($form['select'] as $name => $config)
                 {
-                    if(isset($config["required"]) && $config["required"] && !self::minLength($params[$name], 1))
+                    if(isset($config["required"]) && $config["required"] && !self::minLength($paramsPost[$name], 1))
                     {
                         $errorsMsg[] = $config['placeholder']." est requis";
                     }

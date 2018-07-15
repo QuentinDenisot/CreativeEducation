@@ -24,10 +24,19 @@
         {
             $user = new User();
 
-            //si utilisateur connecté on renvoie vers la page d'accueil
+            //si utilisateur connecté
             if($user->isConnected())
             {
-                header('Location: '.DIRNAME.'index/home');
+                //si role autorisé on renvoie vers la page d'accueil
+                if($user->allowedRole())
+                {
+                    header('Location: '.DIRNAME.'index/home');
+                }
+                //sinon déconnexion
+                else
+                {
+                    header('Location: '.DIRNAME.'index/logout');
+                }
             }
             //sinon affichage page login
             else
@@ -83,73 +92,111 @@
                     $user = new User();
                     $targetedUser = $user->getAll($queryConditions);
 
-                    //si l'utilisateur est trouvé et que le mot de passe est correct
-                    if(count($targetedUser) == 1 && password_verify($params['POST']['password'], $targetedUser[0]->getPwd()))
+                    //si l'utilisateur est trouvé
+                    if(count($targetedUser) == 1)
                     {
-                        //si le rôle de l'utilisateur n'est pas "en attente de validation mail" : on continue la vérification
-                        if($targetedUser[0]->getId_role() != 5)
+                        //si l'utilisateur n'est pas désactivé
+                        if(!$user->isDeactivated($targetedUser[0]->getId()))
                         {
-                            //si le rôle de l'utilisateur n'est pas "en attente d'attribution de rôle" : connexion
-                            if($targetedUser[0]->getId_role() != 3)
+                            //si le mot de passe est correct
+                            if(password_verify($params['POST']['password'], $targetedUser[0]->getPwd()))
                             {
-                                //mise à jour token bdd de l'utilisateur
-                                $targetedUser[0]->setToken();
-                                $targetedUser[0]->save();
-
-                                $_SESSION['user']['id'] = $targetedUser[0]->getId();
-                                $_SESSION['user']['firstname'] = $targetedUser[0]->getFirstname();
-                                $_SESSION['user']['lastname'] = $targetedUser[0]->getLastname();
-                                $_SESSION['user']['email'] = $targetedUser[0]->getEmail();
-                                $_SESSION['user']['status'] = $targetedUser[0]->getStatus();
-                                $_SESSION['user']['token'] = $targetedUser[0]->getToken();
-                                $_SESSION['user']['profilePicPath'] = $targetedUser[0]->getProfilePicPath();
-                                $_SESSION['user']['insertedDate'] = $targetedUser[0]->getInsertedDate();
-                                $_SESSION['user']['updatedDate'] = $targetedUser[0]->getUpdatedDate();
-                                $_SESSION['user']['id_role'] = $targetedUser[0]->getId_role();
-
-                                //redirection vers le dashboard pour l'admin
-                                if($targetedUser[0]->getId_role() == 1)
+                                //si le rôle de l'utilisateur n'est pas "en attente de validation mail" : on continue la vérification
+                                if($targetedUser[0]->getId_role() != 5)
                                 {
-                                    header('Location: '.DIRNAME.'index/dashboard');
+                                    //si le rôle de l'utilisateur n'est pas "en attente d'attribution de rôle" : connexion
+                                    if($targetedUser[0]->getId_role() != 3)
+                                    {
+                                        //mise à jour token bdd de l'utilisateur
+                                        $targetedUser[0]->setToken();
+                                        $targetedUser[0]->save();
+
+                                        $_SESSION['user']['id'] = $targetedUser[0]->getId();
+                                        $_SESSION['user']['firstname'] = $targetedUser[0]->getFirstname();
+                                        $_SESSION['user']['lastname'] = $targetedUser[0]->getLastname();
+                                        $_SESSION['user']['email'] = $targetedUser[0]->getEmail();
+                                        $_SESSION['user']['status'] = $targetedUser[0]->getStatus();
+                                        $_SESSION['user']['token'] = $targetedUser[0]->getToken();
+                                        $_SESSION['user']['profilePicPath'] = $targetedUser[0]->getProfilePicPath();
+                                        $_SESSION['user']['insertedDate'] = $targetedUser[0]->getInsertedDate();
+                                        $_SESSION['user']['updatedDate'] = $targetedUser[0]->getUpdatedDate();
+                                        $_SESSION['user']['id_role'] = $targetedUser[0]->getId_role();
+
+                                        //redirection vers le dashboard pour l'admin et les professeurs
+                                        if($user->isAdmin() || $user->isProfessor())
+                                        {
+                                            header('Location: '.DIRNAME.'index/dashboard');
+                                        }
+                                        //redirection vers la page d'accueil pour les apprenants
+                                        elseif($user->isStudent())
+                                        {
+                                            header('Location: '.DIRNAME.'index/home');
+                                        }
+                                    }
+                                    //affichage message erreur
+                                    else
+                                    {
+                                        $form = Auth::loginForm();
+                                        $v = new View("auth-login", "auth");
+                                        $v->assign("config", $form);
+                                        $v->assign("errors", "Compte en attente d'attribution de rôle");
+                                        //on ne réaffiche pas le mot de passe
+                                        unset($params['POST']['password']);
+                                        $v->assign("fieldValues", $params['POST']);
+                                        $alert = new Alert("Compte en attente d'attribution de rôle", 'info');
+                                    }
                                 }
-                                //redirection vers la page d'accueil pour les apprenants et professeurs
-                                elseif($targetedUser[0]->getId_role() == 2 || $targetedUser[0]->getId_role() == 4)
+                                //affichage message erreur
+                                else
                                 {
-                                    header('Location: '.DIRNAME.'index/home');
+                                    $form = Auth::loginForm();
+                                    $v = new View("auth-login", "auth");
+                                    $v->assign("config", $form);
+                                    $v->assign("errors", "Compte en attente de validation mail");
+                                    //on ne réaffiche pas le mot de passe
+                                    unset($params['POST']['password']);
+                                    $v->assign("fieldValues", $params['POST']);
+                                    $alert = new Alert('Compte en attente de validation mail', 'info');
                                 }
+                                
                             }
-                            //affichage message erreur
+                            //sinon affichage message erreur
                             else
                             {
                                 $form = Auth::loginForm();
                                 $v = new View("auth-login", "auth");
                                 $v->assign("config", $form);
-                                $v->assign("errors", "Compte en attente d'attribution de rôle");
-                                $v->assign("fieldValues", null);
-                                $alert = new Alert("Compte en attente d'attribution de rôle", 'info');
+                                $v->assign("errors", "Identifiants incorrects, veuillez réessayer");
+                                //on ne réaffiche pas le mot de passe
+                                unset($params['POST']['password']);
+                                $v->assign("fieldValues", $params['POST']);
+                                $alert = new Alert('Identifiants incorrects, veuillez réessayer', 'error');
                             }
                         }
-                        //affichage message erreur
+                        //sinon erreur : user désactivé
                         else
                         {
                             $form = Auth::loginForm();
                             $v = new View("auth-login", "auth");
                             $v->assign("config", $form);
-                            $v->assign("errors", "Compte en attente de validation mail");
-                            $v->assign("fieldValues", null);
-                            $alert = new Alert('Compte en attente de validation mail', 'info');
+                            $v->assign("errors", "Votre compte est désactivé");
+                            //on ne réaffiche pas le mot de passe
+                            unset($params['POST']['password']);
+                            $v->assign("fieldValues", $params['POST']);
+                            $alert = new Alert('Votre compte est désactivé', 'info');
                         }
-                        
                     }
-                    //sinon affichage message erreur
+                    //sinon erreur : utilisateur inexistant
                     else
                     {
                         $form = Auth::loginForm();
                         $v = new View("auth-login", "auth");
                         $v->assign("config", $form);
-                        $v->assign("errors", "Identifiants incorrects, veuillez réessayer");
+                        $v->assign("errors", "Utilisateur inexistant");
+                        //on ne réaffiche pas le mot de passe
+                        unset($params['POST']['password']);
                         $v->assign("fieldValues", $params['POST']);
-                        $alert = new Alert('Identifiants incorrects, veuillez réessayer', 'error');
+                        $alert = new Alert('Utilisateur inexistant', 'info');
                     }
                 }
                 //si aucun champ n'est envoyé via post (accès à la page pour la 1ère fois)
@@ -168,10 +215,19 @@
         {
             $user = new User();
 
-            //si utilisateur connecté on renvoie vers la page d'accueil
+            //si utilisateur connecté
             if($user->isConnected())
             {
-                header('Location: '.DIRNAME.'index/home');
+                //si role autorisé on renvoie vers la page d'accueil
+                if($user->allowedRole())
+                {
+                    header('Location: '.DIRNAME.'index/home');
+                }
+                //sinon déconnexion
+                else
+                {
+                    header('Location: '.DIRNAME.'index/logout');
+                }
             }
             //sinon affichage page register
             else
@@ -264,6 +320,7 @@
                             $v = new View("auth-register", "auth");
                             $v->assign("config", $form);
                             $v->assign("errors", "Inscription terminée, veuillez consulter vos mails");
+                            $v->assign("fieldValues", $params['POST']);
                             $alert = new Alert("Inscription terminée, veuillez consulter vos mails", 'success');
 
                             $user = new User();
@@ -367,11 +424,20 @@
         {
             $user = new User();
 
+
             //si utilisateur connecté on renvoie vers la page d'accueil
             if($user->isConnected())
             {
-                $v = new View("front-home", "front");
-                $v->assign('name', $_SESSION['user']['firstname']);
+                if($user->allowedRole())
+                {
+                    $v = new View("front-home", "front");
+                    $v->assign('name', $_SESSION['user']['firstname']);
+                }
+                //sinon déconnexion
+                else
+                {
+                    header('Location: '.DIRNAME.'index/logout');
+                }
             }
             //sinon on renvoie vers la page de login
             else
@@ -385,9 +451,10 @@
             $user = new User();
 
             //si utilisateur connecté on renvoie vers la page d'accueil
-            if($user->isConnected() && $user->isAdmin())
+            if($user->isConnected() && ($user->isAdmin() || $user->isProfessor()))
             {
                 $v = new View('back-dashboard', 'back');
+                //var_dump($user->isProfessor());
             }
             //sinon on renvoie vers la page de login
             else
@@ -751,15 +818,9 @@
                                     $alert = new Alert($error, 'error');
                                 }
                             }
-                            //sinon on renvoie sur la même page avec message de succès + on enregistre le nouveau mot de passe de l'utilisateur
+                            //sinon on renvoie sur la même page avec message de succès + enregistrement nouveau mot de passe de l'utilisateur + màj token
                             else
                             {
-                                /*$form = Auth::renewPasswordForm();
-                                $v = new View("auth-renewPassword", "auth");
-                                $v->assign("config", $form);
-                                $v->assign("errors", "Mot de passe renouvelé avec succès");
-                                $v->assign("fieldValues", $params['POST']);*/
-
                                 $form = Auth::loginForm();
                                 $v = new View("auth-login", "auth");
                                 $v->assign("config", $form);
@@ -769,6 +830,7 @@
                                 $alert = new Alert("Mot de passe renouvelé avec succès", 'success');
 
                                 $targetedUser[0]->setPwd($params['POST']['password']);
+                                $targetedUser[0]->setToken();
                                 $targetedUser[0]->save();
                             }
                         }
@@ -800,17 +862,5 @@
             {
                 header('Location: '.DIRNAME.'index/login');
             }
-        }
-
-        //↓↓↓inutile↓↓↓
-        public function frontAction($params)
-        {
-            $v = new View('front-home', 'front');
-            $v->assign('name', 'Quentin');
-        }
-
-        public function backAction($params)
-        {
-            $v = new View('back-dashboard', 'back');
         }
     }

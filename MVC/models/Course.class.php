@@ -5,9 +5,10 @@
         protected $title;
         protected $description;
         protected $filePath;
+        protected $fileName;
         protected $status;
-        protected $insertedDate;
-        protected $updatedDate;
+        //protected $insertedDate;
+        //protected $updatedDate;
         protected $id_user;
 
         public function __construct()
@@ -33,6 +34,11 @@
         public function setFilePath($filePath)
         {
             $this->filePath = $filePath;
+        }
+
+        public function setFileName($fileName)
+        {
+            $this->fileName = $fileName;
         }
 
         public function setStatus($status)
@@ -65,6 +71,11 @@
             return $this->filePath;
         }
 
+        public function getFileName()
+        {
+            return $this->fileName;
+        }
+
         public function getStatus()
         {
             return $this->status;
@@ -90,7 +101,7 @@
             return [
                 "config" => [
                     "method" => "POST",
-                    "action" => "",
+                    "action" => "course/add",
                     "enctype" => "multipart/form-data"
                 ],
                 "input" => [
@@ -108,7 +119,8 @@
                         "extensions" => [
                             "txt",
                             "pdf"
-                        ]
+                        ],
+                        "maxBytes" => 5242880
                     ]
                 ],
                 "textarea" => [

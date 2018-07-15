@@ -19,8 +19,8 @@
                     type="<?php echo $params['type'];?>" 
                     name="<?php echo $name;?>"
                     placeholder="<?php echo $params['placeholder'];?>"
-                    <?php echo (isset($params['required'])) ? "required='required'" : "";
-                          echo (isset($fieldValues)) ? ' value="'.$fieldValues[$name].'" ' : ""; ?>
+                    <?php echo (isset($params['required']) && $params['required']) ? "required='required'" : "";
+                          echo (isset($fieldValues[$name])) ? ' value="'.$fieldValues[$name].'" ' : ""; ?>
                 >
             </div>
 
@@ -32,8 +32,7 @@
                     type="<?php echo $params['type'];?>" 
                     name="<?php echo $name;?>"
                     placeholder="<?php echo $params['placeholder'];?>"
-                    <?php echo (isset($params['required']))?"required='required'":"";
-                          echo (isset($fieldValues))?' value="'.$fieldValues[$name].'" ':""; ?>
+                    <?php echo (isset($params['required']) && $params['required'])?"required='required'":""; ?>
                 >
             </div>
 
@@ -44,7 +43,7 @@
                         <input 
                             type="<?php echo $params['type'];?>" 
                             name="<?php echo $name;?>" 
-                            <?php echo (isset($params['required'])) ? "required='required'" : ""; ?>
+                            <?php echo (isset($params['required']) && $params['required']) ? "required='required'" : ""; ?>
 
                         >
                     </div>
@@ -86,7 +85,7 @@
 
     endif;
 
-    if($config['captcha']): ?>
+    if(isset($config['captcha']) && $config['captcha']): ?>
 
         <div class="form-row captcha">
             <img src="<?php echo DIRNAME.'public/captcha/captcha.php'; ?>">
@@ -98,7 +97,7 @@
                 type="<?php echo $config['input']['captcha']['type']; ?>" 
                 name="<?php echo $name;?>"
                 placeholder="<?php echo $config['input']['captcha']['placeholder'];?>"
-                <?php echo (isset($config['input']['captcha']['required']))?"required='required'":""; ?>
+                <?php echo (isset($config['input']['captcha']['required']) && $config['input']['captcha']['required']) ? "required='required'" : ""; ?>
             >
         </div>
 

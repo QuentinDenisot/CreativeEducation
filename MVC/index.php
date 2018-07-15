@@ -58,6 +58,7 @@
     $params = [
         "POST" => $_POST,
         "GET" => $_GET,
+        "FILES" => $_FILES,
         "URL" => $uriExploded
     ];
 

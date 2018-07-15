@@ -3,10 +3,31 @@
     {
         public function indexAction($params)
         {
-            $role = new Role;
-            $roleArray = $role->getAll();
-            $v = new View("back-roles", "back");
-            $v->assign('roleArray', $roleArray);
+            $user = new User();
+
+            //vérification user connecté
+            if($user->isConnected())
+            {
+                //vérification user admin
+                if($user->isAdmin())
+                {
+                    $role = new Role;
+                    //tableau des roles
+                    $table = $role->listRoleTable();
+                    $v = new View("back-roles", "back");
+                    $v->assign('config', $table);
+                }
+                //sinon on le renvoie la home
+                else
+                {
+                    header('Location: '.DIRNAME.'index/home');
+                }
+            }
+            //sinon on renvoie vers la page de login
+            else
+            {
+                header('Location: '.DIRNAME.'index/login');
+            }
         }
 
         public function addAction($params)
@@ -194,59 +215,175 @@
 
         public function deleteAction($params)
         {
-            //->id du role à supprimer
-            $id = $params['URL'][0];
+            $user = new User();
 
-            $queryConditions = [
-                'select'=>[
-                    'role.*'
-                ],
-                'join'=>[
-                    'inner_join'=>[],
-                    'left_join'=>[],
-                    'right_join'=>[]
-                ],
-                'where'=>[
-                    'clause'=>'role.id = '.$id,
-                    'and'=>[],
-                    'or'=>[]
-                ],
-                'and'=>[
-                    [
-                        'clause'=>'',
-                        'and'=>[],
-                        'or'=>[]
-                    ]
-                ],
-                'or'=>[
-                    [
-                        'clause'=>'',
-                        'and'=>[],
-                        'or'=>[]
-                    ]
-                ],
-                'group_by'=>[],
-                'having'=>[
-                    'clause'=>'',
-                    'and'=>[],
-                    'or'=>[]
-                ],
-                'order_by'=>[
-                    'asc'=>[],
-                    'desc'=>[]
-                ],
-                'limit'=>[
-                    'offset'=>'',
-                    'range'=>''
-                ]
-            ];
+            //vérification user connecté
+            if($user->isConnected())
+            {
+                //vérification user admin
+                if($user->isAdmin())
+                {
+                    //id du user à supprimer
+                    $id = $params['URL'][0];
 
-            $role = new Role;
+                    //si l'id est renseigné et qu'il s'agit d'un nombre
+                    if(trim($id) != '' && is_numeric($id))
+                    {
+                        $queryConditions = [
+                            'select'=>[
+                                'role.*'
+                            ],
+                            'join'=>[
+                                'inner_join'=>[],
+                                'left_join'=>[],
+                                'right_join'=>[]
+                            ],
+                            'where'=>[
+                                'clause'=>'role.id = '.$id,
+                                'and'=>[],
+                                'or'=>[]
+                            ],
+                            'and'=>[
+                                [
+                                    'clause'=>'',
+                                    'and'=>[],
+                                    'or'=>[]
+                                ]
+                            ],
+                            'or'=>[
+                                [
+                                    'clause'=>'',
+                                    'and'=>[],
+                                    'or'=>[]
+                                ]
+                            ],
+                            'group_by'=>[],
+                            'having'=>[
+                                'clause'=>'',
+                                'and'=>[],
+                                'or'=>[]
+                            ],
+                            'order_by'=>[
+                                'asc'=>[],
+                                'desc'=>[]
+                            ],
+                            'limit'=>[
+                                'offset'=>'',
+                                'range'=>''
+                            ]
+                        ];
 
-            $targetedRole = $role->getAll($queryConditions);
-            $targetedRole[0]->setStatus('0');
-            $targetedRole[0]->save();
+                        $role = new Role;
 
-            header('Location: '.DIRNAME.'role/index');
-        }   
+                        $targetedRole = $role->getAll($queryConditions);
+                        $targetedRole[0]->setStatus('0');
+                        $targetedRole[0]->save();
+
+                        header('Location: '.DIRNAME.'role/index');
+                    }
+                    //sinon 404
+                    else
+                    {
+                        header('Location: '.DIRNAME.'error/404');
+                    }
+                }
+                //sinon on le renvoie la home
+                else
+                {
+                    header('Location: '.DIRNAME.'index/home');
+                }
+            }
+            //sinon on renvoie vers la page de login
+            else
+            {
+                header('Location: '.DIRNAME.'index/login');
+            }
+        }
+
+        public function activateAction($params)
+        {
+            $user = new User();
+
+            //vérification user connecté
+            if($user->isConnected())
+            {
+                //vérification user admin
+                if($user->isAdmin())
+                {
+                    //id du user à supprimer
+                    $id = $params['URL'][0];
+
+                    //si l'id est renseigné et qu'il s'agit d'un nombre
+                    if(trim($id) != '' && is_numeric($id))
+                    {
+                        $queryConditions = [
+                            'select'=>[
+                                'role.*'
+                            ],
+                            'join'=>[
+                                'inner_join'=>[],
+                                'left_join'=>[],
+                                'right_join'=>[]
+                            ],
+                            'where'=>[
+                                'clause'=>'role.id = '.$id,
+                                'and'=>[],
+                                'or'=>[]
+                            ],
+                            'and'=>[
+                                [
+                                    'clause'=>'',
+                                    'and'=>[],
+                                    'or'=>[]
+                                ]
+                            ],
+                            'or'=>[
+                                [
+                                    'clause'=>'',
+                                    'and'=>[],
+                                    'or'=>[]
+                                ]
+                            ],
+                            'group_by'=>[],
+                            'having'=>[
+                                'clause'=>'',
+                                'and'=>[],
+                                'or'=>[]
+                            ],
+                            'order_by'=>[
+                                'asc'=>[],
+                                'desc'=>[]
+                            ],
+                            'limit'=>[
+                                'offset'=>'',
+                                'range'=>''
+                            ]
+                        ];
+
+                        $role = new Role;
+
+                        $targetedRole = $role->getAll($queryConditions);
+                        $targetedRole[0]->setStatus('1');
+                        $targetedRole[0]->save();
+
+                        header('Location: '.DIRNAME.'role/index');
+                    }
+                    //sinon 404
+                    else
+                    {
+                        header('Location: '.DIRNAME.'error/404');
+                    }
+                }
+                //sinon on le renvoie la home
+                else
+                {
+                    header('Location: '.DIRNAME.'index/home');
+                }
+            }
+            //sinon on renvoie vers la page de login
+            else
+            {
+                header('Location: '.DIRNAME.'index/login');
+            }
+        }
     }

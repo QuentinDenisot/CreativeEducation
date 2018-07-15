@@ -3,21 +3,23 @@
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
-    <link rel="icon" type="image/png" href="<?php echo DIRNAME; ?>/public/images/favicon.png">
+    <link rel="icon" type="image/png" href="<?php echo DIRNAME; ?>public/images/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Creative Education</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
-    <link href="<?php echo DIRNAME; ?>/public/css/dashboard.css" rel="stylesheet" />
-    <link href="<?php echo DIRNAME; ?>/public/css/grid.css" rel="stylesheet" />
+    <link href="<?php echo DIRNAME; ?>public/css/dashboard.css" rel="stylesheet" />
+    <link href="<?php echo DIRNAME; ?>public/css/grid.css" rel="stylesheet" />
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>/public/css/alert.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>public/css/alert.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="<?php echo DIRNAME; ?>/public/js/alert.js"></script>
+    <script src="<?php echo DIRNAME; ?>public/js/alert.js"></script>
+    <script src="<?php echo DIRNAME; ?>public/js/inputFileMaxSize.js"></script>
 </head>
 <body>
+    <?php $user = new User(); ?>
     <div class="wrapper">
         <div class="sidebar" data-active-color="rose" data-background-color="black">
             <div class="logo">
@@ -25,7 +27,7 @@
                     CE
                 </a> -->
                 <img src="<?php echo DIRNAME.'public/images/logo.svg'; ?>" alt="logo">
-                <a href="http://www.theosenoussaoui.fr" class="simple-text logo-normal">
+                <a href="<?php echo DIRNAME.'index/home'; ?>" class="simple-text logo-normal">
                     Creative Education
                 </a>
             </div>
@@ -104,15 +106,15 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="<?php echo ($c == 'RoleController')?'active':''; ?>">
-                        <a data-toggle="collapse" href="#role-menu">
-                            <i class="material-icons">assignment</i>
-                            <p>Rôles<strong class="caret"></strong> </p>
+                    <li class="<?php echo ($c == 'CourseCategoryController')?'active':''; ?>">
+                        <a data-toggle="collapse" href="#courseCategory-menu">
+                            <i class="material-icons">category</i>
+                            <p>Catégories cours<strong class="caret"></strong> </p>
                         </a>
-                        <div class="collapse" id="role-menu">
+                        <div class="collapse" id="courseCategory-menu">
                             <ul class="nav">
                                 <li>
-                                    <a href="<?php echo DIRNAME.'role'; ?>">
+                                    <a href="<?php echo DIRNAME.'courseCategory'; ?>">
                                         <span class="sidebar-mini">
                                             <i class="material-icons">list</i>
                                         </span>
@@ -120,7 +122,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo DIRNAME.'role/add'; ?>">
+                                    <a href="<?php echo DIRNAME.'courseCategory/add'; ?>">
                                         <span class="sidebar-mini">
                                             <i class="material-icons">add_circle</i>
                                         </span>
@@ -130,6 +132,38 @@
                             </ul>
                         </div>
                     </li>
+
+                    <?php if($user->isAdmin()): ?>
+
+                        <li class="<?php echo ($c == 'RoleController')?'active':''; ?>">
+                            <a data-toggle="collapse" href="#role-menu">
+                                <i class="material-icons">assignment</i>
+                                <p>Rôles<strong class="caret"></strong> </p>
+                            </a>
+                            <div class="collapse" id="role-menu">
+                                <ul class="nav">
+                                    <li>
+                                        <a href="<?php echo DIRNAME.'role'; ?>">
+                                            <span class="sidebar-mini">
+                                                <i class="material-icons">list</i>
+                                            </span>
+                                            <span class="sidebar-normal">Liste</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo DIRNAME.'role/add'; ?>">
+                                            <span class="sidebar-mini">
+                                                <i class="material-icons">add_circle</i>
+                                            </span>
+                                            <span class="sidebar-normal">Ajout</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                    <?php endif; ?>
+
                     <li class="<?php echo ($c == 'PageController')?'active':''; ?>">
                         <a data-toggle="collapse" href="#page-menu">
                             <i class="material-icons">apps</i>
@@ -156,38 +190,16 @@
                             </ul>
                         </div>
                     </li>
-                    <!-- <li class="<?php echo ($c == 'UserController' || $c == 'RoleController' || $c == 'CourseController')?'active':''; ?>">
-                        <a data-toggle="collapse" href="#pagesExamples">
-                            <i class="material-icons">content_paste</i>
-                            <p> Gestion<strong class="caret"></strong> </p>
-                        </a>
-                        <div class="collapse" id="pagesExamples">
-                            <ul class="nav">
-                                <li>
-                                    <a href="<?php echo DIRNAME.'role'; ?>">
-                                        <span class="sidebar-mini"> R </span>
-                                        <span class="sidebar-normal">Rôles</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo DIRNAME.'user'; ?>">
-                                        <span class="sidebar-mini"> U </span>
-                                        <span class="sidebar-normal">Utilisateurs</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo DIRNAME.'course'; ?>">
-                                        <span class="sidebar-mini"> C </span>
-                                        <span class="sidebar-normal">Cours</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li> -->
                     <li>
                         <a href="./charts.html">
                             <i class="material-icons">timeline</i>
                             <p>Statistiques</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo DIRNAME.'index/logout'; ?>">
+                            <i class="material-icons">exit_to_app</i>
+                            <p>Déconnexion</p>
                         </a>
                     </li>
                     <!-- <li>
@@ -217,8 +229,8 @@
 </body>
 <!--   Core JS Files   -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="<?php echo DIRNAME; ?>/public/js/creative.js" type="text/javascript"></script>
-<script src="<?php echo DIRNAME; ?>/public/js/Chart.js" type="text/javascript"></script>
+<script src="<?php echo DIRNAME; ?>public/js/creative.js" type="text/javascript"></script>
+<script src="<?php echo DIRNAME; ?>public/js/Chart.js" type="text/javascript"></script>
 
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');

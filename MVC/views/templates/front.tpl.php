@@ -5,25 +5,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Front Homepage</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <link rel="icon" type="image/png" href="<?php echo DIRNAME; ?>/public/images/favicon.png">
-        <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>/public/css/style-front-tpl.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>/public/css/grid.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>/public/css/alert.css">
-        <script src="<?php echo DIRNAME; ?>/public/js/alert.js"></script>
+        <link rel="icon" type="image/png" href="<?php echo DIRNAME; ?>public/images/favicon.png">
+        <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>public/css/style-front-tpl.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>public/css/grid.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>public/css/alert.css">
+        <script src="<?php echo DIRNAME; ?>public/js/alert.js"></script>
     </head>
     <body>
         <header>
-            <img src="<?php echo DIRNAME; ?>/public/images/background-img.jpg" alt="background-image">
+            <img src="<?php echo DIRNAME; ?>public/images/background-img.jpg" alt="background-image">
             <section class="headerTop">
                 <div class="logo-container">
-                    <img src="<?php echo DIRNAME; ?>/public/images/logo.svg" alt="logo">
+                    <img src="<?php echo DIRNAME; ?>public/images/logo.svg" alt="logo">
                     <p>CREATIVE EDUCATION</p>
                 </div>
                 <nav class="hidden-nav">
                     <ul>
                         <li class="active"><a href="#onglet1">Accueil<span class="hoverBorder"></span></a></li>
                         <li class="item-list">
-                            <a href="#onglet2">Onglet 2 Liste<img src="<?php echo DIRNAME; ?>/public/images/arrow-down.svg" alt="arrow-down" class="dropdown-arrow"><span class="hoverBorder"></span></a>
+                            <a href="#onglet2">Onglet 2 Liste<img src="<?php echo DIRNAME; ?>public/images/arrow-down.svg" alt="arrow-down" class="dropdown-arrow"><span class="hoverBorder"></span></a>
                             <div class="dropdown-container">
                                 <div class="triangle"></div>
                                 <ul class="dropdown-list hidden-dropdown">

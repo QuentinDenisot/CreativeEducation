@@ -155,6 +155,7 @@
             }
         }
 
+        //permet de définir si le user est connecté
         public function isConnected()
         {
             //vérification existence session
@@ -244,6 +245,162 @@
             }
         }
 
+        //permet de définir si le user est désactivé ou non
+        public function isDeactivated($idUser = null)
+        {
+            //si le paramètre n'est pas renseigné, on se base sur l'id du user connecté, sinon sur celui renseigné
+            $idUser = ($idUser === null) ? $_SESSION['user']['id'] : $idUser;
+
+            //récupération utilisateur selon id
+            $queryConditions = [
+                "select"=>[
+                    "user.*"
+                ],
+                "join"=>[
+                    "inner_join"=>[],
+                    "left_join"=>[],
+                    "right_join"=>[]
+                ],
+                "where"=>[
+                    "clause"=>"`user`.`id` = '".$idUser."'",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "and"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "or"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "group_by"=>[],
+                "having"=>[
+                    "clause"=>"",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "order_by"=>[
+                    "asc"=>[],
+                    "desc"=>[]
+                ],
+                "limit"=>[
+                    "offset"=>"",
+                    "range"=>""
+                ]
+            ];
+
+            $user = new User();
+            $targetedUser = $user->getAll($queryConditions);
+
+            //si récupération utilisateur effectuée
+            if(count($targetedUser) == 1)
+            {
+                //vérification que le status du user est 0 (Désactivé / Supprimé)
+                if($targetedUser[0]->getStatus() == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            //si pas de récupération : utilisateur non connecté
+            else
+            {
+                return false;
+            }
+        }
+
+        //permet de définir si le rôle du user est autorisé à la connexion
+        public function allowedRole($idUser = null)
+        {
+            //si le paramètre n'est pas renseigné, on se base sur l'id du user connecté, sinon sur celui renseigné
+            $idUser = ($idUser === null) ? $_SESSION['user']['id'] : $idUser;
+
+            //récupération utilisateur selon id
+            $queryConditions = [
+                "select"=>[
+                    "user.*"
+                ],
+                "join"=>[
+                    "inner_join"=>[],
+                    "left_join"=>[],
+                    "right_join"=>[]
+                ],
+                "where"=>[
+                    "clause"=>"`user`.`id` = '".$idUser."'",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "and"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "or"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "group_by"=>[],
+                "having"=>[
+                    "clause"=>"",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "order_by"=>[
+                    "asc"=>[],
+                    "desc"=>[]
+                ],
+                "limit"=>[
+                    "offset"=>"",
+                    "range"=>""
+                ]
+            ];
+
+            $user = new User();
+            $targetedUser = $user->getAll($queryConditions);
+
+            //si récupération utilisateur effectuée
+            if(count($targetedUser) == 1)
+            {
+                //liste des roles autorisés (admin / apprenant / professeur)
+                $allowedRoles = [
+                    1,
+                    2,
+                    4
+                ];
+
+                //vérification que le role du user fasse partie des la liste des roles autorisés
+                if(in_array($targetedUser[0]->getId_role(), $allowedRoles))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            //si pas de récupération : utilisateur non connecté
+            else
+            {
+                return false;
+            }
+        }
+
+        //permet de définir si le user est admin
         public function isAdmin()
         {
             //vérification existence session
@@ -302,6 +459,166 @@
                 {
                     //vérification que l'id_role du user connecté est bien 1 (admin)
                     if($targetedUser[0]->getId_role() == 1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                //si pas de récupération : utilisateur non connecté
+                else
+                {
+                    return false;
+                }
+            }
+            //si pas de session : utilisateur non connecté
+            else
+            {
+                return false;
+            }
+        }
+
+        //permet de définir si le user est professeur
+        public function isProfessor()
+        {
+            //vérification existence session
+            if(isset($_SESSION['user']['id']))
+            {
+                //récupération utilisateur en cours
+                $queryConditions = [
+                    "select"=>[
+                        "user.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`user`.`id` = '".$_SESSION['user']['id']."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $user = new User();
+                $targetedUser = $user->getAll($queryConditions);
+
+                //si récupération utilisateur effectuée
+                if(count($targetedUser) == 1)
+                {
+                    //vérification que l'id_role du user connecté est bien 4 (professeur)
+                    if($targetedUser[0]->getId_role() == 4)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                //si pas de récupération : utilisateur non connecté
+                else
+                {
+                    return false;
+                }
+            }
+            //si pas de session : utilisateur non connecté
+            else
+            {
+                return false;
+            }
+        }
+
+        //permet de définir si le user est apprenant
+        public function isStudent()
+        {
+            //vérification existence session
+            if(isset($_SESSION['user']['id']))
+            {
+                //récupération utilisateur en cours
+                $queryConditions = [
+                    "select"=>[
+                        "user.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`user`.`id` = '".$_SESSION['user']['id']."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $user = new User();
+                $targetedUser = $user->getAll($queryConditions);
+
+                //si récupération utilisateur effectuée
+                if(count($targetedUser) == 1)
+                {
+                    //vérification que l'id_role du user connecté est bien 2 (apprenant)
+                    if($targetedUser[0]->getId_role() == 2)
                     {
                         return true;
                     }
@@ -527,30 +844,138 @@
             ];
         }
 
-        public function userListTable()
+        public function listUserTable()
         {
             //récupération de tous les users
             $user = new User();
             $users = $user->getAll();
 
-            //création tableau à forunir au modal
+            //création tableau à fournir au modal
             $arrayUsers = [];
 
             foreach($users as $user)
             {
+                //récupération du status
+                $queryConditions = [
+                    "select"=>[
+                        "status.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`status`.`id` = '".$user->getStatus()."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $status = new Status();
+                $targetedStatus = $status->getAll($queryConditions)[0];
+
+                //récupération du role
+                $queryConditions = [
+                    "select"=>[
+                        "role.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`role`.`id` = '".$user->getId_role()."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $role = new Role();
+                $targetedRole = $role->getAll($queryConditions)[0];
+
                 $idUser = $user->getId();
                 $arrayUsers[$idUser]['lastname'] = Helpers::cleanLastname($user->getLastname());
                 $arrayUsers[$idUser]['firstname'] = Helpers::cleanFirstname($user->getFirstname());
                 $arrayUsers[$idUser]['email'] = $user->getEmail();
                 $arrayUsers[$idUser]['insertedDate'] = Helpers::europeanDateFormat($user->getInsertedDate());
-                $arrayUsers[$idUser]['status'] = $user->getStatus();
-                $arrayUsers[$idUser]['id_role'] = $user->getId_role();
-                $arrayUsers[$idUser]['actions']['edit']['path'] = 'user/update/'.$user->getId();
+                $arrayUsers[$idUser]['status'] = $targetedStatus->getName();
+                $arrayUsers[$idUser]['role'] = $targetedRole->getName();
+                $arrayUsers[$idUser]['actions']['edit']['path'] = 'user/update/'.$idUser;
                 $arrayUsers[$idUser]['actions']['edit']['icon'] = 'build';
                 $arrayUsers[$idUser]['actions']['edit']['color'] = 'blue';
-                $arrayUsers[$idUser]['actions']['delete']['path'] = 'user/delete/'.$user->getId();
-                $arrayUsers[$idUser]['actions']['delete']['icon'] = 'close';
-                $arrayUsers[$idUser]['actions']['delete']['color'] = 'red';
+
+                //changement du bouton en fonction du statut du user : si activé, on affiche le bouton de désactivation
+                if($user->getStatus() == 1)
+                {
+                    $arrayUsers[$idUser]['actions']['delete']['path'] = 'user/delete/'.$idUser;
+                    $arrayUsers[$idUser]['actions']['delete']['icon'] = 'close';
+                    $arrayUsers[$idUser]['actions']['delete']['color'] = 'red';
+                }
+                //sinon on affiche le bouton d'activation
+                elseif($user->getStatus() == 0)
+                {
+                    $arrayUsers[$idUser]['actions']['delete']['path'] = 'user/activate/'.$idUser;
+                    $arrayUsers[$idUser]['actions']['delete']['icon'] = 'check';
+                    $arrayUsers[$idUser]['actions']['delete']['color'] = 'green';
+                }
             }
 
             return [

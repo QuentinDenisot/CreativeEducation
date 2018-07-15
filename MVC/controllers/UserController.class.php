@@ -9,14 +9,11 @@
             if($user->isConnected())
             {
                 //vérification user admin
-                if($user->isAdmin())
+                if($user->isAdmin() || $user->isProfessor())
                 {
-                    $userArray = $user->getAll();
                     //tableau des users
-                    $table = $user->userListTable();
-
+                    $table = $user->listUserTable();
                     $v = new View("back-users", "back");
-                    $v->assign('userArray', $userArray);
                     $v->assign('config', $table);
                 }
                 //sinon on le renvoie la home
@@ -32,11 +29,6 @@
             }
         }
 
-        public function showAction($params)
-        {
-            
-        }
-
         public function addAction($params)
         {
             $user = new User();
@@ -45,7 +37,7 @@
             if($user->isConnected())
             {
                 //vérification user admin
-                if($user->isAdmin())
+                if($user->isAdmin() || $user->isProfessor())
                 {
                     //si tous les champs sont remplis
                     if(!empty($params['POST']))
@@ -248,7 +240,7 @@
             if($user->isConnected())
             {
                 //vérification user admin
-                if($user->isAdmin())
+                if($user->isAdmin() || $user->isProfessor())
                 {
                     //si tous les champs sont remplis
                     if(!empty($params['POST']))
@@ -431,7 +423,7 @@
             if($user->isConnected())
             {
                 //vérification user admin
-                if($user->isAdmin())
+                if($user->isAdmin() || $user->isProfessor())
                 {
                     //id du user à supprimer
                     $id = $params['URL'][0];
@@ -506,5 +498,90 @@
             {
                 header('Location: '.DIRNAME.'index/login');
             }
-        }   
+        }
+
+        public function activateAction($params)
+        {
+            $user = new User();
+
+            //vérification user connecté
+            if($user->isConnected())
+            {
+                //vérification user admin
+                if($user->isAdmin() || $user->isProfessor())
+                {
+                    //id du user à supprimer
+                    $id = $params['URL'][0];
+
+                    //si l'id est renseigné et qu'il s'agit d'un nombre
+                    if(trim($id) != '' && is_numeric($id))
+                    {
+                        $queryConditions = [
+                            'select'=>[
+                                'user.*'
+                            ],
+                            'join'=>[
+                                'inner_join'=>[],
+                                'left_join'=>[],
+                                'right_join'=>[]
+                            ],
+                            'where'=>[
+                                'clause'=>'`user`.`id` = '.$id,
+                                'and'=>[],
+                                'or'=>[]
+                            ],
+                            'and'=>[
+                                [
+                                    'clause'=>'',
+                                    'and'=>[],
+                                    'or'=>[]
+                                ]
+                            ],
+                            'or'=>[
+                                [
+                                    'clause'=>'',
+                                    'and'=>[],
+                                    'or'=>[]
+                                ]
+                            ],
+                            'group_by'=>[],
+                            'having'=>[
+                                'clause'=>'',
+                                'and'=>[],
+                                'or'=>[]
+                            ],
+                            'order_by'=>[
+                                'asc'=>[],
+                                'desc'=>[]
+                            ],
+                            'limit'=>[
+                                'offset'=>'',
+                                'range'=>''
+                            ]
+                        ];
+
+                        $targetedUser = $user->getAll($queryConditions);
+                        $targetedUser[0]->setStatus('1');
+                        $targetedUser[0]->save();
+
+                        header('Location: '.DIRNAME.'user/index');
+                    }
+                    //sinon 404
+                    else
+                    {
+                        header('Location: '.DIRNAME.'error/404');
+                    }
+                }
+                //sinon on le renvoie la home
+                else
+                {
+                    header('Location: '.DIRNAME.'index/home');
+                }
+            }
+            //sinon on renvoie vers la page de login
+            else
+            {
+                header('Location: '.DIRNAME.'index/login');
+            }
+        }
     }
