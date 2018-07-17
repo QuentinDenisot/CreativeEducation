@@ -21,7 +21,7 @@
 
 header
 {
-    height: 84px;
+    height: 400px;
     width: 100%;
 
     @media all and (max-width: 768px)
@@ -31,7 +31,7 @@ header
 
     > img
     {
-        height: 84px;
+        height: 400px;
         width: 100%;
         filter: brightness(40%);
         object-fit: cover;
@@ -431,6 +431,38 @@ header
                 {
                     transform: rotate(45deg) translate(-8px, -9px);
                 }
+            }
+        }
+    }
+
+    .headerBottom
+    {
+        position: absolute;
+        top: 64px;
+        height: 336px;
+        width: 100%;
+
+        @media all and (max-width: 768px)
+        {
+            height: 200px;
+            top: 64px;
+        }
+
+        > div
+        {
+            color: $li_text_color;
+            font-size: 36pt;
+            font-family: "Roboto-Regular";
+            vertical-align: middle;
+            text-align: center;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            @media all and (max-width: 768px)
+            {
+                font-size: 16pt;
             }
         }
     }

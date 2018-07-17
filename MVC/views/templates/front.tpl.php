@@ -6,7 +6,19 @@
         <title>Front Homepage</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link rel="icon" type="image/png" href="<?php echo DIRNAME; ?>public/images/favicon.png">
-        <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>public/css/style-front-tpl.css">
+
+        <!-- chargement du css en fonction de la page sur laquelle on se trouve -->
+
+        <?php if($a == 'homeAction'): ?>
+
+            <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>public/css/style-front-tpl-home.css">
+        
+        <?php else: ?>
+
+            <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>public/css/style-front-tpl.css">    
+
+        <?php endif; ?>
+
         <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>public/css/grid.css">
         <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>public/css/alert.css">
         <script src="<?php echo DIRNAME; ?>public/js/alert.js"></script>
@@ -46,9 +58,17 @@
                     </div>
                 </div>
             </section>
-            <section class="headerBottom">
-                <div>Bienvenue, <?php echo ucfirst(mb_strtolower($this->data['name'])); ?>.</div>
-            </section>
+
+            <!-- affichage ou non de l'élément en fonction de la page sur laquelle on se trouve -->
+
+            <?php if($a == 'homeAction'): ?>
+
+                <section class="headerBottom">
+                    <div>Bienvenue, <?php echo ucfirst(mb_strtolower($this->data['name'])); ?>.</div>
+                </section>
+
+            <?php endif; ?>
+
         </header>
         <main>
             <section class="main-container">

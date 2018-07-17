@@ -424,7 +424,6 @@
         {
             $user = new User();
 
-
             //si utilisateur connecté on renvoie vers la page d'accueil
             if($user->isConnected())
             {
