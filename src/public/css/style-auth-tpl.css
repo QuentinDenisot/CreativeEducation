@@ -1,0 +1,287 @@
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url("../fonts/Roboto/Roboto-Regular.ttf"); }
+@font-face {
+  font-family: "Roboto-Bold";
+  src: url("../fonts/Roboto/Roboto-Bold.ttf"); }
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Roboto-Regular"; }
+
+body > img {
+  height: 100vh;
+  width: 100%;
+  filter: brightness(40%);
+  position: absolute;
+  object-fit: cover;
+  object-position: center; }
+body header {
+  height: 64px;
+  widows: 100%; }
+  body header .headerTop {
+    position: absolute;
+    top: 0px;
+    height: 44px;
+    width: 100%;
+    padding-left: 2%;
+    margin-top: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch; }
+  @media all and (max-width: 768px) {
+    body header nav {
+      position: absolute;
+      width: 100%;
+      height: 100vh;
+      background-color: #252525;
+      left: 0%;
+      top: -20px;
+      padding-top: 20px;
+      box-sizing: border-box;
+      text-align: center;
+      z-index: 1; }
+      body header nav.visible-nav {
+        display: initial; }
+      body header nav.hidden-nav {
+        display: none; } }
+  body header nav > ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    max-height: 44px; }
+    @media all and (max-width: 768px) {
+      body header nav > ul {
+        flex-direction: column;
+        max-height: unset; } }
+    body header nav > ul > li {
+      padding: 0px 30px;
+      position: relative; }
+      @media all and (max-width: 768px) {
+        body header nav > ul > li {
+          font-size: 16pt;
+          border-top: 1px solid #606060; } }
+      @media all and (max-width: 1024px) {
+        body header nav > ul > li {
+          padding: 0px 20px; } }
+      @media all and (max-width: 768px) {
+        body header nav > ul > li:last-child {
+          border-bottom: 1px solid #606060; } }
+      body header nav > ul > li.active > a {
+        cursor: default; }
+      @media all and (max-width: 768px) {
+        body header nav > ul > li.active {
+          border-radius: 0px;
+          background-color: #3e3e3e; }
+          body header nav > ul > li.active > a {
+            color: white; } }
+  body header nav li {
+    list-style-type: none;
+    line-height: 40px;
+    color: #FFFFFF; }
+    body header nav li.active {
+      background-color: #FFFFFF;
+      border-radius: 25px; }
+      body header nav li.active > a {
+        color: #000000;
+        outline: none; }
+    body header nav li .hoverBorder {
+      width: 100%;
+      height: 2px;
+      background-color: #FFFFFF;
+      display: block;
+      position: relative;
+      top: -7px;
+      opacity: 0;
+      transition: all 0.3s ease; }
+      @media all and (max-width: 768px) {
+        body header nav li .hoverBorder {
+          opacity: 0; } }
+    body header nav li > a {
+      font-family: "Roboto-Bold";
+      text-decoration: none;
+      color: #FFFFFF;
+      display: block;
+      padding-top: 2px; }
+      body header nav li > a:hover .hoverBorder {
+        opacity: 1; }
+        @media all and (max-width: 768px) {
+          body header nav li > a:hover .hoverBorder {
+            opacity: 0; } }
+    body header nav li img {
+      width: 10px;
+      fill: #FFFFFF;
+      margin-left: 5px;
+      vertical-align: middle; }
+      @media all and (max-width: 768px) {
+        body header nav li img {
+          width: 20px; } }
+  body header .logo-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin-right: 5%;
+    height: 44px; }
+    body header .logo-container > img {
+      width: 30px;
+      vertical-align: middle; }
+    body header .logo-container > p {
+      font-family: "Roboto-Bold";
+      margin-left: 10px;
+      line-height: 44px;
+      color: #FFFFFF; }
+  body header .burger-container {
+    margin-left: auto;
+    margin-right: 20px;
+    z-index: 1; }
+    @media all and (min-width: 769px) {
+      body header .burger-container {
+        display: none; } }
+    body header .burger-container .burger {
+      position: relative;
+      top: 8px; }
+      body header .burger-container .burger:hover {
+        cursor: pointer; }
+      body header .burger-container .burger .burger-top, body header .burger-container .burger .burger-middle, body header .burger-container .burger .burger-bottom {
+        display: block;
+        height: 5px;
+        width: 36px;
+        border-radius: 3px;
+        background-color: white;
+        transition: all 0.3s ease; }
+      body header .burger-container .burger .burger-top, body header .burger-container .burger .burger-middle {
+        margin-bottom: 7px; }
+      body header .burger-container .burger .animation-top {
+        transform: rotate(-45deg) translate(-8px, 9px); }
+      body header .burger-container .burger .animation-middle {
+        opacity: 0; }
+      body header .burger-container .burger .animation-bottom {
+        transform: rotate(45deg) translate(-8px, -9px); }
+body footer {
+  height: 50px;
+  line-height: 50px;
+  position: absolute;
+  bottom: 0px;
+  font-size: 10pt;
+  color: white;
+  padding: 0% 3%;
+  text-align: right;
+  vertical-align: middle;
+  width: 100%; }
+  @media all and (max-width: 768px) {
+    body footer {
+      font-size: 8pt; } }
+  body footer > span {
+    color: #29B6F6; }
+body main {
+  height: fit-content; }
+  body main .main-container {
+    margin: auto;
+    position: relative;
+    height: calc(100vh - 114px); }
+    body main .main-container .form-container {
+      margin: auto;
+      height: fit-content;
+      width: 30%;
+      min-width: 360px;
+      max-width: 500px;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75); }
+      body main .main-container .form-container > .form-main {
+        margin: auto;
+        height: 100%;
+        width: 100%;
+        background-color: white;
+        border-radius: 5px;
+        position: relative; }
+        body main .main-container .form-container > .form-main > .form-top {
+          margin: auto;
+          height: 65px;
+          width: 85%;
+          background: linear-gradient(76.99deg, #EC407A 0%, #D81B60 100%);
+          color: white;
+          border-radius: 5px;
+          position: relative;
+          transform: translateY(-30%); }
+          body main .main-container .form-container > .form-main > .form-top > .form-legend {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            text-transform: uppercase; }
+        body main .main-container .form-container > .form-main > form {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: stretch; }
+          body main .main-container .form-container > .form-main > form > .form-row {
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: stretch; }
+            body main .main-container .form-container > .form-main > form > .form-row:not(:last-child):not(.captcha) {
+              margin-bottom: 15px;
+              height: 24px;
+              width: 60%; }
+            body main .main-container .form-container > .form-main > form > .form-row:last-child {
+              margin-top: 15px;
+              margin-bottom: 30px; }
+            body main .main-container .form-container > .form-main > form > .form-row > i {
+              color: #333333;
+              vertical-align: middle;
+              margin-right: 10px; }
+            body main .main-container .form-container > .form-main > form > .form-row > input {
+              color: #333333;
+              vertical-align: middle;
+              outline: none;
+              border: 0px;
+              border-bottom: 1px solid #999999;
+              flex: 1; }
+              body main .main-container .form-container > .form-main > form > .form-row > input::placeholder {
+                color: #999999; }
+              body main .main-container .form-container > .form-main > form > .form-row > input:focus {
+                border-color: #EC407A;
+                transition: border-color 0.3s ease; }
+            body main .main-container .form-container > .form-main > form > .form-row > select {
+              color: #999999;
+              vertical-align: middle;
+              outline: none;
+              border: 0px;
+              border-bottom: 1px solid #999999;
+              flex: 1; }
+              body main .main-container .form-container > .form-main > form > .form-row > select > option:first-child {
+                color: #999999; }
+              body main .main-container .form-container > .form-main > form > .form-row > select > option:not(:first-child) {
+                color: #333333; }
+              body main .main-container .form-container > .form-main > form > .form-row > select:focus {
+                border-color: #EC407A;
+                transition: border-color 0.3s ease; }
+          body main .main-container .form-container > .form-main > form > .captcha {
+            margin-bottom: 15px; }
+            body main .main-container .form-container > .form-main > form > .captcha > img {
+              border: 1px solid #999999;
+              border-radius: 3px; }
+          body main .main-container .form-container > .form-main > form > .forgotPassword {
+            justify-content: left;
+            padding-left: 34px; }
+            body main .main-container .form-container > .form-main > form > .forgotPassword > a {
+              color: #29B6F6;
+              font-size: 0.75em;
+              height: fit-content;
+              position: relative;
+              top: 100%;
+              transform: translateY(-100%); }
+          body main .main-container .form-container > .form-main > form > .form-error {
+            width: 80%;
+            margin: auto;
+            font-size: 10pt;
+            font-style: italic; }
+
+/*# sourceMappingURL=style-auth-tpl.css.map */
