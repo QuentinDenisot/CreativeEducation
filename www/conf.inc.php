@@ -1,7 +1,7 @@
  <?php
     define("DBUSER", "root");
     define("DBHOST", "db");
-    define("DBNAME", "myDb");
+    define("DBNAME", "creativeedu");
     define("DBPWD", "test");
     define("DBPORT", "3306");
     define("DBDRIVER", "mysql");
