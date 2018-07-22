@@ -1,8 +1,8 @@
  <?php
     define("DBUSER", "root");
-    define("DBHOST", "localhost");
-    define("DBNAME", "creativeedu");
-    define("DBPWD", "");
+    define("DBHOST", "db");
+    define("DBNAME", "myDb");
+    define("DBPWD", "test");
     define("DBPORT", "3306");
     define("DBDRIVER", "mysql");
     define("SERVERNAME", $_SERVER['SERVER_NAME']);
