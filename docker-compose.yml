@@ -20,7 +20,7 @@ services:
             MYSQL_PASSWORD: test
             MYSQL_ROOT_PASSWORD: test
         volumes:
-            - ./dump:/docker-entrypoint-initdb.d
+            - ./sql:/docker-entrypoint-initdb.d
             - persistent:/var/lib/mysql
         networks:
             - default
