@@ -23,9 +23,6 @@
     <div class="wrapper">
         <div class="sidebar" data-active-color="rose" data-background-color="black">
             <div class="logo">
-                <!-- <a href="http://www.theosenoussaoui.fr" class="simple-text logo-mini">
-                    CE
-                </a> -->
                 <img src="<?php echo DIRNAME.'public/images/logo.svg'; ?>" alt="logo">
                 <a href="<?php echo DIRNAME.'index/home'; ?>" class="simple-text logo-normal">
                     Creative Education
@@ -48,12 +45,14 @@
                     </div>
                 </div>
                 <ul class="nav">
+                    <!-- dashboard -->
                     <li class="<?php echo ($a == 'dashboardAction')?'active':''; ?>">
                         <a href="<?php echo DIRNAME.'index/dashboard'; ?>">
                             <i class="material-icons">dashboard</i>
                             <p> Dashboard </p>
                         </a>
                     </li>
+                    <!-- utilisateurs -->
                     <li class="<?php echo ($c == 'UserController')?'active':''; ?>">
                         <a data-toggle="collapse" href="#user-menu">
                             <i class="material-icons">supervised_user_circle</i>
@@ -80,6 +79,34 @@
                             </ul>
                         </div>
                     </li>
+                    <!-- groupes -->
+                    <li class="<?php echo ($c == 'UsergroupController')?'active':''; ?>">
+                        <a data-toggle="collapse" href="#userGroup-menu">
+                            <i class="material-icons">group_work</i>
+                            <p>Groupes<strong class="caret"></strong> </p>
+                        </a>
+                        <div class="collapse" id="userGroup-menu">
+                            <ul class="nav">
+                                <li>
+                                    <a href="<?php echo DIRNAME.'usergroup'; ?>">
+                                        <span class="sidebar-mini">
+                                            <i class="material-icons">list</i>
+                                        </span>
+                                        <span class="sidebar-normal">Liste</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo DIRNAME.'usergroup/add'; ?>">
+                                        <span class="sidebar-mini">
+                                            <i class="material-icons">add_circle</i>
+                                        </span>
+                                        <span class="sidebar-normal">Ajout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- cours -->
                     <li class="<?php echo ($c == 'CourseController')?'active':''; ?>">
                         <a data-toggle="collapse" href="#course-menu">
                             <i class="material-icons">class</i>
@@ -106,7 +133,8 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="<?php echo ($c == 'CourseCategoryController')?'active':''; ?>">
+                    <!-- catégories de cours -->
+                    <li class="<?php echo ($c == 'CoursecategoryController')?'active':''; ?>">
                         <a data-toggle="collapse" href="#courseCategory-menu">
                             <i class="material-icons">category</i>
                             <p>Catégories cours<strong class="caret"></strong> </p>
@@ -114,7 +142,7 @@
                         <div class="collapse" id="courseCategory-menu">
                             <ul class="nav">
                                 <li>
-                                    <a href="<?php echo DIRNAME.'courseCategory'; ?>">
+                                    <a href="<?php echo DIRNAME.'coursecategory'; ?>">
                                         <span class="sidebar-mini">
                                             <i class="material-icons">list</i>
                                         </span>
@@ -122,7 +150,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo DIRNAME.'courseCategory/add'; ?>">
+                                    <a href="<?php echo DIRNAME.'coursecategory/add'; ?>">
                                         <span class="sidebar-mini">
                                             <i class="material-icons">add_circle</i>
                                         </span>
@@ -132,7 +160,7 @@
                             </ul>
                         </div>
                     </li>
-
+                    <!-- roles -->
                     <?php if($user->isAdmin()): ?>
 
                         <li class="<?php echo ($c == 'RoleController')?'active':''; ?>">
@@ -163,7 +191,7 @@
                         </li>
 
                     <?php endif; ?>
-
+                    <!-- pages -->
                     <li class="<?php echo ($c == 'PageController')?'active':''; ?>">
                         <a data-toggle="collapse" href="#page-menu">
                             <i class="material-icons">apps</i>
@@ -190,24 +218,20 @@
                             </ul>
                         </div>
                     </li>
+                    <!-- statistiques -->
                     <li>
                         <a href="./charts.html">
                             <i class="material-icons">timeline</i>
                             <p>Statistiques</p>
                         </a>
                     </li>
+                    <!-- logout -->
                     <li>
                         <a href="<?php echo DIRNAME.'index/logout'; ?>">
                             <i class="material-icons">exit_to_app</i>
                             <p>Déconnexion</p>
                         </a>
                     </li>
-                    <!-- <li>
-                        <a href="./charts.html">
-                            <i class="material-icons">book</i>
-                            <p> Documentation </p>
-                        </a>
-                    </li> -->
                 </ul>
             </div>
         </div>

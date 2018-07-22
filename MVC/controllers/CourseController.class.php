@@ -12,9 +12,10 @@
                 if($user->isAdmin() || $user->isProfessor())
                 {
                     $course = new Course();
-                    $courseArray = $course->getAll();
+                    //tableau des cours
+                    $table = $course->listCourseTable();
                     $v = new View("back-courses", "back");
-                    $v->assign('courseArray', $courseArray);
+                    $v->assign('config', $table);
                 }
                 //sinon on le renvoie la home
                 else
@@ -212,6 +213,7 @@
 
                             //attribution nouvelles données
                             $targetedCourse->setTitle($params['POST']['title']);
+                            $targetedCourse->setId_course_category($params['POST']['category']);
                             $targetedCourse->setStatus($params['POST']['status']);
 
                             //mise à jour

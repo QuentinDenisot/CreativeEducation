@@ -118,7 +118,7 @@
                                 $v = new View("back-add", "back");
                                 $v->assign("config", $form);
                                 $v->assign("errors", "Adresse mail déjà utilisée");
-                                $v->assign("fieldValues", $_POST);
+                                $v->assign("fieldValues", $params['POST']);
                                 $alert = new Alert("Adresse mail déjà utilisée", 'error');
                             }
                             //sinon succès

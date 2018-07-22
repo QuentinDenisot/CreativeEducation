@@ -1,5 +1,5 @@
 <?php
-    class RoleController
+    class CoursecategoryController
     {
         public function indexAction($params)
         {
@@ -9,12 +9,12 @@
             if($user->isConnected())
             {
                 //vérification user admin
-                if($user->isAdmin())
+                if($user->isAdmin() || $user->isProfessor())
                 {
-                    $role = new Role;
-                    //tableau des roles
-                    $table = $role->listRoleTable();
-                    $v = new View("back-roles", "back");
+                    $course_category = new Course_category();
+                    //tableau des cours
+                    $table = $course_category->listCourseCategoryTable();
+                    $v = new View("back-coursesCategories", "back");
                     $v->assign('config', $table);
                 }
                 //sinon on le renvoie la home
@@ -43,8 +43,8 @@
                     //si tous les champs sont remplis
                     if(!empty($params['POST']))
                     {
-                        $role = new Role();
-                        $form = $role->addRoleForm();
+                        $course_category = new Course_category();
+                        $form = $course_category->addCourseCategoryForm();
                         $errors = Validator::validate($form, $params['POST']);
 
                         //s'il y a des erreurs avec les données saisies dans le formulaire on les affiche
@@ -61,13 +61,13 @@
                                 $alert = new Alert($error, 'error');
                             }
                         }
-                        //sinon on renvoie sur la même page avec message de succès + on enregistre le role
+                        //sinon on renvoie sur la même page avec message de succès + on enregistre la category
                         else
                         {
-                            //permet de savoir si le role existe déjà
+                            //permet de savoir si la catégorie existe déjà
                             $queryConditions = [
                                 "select"=>[
-                                    "role.*"
+                                    "course_category.*"
                                 ],
                                 "join"=>[
                                     "inner_join"=>[],
@@ -75,7 +75,7 @@
                                     "right_join"=>[]
                                 ],
                                 "where"=>[
-                                    "clause"=>"LOWER(`role`.`name`) = '".mb_strtolower(addslashes($params['POST']['name']))."'",
+                                    "clause"=>"LOWER(`course_category`.`name`) = '".mb_strtolower($params['POST']['name'])."'",
                                     "and"=>[],
                                     "or"=>[]
                                 ],
@@ -109,42 +109,40 @@
                                 ]
                             ];
 
-                            $targetedRole = $role->getAll($queryConditions);
+                            $targetedCourseCategory = $course_category->getAll($queryConditions);
 
-                            /*var_dump($queryConditions);
-                            var_dump($targetedRole);*/
-
-                            //si le role existe déjà : erreur
-                            if(count($targetedRole) != 0)
+                            //si la category existe déjà : erreur
+                            if(count($targetedCourseCategory) == 1)
                             {
-                                $form = $role->addRoleForm();
+                                $form = $course_category->addCourseCategoryForm();
                                 $v = new View("back-add", "back");
                                 $v->assign("config", $form);
                                 $v->assign("errors", $errors);
                                 $v->assign("fieldValues", $params['POST']);
-                                $alert = new Alert("Ce rôle existe déjà", 'error');
+                                $alert = new Alert("Cette catégorie existe déjà", 'error');
                             }
-                            //sinon on enregistre le role
+                            //sinon on enregistre la category
                             else
                             {
-                                $role->setName($params['POST']['name']);
-                                $role->setStatus('1');
-                                $role->save();
+                                $course_category->setName($params['POST']['name']);
+                                $course_category->setStatus('1');
+                                $course_category->setId_user($_SESSION['user']['id']);
+                                $course_category->save();
 
-                                $form = $role->addRoleForm();
+                                $form = $course_category->addCourseCategoryForm();
                                 $v = new View("back-add", "back");
                                 $v->assign("config", $form);
                                 $v->assign("errors", $errors);
                                 $v->assign("fieldValues", $params['POST']);
-                                $alert = new Alert("Le rôle a été ajoutée avec succès", 'success');
+                                $alert = new Alert("La catégorie a été ajoutée avec succès", 'success');
                             }
                         }
                     }
                     //sinon, premier chargement de la page
                     else
                     {
-                        $role = new Role();
-                        $form = $role->addRoleForm();
+                        $course_category = new Course_category();
+                        $form = $course_category->addCourseCategoryForm();
                         
                         $v = new View("back-add", "back");
                         $v->assign("config", $form);
@@ -173,13 +171,13 @@
             if($user->isConnected())
             {
                 //vérification user admin
-                if($user->isAdmin())
+                if($user->isAdmin() || $user->isProfessor())
                 {
                     //si tous les champs sont remplis
                     if(!empty($params['POST']))
                     {
-                        $role = new Role();
-                        $form = $role->updateRoleForm();
+                        $course_category = new Course_category();
+                        $form = $course_category->updateCourseCategoryForm();
                         $errors = Validator::validate($form, $params['POST']);
 
                         //s'il y a des erreurs avec les données saisies dans le formulaire on les affiche
@@ -196,13 +194,13 @@
                                 $alert = new Alert($error, 'error');
                             }
                         }
-                        //sinon on renvoie sur la même page avec message de succès + on met à jour le rôle
+                        //sinon on renvoie sur la même page avec message de succès + on met à jour la category
                         else
                         {
-                            //permet de savoir si le role existe déjà
+                            //permet de savoir si la catégorie existe déjà
                             $queryConditions = [
                                 "select"=>[
-                                    "role.*"
+                                    "course_category.*"
                                 ],
                                 "join"=>[
                                     "inner_join"=>[],
@@ -210,13 +208,13 @@
                                     "right_join"=>[]
                                 ],
                                 "where"=>[
-                                    "clause"=>"LOWER(`role`.`name`) = '".mb_strtolower(addslashes($params['POST']['name']))."'",
+                                    "clause"=>"LOWER(`course_category`.`name`) = '".mb_strtolower($params['POST']['name'])."'",
                                     "and"=>[],
                                     "or"=>[]
                                 ],
                                 "and"=>[
                                     [
-                                        "clause"=>"`role`.`id` != '".$params['URL'][0]."'",
+                                        "clause"=>"`course_category`.`id` != '".$params['URL'][0]."'",
                                         "and"=>[],
                                         "or"=>[]
                                     ]
@@ -244,14 +242,14 @@
                                 ]
                             ];
 
-                            $targetedRole = $role->getAll($queryConditions);
+                            $targetedCourseCategory = $course_category->getAll($queryConditions);
 
-                            //si la role existe déjà : erreur
-                            if(count($targetedRole) != 0)
+                            //si la category existe déjà : erreur
+                            if(count($targetedCourseCategory) == 1)
                             {
                                 $queryConditions = [
                                     'select'=>[
-                                        'role.*'
+                                        'course_category.*'
                                     ],
                                     'join'=>[
                                         'inner_join'=>[],
@@ -259,7 +257,7 @@
                                         'right_join'=>[]
                                     ],
                                     'where'=>[
-                                        'clause'=>'`role`.`id` = '.$params['URL'][0],
+                                        'clause'=>'`course_category`.`id` = '.$params['URL'][0],
                                         'and'=>[],
                                         'or'=>[]
                                     ],
@@ -293,30 +291,31 @@
                                     ]
                                 ];
 
-                                $targetedRole = $role->getAll($queryConditions)[0];
+                                $targetedCourseCategory = $course_category->getAll($queryConditions)[0];
 
                                 //données à transmettre dans la form afin de pré remplir les champs
                                 $fieldValues = [
-                                    'name' => $targetedRole->getName(),
-                                    'status' => $targetedRole->getStatus()
+                                    'name' => $targetedCourseCategory->getName(),
+                                    'status' => $targetedCourseCategory->getStatus()
                                 ];
 
-                                $form = $role->updateRoleForm();
+                                $form = $course_category->updateCourseCategoryForm();
                                 $v = new View("back-update", "back");
                                 $v->assign("config", $form);
                                 $v->assign("errors", $errors);
                                 $v->assign("fieldValues", $fieldValues);
-                                $alert = new Alert("Ce rôle existe déjà", 'error');
+                                $alert = new Alert("Cette catégorie existe déjà", 'error');
                             }
+                            //sinon on enregistre la category
                             else
                             {
-                                //id du rôle à modifier
+                                //id du cours à modifier
                                 $id = $params['URL'][0];
 
-                                //récupération rôle
+                                //récupération cours
                                 $queryConditions = [
                                     'select'=>[
-                                        'role.*'
+                                        'course_category.*'
                                     ],
                                     'join'=>[
                                         'inner_join'=>[],
@@ -324,7 +323,7 @@
                                         'right_join'=>[]
                                     ],
                                     'where'=>[
-                                        'clause'=>'`role`.`id` = '.$id,
+                                        'clause'=>'`course_category`.`id` = '.$id,
                                         'and'=>[],
                                         'or'=>[]
                                     ],
@@ -358,14 +357,15 @@
                                     ]
                                 ];
 
-                                $role = new Role();
-                                $targetedRole = $role->getAll($queryConditions)[0];
+                                $course_category = new Course_category();
+                                $targetedCourseCategory = $course_category->getAll($queryConditions)[0];
 
                                 //attribution nouvelles données
-                                $targetedRole->setName($params['POST']['name']);
+                                $targetedCourseCategory->setName($params['POST']['name']);
+                                $targetedCourseCategory->setStatus($params['POST']['status']);
 
                                 //mise à jour
-                                $targetedRole->save();
+                                $targetedCourseCategory->save();
 
                                 //affichage message succès
                                 $v = new View("back-update", "back");
@@ -379,12 +379,12 @@
                     }
                     else
                     {
-                        //id du rôle à modifier
+                        //id du cours à modifier
                         $id = $params['URL'][0];
 
                         $queryConditions = [
                             'select'=>[
-                                'role.*'
+                                'course_category.*'
                             ],
                             'join'=>[
                                 'inner_join'=>[],
@@ -392,7 +392,7 @@
                                 'right_join'=>[]
                             ],
                             'where'=>[
-                                'clause'=>'`role`.`id` = '.$id,
+                                'clause'=>'`course_category`.`id` = '.$id,
                                 'and'=>[],
                                 'or'=>[]
                             ],
@@ -426,15 +426,16 @@
                             ]
                         ];
 
-                        $role = new Role();
-                        $targetedRole = $role->getAll($queryConditions)[0];
+                        $course_category = new Course_category();
+                        $targetedCourseCategory = $course_category->getAll($queryConditions)[0];
 
                         //données à transmettre dans la form afin de pré remplir les champs
                         $fieldValues = [
-                            'name' => $targetedRole->getName()
+                            'name' => $targetedCourseCategory->getName(),
+                            'status' => $targetedCourseCategory->getStatus()
                         ];
 
-                        $form = $role->updateRoleForm();
+                        $form = $course_category->updateCourseCategoryForm();
                         
                         $v = new View("back-update", "back");
                         $v->assign("config", $form);
@@ -463,9 +464,9 @@
             if($user->isConnected())
             {
                 //vérification user admin
-                if($user->isAdmin())
+                if($user->isAdmin() || $user->isProfessor())
                 {
-                    //id du user à supprimer
+                    //id de la category à supprimer
                     $id = $params['URL'][0];
 
                     //si l'id est renseigné et qu'il s'agit d'un nombre
@@ -473,7 +474,7 @@
                     {
                         $queryConditions = [
                             'select'=>[
-                                'role.*'
+                                'course_category.*'
                             ],
                             'join'=>[
                                 'inner_join'=>[],
@@ -481,7 +482,7 @@
                                 'right_join'=>[]
                             ],
                             'where'=>[
-                                'clause'=>'role.id = '.$id,
+                                'clause'=>'course_category.id = '.$id,
                                 'and'=>[],
                                 'or'=>[]
                             ],
@@ -515,13 +516,13 @@
                             ]
                         ];
 
-                        $role = new Role;
+                        $course_category = new Course_category();
 
-                        $targetedRole = $role->getAll($queryConditions);
-                        $targetedRole[0]->setStatus('0');
-                        $targetedRole[0]->save();
+                        $targetedCourseCategory = $course_category->getAll($queryConditions);
+                        $targetedCourseCategory[0]->setStatus('0');
+                        $targetedCourseCategory[0]->save();
 
-                        header('Location: '.DIRNAME.'role/index');
+                        header('Location: '.DIRNAME.'coursecategory/index');
                     }
                     //sinon 404
                     else
@@ -550,9 +551,9 @@
             if($user->isConnected())
             {
                 //vérification user admin
-                if($user->isAdmin())
+                if($user->isAdmin() || $user->isProfessor())
                 {
-                    //id du user à supprimer
+                    //id de la category à supprimer
                     $id = $params['URL'][0];
 
                     //si l'id est renseigné et qu'il s'agit d'un nombre
@@ -560,7 +561,7 @@
                     {
                         $queryConditions = [
                             'select'=>[
-                                'role.*'
+                                'course_category.*'
                             ],
                             'join'=>[
                                 'inner_join'=>[],
@@ -568,7 +569,7 @@
                                 'right_join'=>[]
                             ],
                             'where'=>[
-                                'clause'=>'role.id = '.$id,
+                                'clause'=>'`course_category`.`id` = '.$id,
                                 'and'=>[],
                                 'or'=>[]
                             ],
@@ -602,13 +603,13 @@
                             ]
                         ];
 
-                        $role = new Role;
+                        $course_category = new Course_category();
 
-                        $targetedRole = $role->getAll($queryConditions);
-                        $targetedRole[0]->setStatus('1');
-                        $targetedRole[0]->save();
+                        $targetedCourseCategory = $course_category->getAll($queryConditions);
+                        $targetedCourseCategory[0]->setStatus('1');
+                        $targetedCourseCategory[0]->save();
 
-                        header('Location: '.DIRNAME.'role/index');
+                        header('Location: '.DIRNAME.'coursecategory/index');
                     }
                     //sinon 404
                     else

@@ -40,6 +40,29 @@
             return $this->status;
         }
 
+        public function addRoleForm()
+        {
+            return [
+                "config" => [
+                    "method" => "POST",
+                    "action" => "role/add"
+                ],
+                "input" => [
+                    "name" => [
+                        "type" => "text",
+                        "placeholder" => "Nom",
+                        "required" => true,
+                        "minString" => 5,
+                        "maxString" => 250
+                    ]
+                ],
+                "button" => [
+                    "text" => "AJOUTER"
+                ],
+                "captcha" => false
+            ];
+        }
+
         public function updateRoleForm()
         {
             return [

@@ -10,6 +10,7 @@
         //protected $insertedDate;
         //protected $updatedDate;
         protected $id_user;
+        protected $id_course_category;
 
         public function __construct()
         {
@@ -49,6 +50,11 @@
         public function setId_user($id_user)
         {
             $this->id_user = $id_user;
+        }
+
+        public function setId_course_category($id_course_category)
+        {
+            $this->id_course_category = $id_course_category;
         }
 
         public function getId()
@@ -96,8 +102,68 @@
             return $this->id_user;
         }
 
+        public function getId_course_category()
+        {
+            return $this->id_course_category;
+        }
+
         public function addCourseForm()
         {
+            //récupération de toutes les catégories pour alimenter la liste déroulante
+            $queryConditions = [
+                "select"=>[
+                    "course_category.*"
+                ],
+                "join"=>[
+                    "inner_join"=>[],
+                    "left_join"=>[],
+                    "right_join"=>[]
+                ],
+                "where"=>[
+                    "clause"=>"`course_category`.`status` = '1'",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "and"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "or"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "group_by"=>[],
+                "having"=>[
+                    "clause"=>"",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "order_by"=>[
+                    "asc"=>[
+                        "`course_category`.`id`"
+                    ],
+                    "desc"=>[]
+                ],
+                "limit"=>[
+                    "offset"=>"",
+                    "range"=>""
+                ]
+            ];
+
+            $course_category = new Course_category();
+            $categories = $course_category->getAll($queryConditions);
+
+            foreach($categories as $category)
+            {
+                $options[$category->getId()] = $category->getName();
+            }
+
             return [
                 "config" => [
                     "method" => "POST",
@@ -132,6 +198,14 @@
                         "rows" => 1
                     ]
                 ],
+                "select" => [
+                    "category" => [
+                        "placeholder" => "Catégorie",
+                        "emptyOption" => false,
+                        "options" => $options,
+                        "required" => true
+                    ]
+                ],
                 "button" => [
                     "text" => "AJOUTER"
                 ],
@@ -141,6 +215,61 @@
 
         public function updateCourseForm()
         {
+            //récupération de toutes les catégories pour alimenter la liste déroulante
+            $queryConditions = [
+                "select"=>[
+                    "course_category.*"
+                ],
+                "join"=>[
+                    "inner_join"=>[],
+                    "left_join"=>[],
+                    "right_join"=>[]
+                ],
+                "where"=>[
+                    "clause"=>"`course_category`.`status` = '1'",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "and"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "or"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "group_by"=>[],
+                "having"=>[
+                    "clause"=>"",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "order_by"=>[
+                    "asc"=>[
+                        "`course_category`.`id`"
+                    ],
+                    "desc"=>[]
+                ],
+                "limit"=>[
+                    "offset"=>"",
+                    "range"=>""
+                ]
+            ];
+
+            $course_category = new Course_category();
+            $categories = $course_category->getAll($queryConditions);
+
+            foreach($categories as $category)
+            {
+                $optionsCategories[$category->getId()] = $category->getName();
+            }
+
             //récupération de tous les status pour alimenter la liste déroulante
             $queryConditions = [
                 "select"=>[
@@ -193,7 +322,7 @@
 
             foreach($statuses as $status)
             {
-                $options[$status->getId()] = $status->getName();
+                $optionsStatus[$status->getId()] = $status->getName();
             }
 
             return [
@@ -210,10 +339,275 @@
                         "maxString" => 250
                     ]
                 ],
+                "select" => [
+                    "category" => [
+                        "placeholder" => "Catégorie",
+                        "emptyOption" => false,
+                        "options" => $optionsCategories,
+                        "required" => true
+                    ],
+                    "status" => [
+                        "placeholder" => "Statut",
+                        "emptyOption" => false,
+                        "options" => $optionsStatus,
+                        "required" => true
+                    ]
+                ],
                 "button" => [
                     "text" => "VALIDER LES MODIFICATIONS"
                 ],
                 "captcha" => false
+            ];
+        }
+
+        public function listCourseTable()
+        {
+            $user = new User();
+
+            //si user est professeur, on récupère uniquement les cours qu'il a créés
+            if($user->isProfessor())
+            {
+                //cours liés au professeur connecté
+                $queryConditions = [
+                    "select"=>[
+                        "course.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`course`.`id_user` = '".$_SESSION['user']['id']."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $course = new Course();
+                $courses = $course->getAll($queryConditions);
+            }
+            //si user est admin, on récupère tous les cours
+            elseif($user->isAdmin())
+            {
+                $course = new Course();
+                $courses = $course->getAll();
+            }
+
+            //création tableau à fournir au modal
+            $arrayCourses = [];
+
+            foreach($courses as $course)
+            {
+                //récupération de la category
+                $queryConditions = [
+                    "select"=>[
+                        "course_category.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`course_category`.`id` = '".$course->getId_course_category()."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $course_category = new Course_category();
+                $targetedCategory = $course_category->getAll($queryConditions)[0];
+
+                //récupération du status
+                $queryConditions = [
+                    "select"=>[
+                        "status.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`status`.`id` = '".$course->getStatus()."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $status = new Status();
+                $targetedStatus = $status->getAll($queryConditions)[0];
+
+                //récupération du user qui a créé le cours
+                $queryConditions = [
+                    "select"=>[
+                        "user.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`user`.`id` = '".$course->getId_user()."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $targetedUser = $user->getAll($queryConditions)[0];
+
+                $idCourse = $course->getId();
+                $arrayCourses[$idCourse]['title'] = $course->getTitle();
+                $arrayCourses[$idCourse]['category'] = $targetedCategory->getName();
+                $arrayCourses[$idCourse]['filename'] = $course->getFileName();
+                $arrayCourses[$idCourse]['insertedDate'] = Helpers::europeanDateFormat($course->getInsertedDate());
+                $arrayCourses[$idCourse]['creator'] = Helpers::cleanFirstname($targetedUser->getFirstname()).' '.Helpers::cleanLastname($targetedUser->getLastname());
+                $arrayCourses[$idCourse]['status'] = $targetedStatus->getName();
+                $arrayCourses[$idCourse]['actions']['edit']['path'] = 'course/update/'.$idCourse;
+                $arrayCourses[$idCourse]['actions']['edit']['icon'] = 'build';
+                $arrayCourses[$idCourse]['actions']['edit']['color'] = 'blue';
+
+                //changement du bouton en fonction du statut du user : si activé, on affiche le bouton de désactivation
+                if($course->getStatus() == 1)
+                {
+                    $arrayCourses[$idCourse]['actions']['delete']['path'] = 'course/delete/'.$idCourse;
+                    $arrayCourses[$idCourse]['actions']['delete']['icon'] = 'close';
+                    $arrayCourses[$idCourse]['actions']['delete']['color'] = 'red';
+                }
+                //sinon on affiche le bouton d'activation
+                elseif($course->getStatus() == 0)
+                {
+                    $arrayCourses[$idCourse]['actions']['delete']['path'] = 'course/activate/'.$idCourse;
+                    $arrayCourses[$idCourse]['actions']['delete']['icon'] = 'check';
+                    $arrayCourses[$idCourse]['actions']['delete']['color'] = 'green';
+                }
+            }
+
+            return [
+                "thead" => [
+                    "Titre",
+                    "Catégorie",
+                    "Fichier",
+                    "Date d'ajout",
+                    "Créateur",
+                    "Statut",
+                    "Actions"
+                ],
+                "content" => $arrayCourses
             ];
         }
     }
