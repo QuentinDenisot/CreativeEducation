@@ -1,7 +1,5 @@
-FROM php:7.0-apache
+FROM php:7.1.2-apache
 
 LABEL maintainer="Quentin, Théo, Arnaud, Julien <theosen95@gmail.com>"
 
-RUN apt-get update \
- && docker-php-ext-install pdo pdo_mysql
-RUN rm -rf /tmp/* /var/cache/apt/* 
+RUN docker-php-ext-install mysqli
