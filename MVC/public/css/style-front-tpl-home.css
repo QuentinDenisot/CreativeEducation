@@ -341,8 +341,7 @@ footer {
   font-size: 10pt;
   padding: 0% 3%;
   text-align: right;
-  vertical-align: middle;
-  background-color: #F5F5F5; }
+  vertical-align: middle; }
   @media all and (max-width: 768px) {
     footer {
       font-size: 8pt; } }

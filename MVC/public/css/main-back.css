@@ -1115,6 +1115,9 @@ h2.title {
   .close i {
     font-size: 11px; }
 
+.headerTop button {
+  margin-top: 0; }
+
 body {
   background-color: #EEEEEE;
   color: #3C4858; }
@@ -1971,6 +1974,9 @@ form .form-footer .checkbox {
   width: 100%;
   padding-top: 10px;
   z-index: 1029; }
+
+.navbar-right {
+  float: right; }
 
 .dropdown-menu {
   border: 0;
