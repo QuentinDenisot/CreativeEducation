@@ -19,6 +19,7 @@
         protected $insertedDate;
         protected $updatedDate;*/
         protected $id_role;
+        protected $id_user_group;
 
         public function __construct()
         {
@@ -68,6 +69,11 @@
         public function setId_role($id_role = 0)
         {
             $this->id_role = $id_role;
+        }
+
+        public function setId_user_group($id_user_group = 1)
+        {
+            $this->id_user_group = $id_user_group;
         }
 
         public function getId()
@@ -123,6 +129,11 @@
         public function getId_role()
         {
             return $this->id_role;
+        }
+
+        public function getId_user_group()
+        {
+            return $this->id_user_group;
         }
 
         public function sendMail($subject, $body)
@@ -691,10 +702,67 @@
 
             $role = new Role();
             $roles = $role->getAll($queryConditions);
+            $optionsRoles = [];
 
             foreach($roles as $role)
             {
-                $options[$role->getId()] = $role->getName();
+                $optionsRoles[$role->getId()] = $role->getName();
+            }
+
+            //récupération des groupes que l'on peut attribuer lors de la création d'un nouvel utilisateur (apprenant / professeur)
+            $queryConditions = [
+                "select"=>[
+                    "user_group.*"
+                ],
+                "join"=>[
+                    "inner_join"=>[],
+                    "left_join"=>[],
+                    "right_join"=>[]
+                ],
+                "where"=>[
+                    "clause"=>"`user_group`.`status` = '1'",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "and"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "or"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "group_by"=>[],
+                "having"=>[
+                    "clause"=>"",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "order_by"=>[
+                    "asc"=>[
+                        "`user_group`.`id`"
+                    ],
+                    "desc"=>[]
+                ],
+                "limit"=>[
+                    "offset"=>"",
+                    "range"=>""
+                ]
+            ];
+
+            $user_group = new User_group();
+            $groups = $user_group->getAll($queryConditions);
+            $optionsGroups = [];
+
+            foreach($groups as $group)
+            {
+                $optionsGroups[$group->getId()] = $group->getName();
             }
 
             return [
@@ -732,7 +800,13 @@
                     "role" => [
                         "placeholder" => "Rôle",
                         "emptyOption" => true,
-                        "options" => $options,
+                        "options" => $optionsRoles,
+                        "required" => true
+                    ],
+                    "group" => [
+                        "placeholder" => "Groupe",
+                        "emptyOption" => false,
+                        "options" => $optionsGroups,
                         "required" => true
                     ]
                 ],
@@ -795,10 +869,67 @@
 
             $role = new Role();
             $roles = $role->getAll($queryConditions);
+            $optionsRoles = [];
 
             foreach($roles as $role)
             {
-                $options[$role->getId()] = $role->getName();
+                $optionsRoles[$role->getId()] = $role->getName();
+            }
+
+            //récupération des groupes que l'on peut attribuer lors de la création d'un nouvel utilisateur (apprenant / professeur)
+            $queryConditions = [
+                "select"=>[
+                    "user_group.*"
+                ],
+                "join"=>[
+                    "inner_join"=>[],
+                    "left_join"=>[],
+                    "right_join"=>[]
+                ],
+                "where"=>[
+                    "clause"=>"`user_group`.`status` = '1'",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "and"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "or"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "group_by"=>[],
+                "having"=>[
+                    "clause"=>"",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "order_by"=>[
+                    "asc"=>[
+                        "`user_group`.`id`"
+                    ],
+                    "desc"=>[]
+                ],
+                "limit"=>[
+                    "offset"=>"",
+                    "range"=>""
+                ]
+            ];
+
+            $user_group = new User_group();
+            $groups = $user_group->getAll($queryConditions);
+            $optionsGroups = [];
+
+            foreach($groups as $group)
+            {
+                $optionsGroups[$group->getId()] = $group->getName();
             }
 
             return [
@@ -833,7 +964,13 @@
                     "role" => [
                         "placeholder" => "Rôle",
                         "emptyOption" => false,
-                        "options" => $options,
+                        "options" => $optionsRoles,
+                        "required" => true
+                    ],
+                    "group" => [
+                        "placeholder" => "Groupe",
+                        "emptyOption" => false,
+                        "options" => $optionsGroups,
                         "required" => true
                     ]
                 ],
@@ -903,6 +1040,54 @@
                 $status = new Status();
                 $targetedStatus = $status->getAll($queryConditions)[0];
 
+                //récupération du group
+                $queryConditions = [
+                    "select"=>[
+                        "user_group.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`user_group`.`id` = '".$user->getId_user_group()."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $user_group = new User_group();
+                $targetedGroup = $user_group->getAll($queryConditions)[0];
+
                 //récupération du role
                 $queryConditions = [
                     "select"=>[
@@ -956,6 +1141,7 @@
                 $arrayUsers[$idUser]['firstname'] = Helpers::cleanFirstname($user->getFirstname());
                 $arrayUsers[$idUser]['email'] = $user->getEmail();
                 $arrayUsers[$idUser]['insertedDate'] = Helpers::europeanDateFormat($user->getInsertedDate());
+                $arrayUsers[$idUser]['group'] = $targetedGroup->getName();
                 $arrayUsers[$idUser]['status'] = $targetedStatus->getName();
                 $arrayUsers[$idUser]['role'] = $targetedRole->getName();
                 $arrayUsers[$idUser]['actions']['edit']['path'] = 'user/update/'.$idUser;
@@ -984,6 +1170,7 @@
                     "Prénom",
                     "Email",
                     "Date d'inscription",
+                    "Groupe",
                     "Statut",
                     "Rôle",
                     "Actions"

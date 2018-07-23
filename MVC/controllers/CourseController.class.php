@@ -85,6 +85,7 @@
                                 $course->setFileName($filename);
                                 $course->setStatus('1');
                                 $course->setId_user($_SESSION['user']['id']);
+                                $course->setId_course_category($params['POST']['category']);
                                 $course->save();
 
                                 $v = new View("back-add", "back");
@@ -215,6 +216,7 @@
                             $targetedCourse->setTitle($params['POST']['title']);
                             $targetedCourse->setId_course_category($params['POST']['category']);
                             $targetedCourse->setStatus($params['POST']['status']);
+                            $targetedCourse->setDescription($params['POST']['description']);
 
                             //mise à jour
                             $targetedCourse->save();
@@ -283,7 +285,9 @@
                         //données à transmettre dans la form afin de pré remplir les champs
                         $fieldValues = [
                             'title' => $targetedCourse->getTitle(),
-                            'status' => $targetedCourse->getStatus()
+                            'status' => $targetedCourse->getStatus(),
+                            'description' => $targetedCourse->getDescription(),
+                            'category' => $targetedCourse->getId_course_category()
                         ];
 
                         $form = $course->updateCourseForm();

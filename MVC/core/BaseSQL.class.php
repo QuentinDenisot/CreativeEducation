@@ -56,10 +56,10 @@
             }
         }
 
-        public function delete($id)
+        public function delete($id, $targetedColumn = 'id')
         {
             $query = $this->pdo->prepare("DELETE FROM ".$this->table." 
-                                          WHERE `".$this->table."`.`id` = '".$id."'");
+                                          WHERE `".$this->table."`.`".$targetedColumn."` = '".$id."'");
 
             $query->execute();
         }

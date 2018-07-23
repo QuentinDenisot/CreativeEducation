@@ -57,7 +57,10 @@
                 <label class="col-md-2 label-on-left"><?php echo $params['placeholder']; ?></label>
                 <div class="col-md-10">
                     <div class="form-group is-empty">
-                        <select name="<?php echo $name; ?>" class="form-control">
+                        <select name="<?php echo $name; ?>" 
+                                <?php echo (isset($params['required']) && $params['required']) ? "required='required'" : ""; 
+                                echo (isset($params['multiple']) && $params['multiple']) ? "multiple" : ""; ?> 
+                                class="form-control">
                             
                             <?php if($params['emptyOption']): ?>
 

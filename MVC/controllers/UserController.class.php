@@ -140,6 +140,7 @@
                                 $user->setStatus('1');
                                 $user->setToken();
                                 $user->setId_role($params['POST']['role']);
+                                $user->setId_user_group($params['POST']['group']);
                                 $user->save();
 
                                 //récupération de l'id du user depuis email
@@ -321,6 +322,7 @@
                             $targetedUser->setLastname($params['POST']['lastname']);
                             $targetedUser->setEmail($params['POST']['email']);
                             $targetedUser->setId_role($params['POST']['role']);
+                            $targetedUser->setId_user_group($params['POST']['group']);
 
                             //mise à jour
                             $targetedUser->save();
@@ -391,7 +393,8 @@
                             'firstname' => Helpers::cleanFirstname($targetedUser->getFirstname()),
                             'lastname' => Helpers::cleanLastname($targetedUser->getLastname()),
                             'email' => $targetedUser->getEmail(),
-                            'role' => $targetedUser->getId_role()
+                            'role' => $targetedUser->getId_role(),
+                            'group' => $targetedUser->getId_user_group()
                         ];
 
                         $form = $user->updateUserForm();
