@@ -8,8 +8,7 @@
     <title>Creative Education</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
-    <link href="<?php echo DIRNAME; ?>public/css/dashboard.css" rel="stylesheet" />
-    <link href="<?php echo DIRNAME; ?>public/css/grid.css" rel="stylesheet" />
+    <link href="<?php echo DIRNAME; ?>public/css/main-back.css" rel="stylesheet" />
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -22,7 +21,7 @@
     <?php $user = new User(); ?>
     <div class="wrapper">
         <div class="sidebar" data-active-color="rose" data-background-color="black">
-            <div class="logo">
+            <div class="logo-creative">
                 <img src="<?php echo DIRNAME.'public/images/logo.svg'; ?>" alt="logo">
                 <a href="<?php echo DIRNAME.'index/home'; ?>" class="simple-text logo-normal">
                     Creative Education
