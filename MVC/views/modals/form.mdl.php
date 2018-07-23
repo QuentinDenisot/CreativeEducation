@@ -135,7 +135,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group form-button form-button-center">
-                <button name="button" type="submit" class="btn btn-fill btn-rose"><?php echo $config['button']['text']; ?></button>
+                <button name="button" type="submit" class="btn btn-fill btn-rose pull-right"><?php echo $config['button']['text']; ?></button>
             </div>
         </div>
     </div>

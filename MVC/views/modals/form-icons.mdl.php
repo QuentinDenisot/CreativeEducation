@@ -111,8 +111,6 @@
 
     <?php endif; ?>
 
-
-
     <div class="form-row">
         <button name="button" value="sendForm" class="btn btn-rose">
             <?php echo $config['button']['text']; ?>

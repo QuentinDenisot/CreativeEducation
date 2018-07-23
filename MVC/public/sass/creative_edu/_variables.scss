@@ -243,9 +243,6 @@ $input-color:                    $gray !default;
 //** `<input>` border color
 $input-border:                   #ccc !default;
 
-// TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
-//** Default `.form-control` border radius
-// This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
 $input-border-radius:            $border-radius-base !default;
 //** Large `.form-control` border radius
 $input-border-radius-large:      $border-radius-large !default;
@@ -585,3 +582,9 @@ $margin-bottom:                0 0 10px 0 !default;
 $margin-base-vertical:         15px !default;
 
 $font-color:                 #66615b !default;
+
+$li_text_color: #FFFFFF;
+$li_active_text_color: #000000;
+$dropdown_color: rgba(0, 0, 0, 0.5);
+$background_color: #F5F5F5;
+$footer_span_color: #29B6F6;

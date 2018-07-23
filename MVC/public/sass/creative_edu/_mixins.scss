@@ -24,41 +24,6 @@
     lighten($variation-color, $db-param-1));
 }
 
-@mixin navbar-variations-content($args) {
-    $variation-color: map-get($args, variation-color);
-    $variation-color-text: map-get($args, variation-color-text);
-
-    background-color: $variation-color;
-    color: $variation-color-text; // deeply defined to override welljumbo class without !impotant need
-    .navbar-form .form-group input.form-control,
-    .navbar-form input.form-control {
-        @include material-placeholder {
-            color: $variation-color-text;
-        }
-    }
-    .dropdown-menu {
-        border-radius: $border-radius-base !important;
-        li > a {
-            &:hover,
-            &:focus {
-                color: $white-color;
-                background-color: $variation-color;
-                @include shadow-big-color($variation-color);
-            }
-        }
-
-        .active > a {
-            &:hover,
-            &:focus {
-                color: $variation-color-text;
-            }
-            background-color: $variation-color;
-            color: $variation-color-text;
-            @include shadow-big-color($variation-color);
-        }
-    }
-}
-
 @mixin transition($time, $type) {
     -webkit-transition: all $time $type;
     -moz-transition: all $time $type;
@@ -171,20 +136,6 @@
     &:hover {
         // remove this line if you want black shadows
         @include button-shadow-color($btn-color);
-    }
-
-    &.disabled,
-    &:disabled,
-    &[disabled],
-    fieldset[disabled] & {
-        &,
-        &:hover,
-        &:focus,
-        &.focus,
-        &:active,
-        &.active {
-            box-shadow: none;
-        }
     }
 
     &.btn-simple {

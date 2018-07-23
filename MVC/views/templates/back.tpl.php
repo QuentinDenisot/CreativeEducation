@@ -237,7 +237,7 @@
         <?php
             include 'views/'.$this->v;
         ?>
-        <footer class="footer">
+        <!--<footer class="footer">
             <div class="container-fluid">
                 <p class="copyright pull-right">
                     &copy;
@@ -247,7 +247,7 @@
                     <a href="http://www.theosenoussaoui.fr"> Senoussaoui Théo </a> déteste Charts.js
                 </p>
             </div>
-        </footer>
+        </footer>-->
     </div>
 </body>
 <!--   Core JS Files   -->
