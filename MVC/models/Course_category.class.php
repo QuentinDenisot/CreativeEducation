@@ -337,7 +337,7 @@
                 $arrayCategories[$idCategory]['actions']['edit']['icon'] = 'build';
                 $arrayCategories[$idCategory]['actions']['edit']['color'] = 'blue';
 
-                //changement du bouton en fonction du statut du user : si activé, on affiche le bouton de désactivation
+                //changement du bouton en fonction du statut de la category : si activé, on affiche le bouton de désactivation
                 if($category->getStatus() == 1)
                 {
                     $arrayCategories[$idCategory]['actions']['delete']['path'] = 'coursecategory/delete/'.$idCategory;

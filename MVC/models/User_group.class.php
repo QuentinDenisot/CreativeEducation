@@ -40,12 +40,12 @@
 
         public function getName()
         {
-            return $this->name;
+            return htmlspecialchars($this->name);
         }
 
         public function getStatus()
         {
-            return $this->status;
+            return htmlspecialchars($this->status);
         }
 
         public function getInsertedDate()
@@ -333,21 +333,21 @@
                 //$arrayGroups[$idGroup]['nbLinkedStudents'] = $nbLinkedStudents;
                 $arrayGroups[$idGroup]['insertedDate'] = Helpers::europeanDateFormat($group->getInsertedDate());
                 $arrayGroups[$idGroup]['status'] = $targetedStatus->getName();
-                $arrayGroups[$idGroup]['actions']['edit']['path'] = 'coursecategory/update/'.$idGroup;
+                $arrayGroups[$idGroup]['actions']['edit']['path'] = 'usergroup/update/'.$idGroup;
                 $arrayGroups[$idGroup]['actions']['edit']['icon'] = 'build';
                 $arrayGroups[$idGroup]['actions']['edit']['color'] = 'blue';
 
-                //changement du bouton en fonction du statut du user : si activé, on affiche le bouton de désactivation
-                if($category->getStatus() == 1)
+                //changement du bouton en fonction du statut du group : si activé, on affiche le bouton de désactivation
+                if($group->getStatus() == 1)
                 {
-                    $arrayGroups[$idGroup]['actions']['delete']['path'] = 'coursecategory/delete/'.$idGroup;
+                    $arrayGroups[$idGroup]['actions']['delete']['path'] = 'usergroup/delete/'.$idGroup;
                     $arrayGroups[$idGroup]['actions']['delete']['icon'] = 'close';
                     $arrayGroups[$idGroup]['actions']['delete']['color'] = 'red';
                 }
                 //sinon on affiche le bouton d'activation
-                elseif($category->getStatus() == 0)
+                elseif($group->getStatus() == 0)
                 {
-                    $arrayGroups[$idGroup]['actions']['delete']['path'] = 'coursecategory/activate/'.$idGroup;
+                    $arrayGroups[$idGroup]['actions']['delete']['path'] = 'usergroup/activate/'.$idGroup;
                     $arrayGroups[$idGroup]['actions']['delete']['icon'] = 'check';
                     $arrayGroups[$idGroup]['actions']['delete']['color'] = 'green';
                 }
@@ -357,7 +357,7 @@
                 "thead" => [
                     "Nom",
                     "Créateur",
-                    "Cours liés",
+                    //"Cours liés",
                     "Date d'ajout",
                     "Statut",
                     "Actions"
