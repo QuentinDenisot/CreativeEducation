@@ -322,7 +322,8 @@ h2.title {
       letter-spacing: 1px;
       position: relative;
       float: left;
-      display: inherit; }
+      display: inherit;
+      margin-top: 2px; }
     .sidebar .sidebar-wrapper > .nav [data-toggle="collapse"] ~ div > ul > li > a i,
     .sidebar .sidebar-wrapper .user .blue [data-toggle="collapse"] ~ div > ul > li > a i {
       font-size: 17px;
