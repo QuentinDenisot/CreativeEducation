@@ -331,11 +331,11 @@ h2.title {
   .sidebar .logo-creative {
     display: block;
     height: 40px;
-    width: 250px;
+    width: 200px;
     float: left;
     overflow: hidden;
     margin-right: 11px;
-    margin-top: 11px;
+    margin-top: 20px;
     margin-left: 23px; }
     .sidebar .logo-creative img {
       width: 40px;
