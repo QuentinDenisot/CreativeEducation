@@ -21,6 +21,7 @@
 
         <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>public/css/grid.css">
         <link rel="stylesheet" type="text/css" href="<?php echo DIRNAME; ?>public/css/alert.css">
+        
         <script src="<?php echo DIRNAME; ?>public/js/alert.js"></script>
     </head>
     <body>
