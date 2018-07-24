@@ -69,7 +69,7 @@
 
         public function getDescription()
         {
-            return $this->description;
+            return htmlspecialchars($this->description);
         }
 
         public function getFilePath()
@@ -79,12 +79,12 @@
 
         public function getFileName()
         {
-            return $this->fileName;
+            return htmlspecialchars($this->fileName);
         }
 
         public function getStatus()
         {
-            return $this->status;
+            return htmlspecialchars($this->status);
         }
 
         public function getInsertedDate()

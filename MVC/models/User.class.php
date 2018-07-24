@@ -83,12 +83,12 @@
 
         public function getFirstname()
         {
-            return $this->firstname;
+            return htmlspecialchars($this->firstname);
         }
 
         public function getLastname()
         {
-            return $this->lastname;
+            return htmlspecialchars($this->lastname);
         }
 
         public function getPwd()
@@ -103,7 +103,7 @@
 
         public function getStatus()
         {
-            return $this->status;
+            return htmlspecialchars($this->status);
         }
 
         public function getToken()

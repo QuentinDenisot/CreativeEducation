@@ -13,11 +13,12 @@
             //sinon affichage page login
             else
             {
-                $form = Auth::loginForm();
+                /*$form = Auth::loginForm();
                 $v = new View("auth-login", "auth");
                 $v->assign("config", $form);
                 $v->assign("errors", '');
-                $v->assign("fieldValues", null);
+                $v->assign("fieldValues", null);*/
+                header('Location: '.DIRNAME.'index/login');
             }
         }
 
