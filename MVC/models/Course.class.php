@@ -260,8 +260,7 @@
                         "placeholder" => "Catégorie",
                         "emptyOption" => false,
                         "options" => $optionsCategories,
-                        "required" => true,
-                        "multiple" => false
+                        "required" => true
                     ],
                     "groups" => [
                         "placeholder" => "Groupe(s)",
@@ -390,6 +389,62 @@
                 $optionsStatus[$status->getId()] = $status->getName();
             }
 
+            //récupération des groupes que l'on peut attribuer lors de la modification d'un cours
+            $queryConditions = [
+                "select"=>[
+                    "user_group.*"
+                ],
+                "join"=>[
+                    "inner_join"=>[],
+                    "left_join"=>[],
+                    "right_join"=>[]
+                ],
+                "where"=>[
+                    "clause"=>"`user_group`.`status` = '1'",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "and"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "or"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "group_by"=>[],
+                "having"=>[
+                    "clause"=>"",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "order_by"=>[
+                    "asc"=>[
+                        "`user_group`.`id`"
+                    ],
+                    "desc"=>[]
+                ],
+                "limit"=>[
+                    "offset"=>"",
+                    "range"=>""
+                ]
+            ];
+
+            $user_group = new User_group();
+            $groups = $user_group->getAll($queryConditions);
+            $optionsGroups = [];
+
+            foreach($groups as $group)
+            {
+                $optionsGroups[$group->getId()] = $group->getName();
+            }
+
             return [
                 "config" => [
                     "method" => "POST",
@@ -425,6 +480,13 @@
                         "emptyOption" => false,
                         "options" => $optionsStatus,
                         "required" => true
+                    ],
+                    "groups" => [
+                        "placeholder" => "Groupe(s)",
+                        "emptyOption" => false,
+                        "options" => $optionsGroups,
+                        "required" => true,
+                        "multiple" => true
                     ]
                 ],
                 "button" => [

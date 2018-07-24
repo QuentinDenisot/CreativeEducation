@@ -1178,4 +1178,123 @@
                 "content" => $arrayUsers
             ];
         }
+
+        //liste des user à charger sur le dashboard 
+        public function listStudentsDashTable()
+        {
+            //récupération de tous les apprenants (max 10)
+            $queryConditions = [
+                "select"=>[
+                    "user.*"
+                ],
+                "join"=>[
+                    "inner_join"=>[],
+                    "left_join"=>[],
+                    "right_join"=>[]
+                ],
+                "where"=>[
+                    "clause"=>"`user`.`id_role` = '2'",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "and"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "or"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "group_by"=>[],
+                "having"=>[
+                    "clause"=>"",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "order_by"=>[
+                    "asc"=>[
+                        "`user`.`lastname`",
+                        "`user`.`firstname`"
+                    ],
+                    "desc"=>[]
+                ],
+                "limit"=>[
+                    "offset"=>"0",
+                    "range"=>"10"
+                ]
+            ];
+
+            $user = new User();
+            $users = $user->getAll($queryConditions);
+
+            //création tableau à fournir au modal
+            $arrayUsers = [];
+
+            foreach($users as $user)
+            {
+                //récupération du group
+                $queryConditions = [
+                    "select"=>[
+                        "user_group.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`user_group`.`id` = '".$user->getId_user_group()."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $user_group = new User_group();
+                $targetedGroup = $user_group->getAll($queryConditions)[0];
+            }
+
+            return [
+                "thead" => [
+                    "Nom",
+                    "Prénom",
+                    "Email",
+                    "Groupe"
+                ],
+                "content" => $arrayStudents
+            ];
+        }
     }

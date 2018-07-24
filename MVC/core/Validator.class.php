@@ -98,9 +98,33 @@
             {
                 foreach($form['select'] as $name => $config)
                 {
-                    if(isset($config["required"]) && $config["required"] && !self::minLength($paramsPost[$name], 1))
+                    //si multiple est spécifié dans la config
+                    if(isset($config['multiple']))
                     {
-                        $errorsMsg[] = $config['placeholder']." est requis";
+                        //gestion des select simples
+                        if(!$config['multiple'])
+                        {
+                            if((isset($config["required"]) && $config["required"]) && !self::minLength($paramsPost[$name], 1))
+                            {
+                                $errorsMsg[] = $config['placeholder']." est requis";
+                            }
+                        }
+                        //gestion des select multiples
+                        elseif($config['multiple'])
+                        {
+                            if((isset($config["required"]) && $config["required"]) && count($paramsPost[$name]) == 0)
+                            {
+                                $errorsMsg[] = $config['placeholder']." est requis";   
+                            }
+                        }
+                    }
+                    //si multiple n'est pas spécifié dans la config (donc ici que des select simples)
+                    else
+                    {
+                        if((isset($config["required"]) && $config["required"]) && !self::minLength($paramsPost[$name], 1))
+                        {
+                            $errorsMsg[] = $config['placeholder']." est requis";
+                        }
                     }
                 }
             }

@@ -88,6 +88,66 @@
                                 $course->setId_course_category($params['POST']['category']);
                                 $course->save();
 
+                                //récupération du dernier id inséré dans la table course
+                                $queryConditions = [
+                                    'select'=>[
+                                        'MAX(course.id) as id'
+                                    ],
+                                    'join'=>[
+                                        'inner_join'=>[],
+                                        'left_join'=>[],
+                                        'right_join'=>[]
+                                    ],
+                                    'where'=>[
+                                        'clause'=>'',
+                                        'and'=>[],
+                                        'or'=>[]
+                                    ],
+                                    'and'=>[
+                                        [
+                                            'clause'=>'',
+                                            'and'=>[],
+                                            'or'=>[]
+                                        ]
+                                    ],
+                                    'or'=>[
+                                        [
+                                            'clause'=>'',
+                                            'and'=>[],
+                                            'or'=>[]
+                                        ]
+                                    ],
+                                    'group_by'=>[],
+                                    'having'=>[
+                                        'clause'=>'',
+                                        'and'=>[],
+                                        'or'=>[]
+                                    ],
+                                    'order_by'=>[
+                                        'asc'=>[],
+                                        'desc'=>[]
+                                    ],
+                                    'limit'=>[
+                                        'offset'=>'',
+                                        'range'=>''
+                                    ]
+                                ];
+
+                                $course = new Course();
+                                $targetedCourse = $course->getAll($queryConditions)[0];
+
+                                //id du cours ajouté
+                                $idCourse = $targetedCourse->getId();
+
+                                //insertion des liens entre cours et groupes dans la table course_group_link
+                                foreach($params['POST']['groups'] as $idGroup)
+                                {
+                                    $course_group_link = new Course_group_link();
+                                    $course_group_link->setId_course($idCourse);
+                                    $course_group_link->setId_user_group($idGroup);
+                                    $course_group_link->save();
+                                }
+
                                 $v = new View("back-add", "back");
                                 $v->assign("config", $form);
                                 $v->assign("errors", '');
@@ -209,6 +269,8 @@
                                 ]
                             ];
 
+                            //var_dump($params['POST']['groups']); die();
+
                             $course = new Course();
                             $targetedCourse = $course->getAll($queryConditions)[0];
 
@@ -217,6 +279,19 @@
                             $targetedCourse->setId_course_category($params['POST']['category']);
                             $targetedCourse->setStatus($params['POST']['status']);
                             $targetedCourse->setDescription($params['POST']['description']);
+
+                            //suppression des liens entre cours et groupes (table course_group_link)
+                            $course_group_link = new Course_group_link();
+                            $course_group_link->delete($id, 'id_course');
+
+                            //insertion des nouveaux liens entre cours et groupes dans la table course_group_link
+                            foreach($params['POST']['groups'] as $idGroup)
+                            {
+                                $course_group_link = new Course_group_link();
+                                $course_group_link->setId_course($id);
+                                $course_group_link->setId_user_group($idGroup);
+                                $course_group_link->save();
+                            }
 
                             //mise à jour
                             $targetedCourse->save();
@@ -282,12 +357,69 @@
                         $course = new Course();
                         $targetedCourse = $course->getAll($queryConditions)[0];
 
+                        //récupération des groupes auxquels est lié le cours
+                        $queryConditions = [
+                            'select'=>[
+                                'course_group_link.*'
+                            ],
+                            'join'=>[
+                                'inner_join'=>[],
+                                'left_join'=>[],
+                                'right_join'=>[]
+                            ],
+                            'where'=>[
+                                'clause'=>'`course_group_link`.`id_course` = '.$id,
+                                'and'=>[],
+                                'or'=>[]
+                            ],
+                            'and'=>[
+                                [
+                                    'clause'=>'',
+                                    'and'=>[],
+                                    'or'=>[]
+                                ]
+                            ],
+                            'or'=>[
+                                [
+                                    'clause'=>'',
+                                    'and'=>[],
+                                    'or'=>[]
+                                ]
+                            ],
+                            'group_by'=>[],
+                            'having'=>[
+                                'clause'=>'',
+                                'and'=>[],
+                                'or'=>[]
+                            ],
+                            'order_by'=>[
+                                'asc'=>[],
+                                'desc'=>[]
+                            ],
+                            'limit'=>[
+                                'offset'=>'',
+                                'range'=>''
+                            ]
+                        ];
+
+                        $course_group_link = new Course_group_link();
+                        $targetedCourseGroupLink = $course_group_link->getAll($queryConditions);
+
+                        //créaation tableau regroupant les id les groupes liés au cours
+                        $arrayCourseGroupLink = [];
+
+                        foreach($targetedCourseGroupLink as $group)
+                        {
+                            $arrayCourseGroupLink[] = $group->getId_user_group();
+                        }
+
                         //données à transmettre dans la form afin de pré remplir les champs
                         $fieldValues = [
                             'title' => $targetedCourse->getTitle(),
                             'status' => $targetedCourse->getStatus(),
                             'description' => $targetedCourse->getDescription(),
-                            'category' => $targetedCourse->getId_course_category()
+                            'category' => $targetedCourse->getId_course_category(),
+                            'groups' => $arrayCourseGroupLink
                         ];
 
                         $form = $course->updateCourseForm();

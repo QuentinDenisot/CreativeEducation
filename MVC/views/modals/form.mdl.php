@@ -57,7 +57,7 @@
                 <label class="col-md-2 label-on-left"><?php echo $params['placeholder']; ?></label>
                 <div class="col-md-10">
                     <div class="form-group is-empty">
-                        <select name="<?php echo $name; ?>" 
+                        <select name="<?php echo $name; echo (isset($params['multiple']) && $params['multiple']) ? "[]" : ""; ?>" 
                                 <?php echo (isset($params['required']) && $params['required']) ? "required='required'" : ""; 
                                 echo (isset($params['multiple']) && $params['multiple']) ? "multiple" : ""; ?> 
                                 class="form-control">
@@ -66,15 +66,29 @@
 
                                 <option value=""></option>
 
-                            <?php endif; ?>
+                            <?php endif; 
 
-                            <?php foreach($params['options'] as $id => $value):
+                            if(is_array($fieldValues[$name])):
 
-                                $selected = ($id == $fieldValues[$name]) ? ' selected ' : ''; ?>
+                                foreach($params['options'] as $id => $value):
 
-                                <option value="<?php echo $id; ?>"<?php echo $selected; ?>><?php echo $value; ?></option>
+                                    $selected = (in_array($id, $fieldValues[$name])) ? ' selected ' : ''; ?>
 
-                            <?php endforeach; ?>
+                                    <option value="<?php echo $id; ?>"<?php echo $selected; ?>><?php echo $value; ?></option>
+
+                                <?php endforeach;
+
+                            else:
+
+                                foreach($params['options'] as $id => $value):
+
+                                    $selected = ($id == $fieldValues[$name]) ? ' selected ' : ''; ?>
+
+                                    <option value="<?php echo $id; ?>"<?php echo $selected; ?>><?php echo $value; ?></option>
+
+                                <?php endforeach;
+
+                            endif; ?>
 
                         </select>
                     </div>

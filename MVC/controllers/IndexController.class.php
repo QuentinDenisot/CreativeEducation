@@ -6,8 +6,9 @@
             //si session existante on renvoie vers la page d'accueil
             if(isset($_SESSION['user']))
             {
-                $v = new View("front-home", "front");
-                $v->assign('name', $_SESSION['user']['firstname']);
+                /*$v = new View("front-home", "front");
+                $v->assign('name', $_SESSION['user']['firstname']);*/
+                header('Location: '.DIRNAME.'index/home');
             }
             //sinon affichage page login
             else
@@ -331,6 +332,7 @@
                             $user->setStatus('1');
                             $user->setToken();
                             $user->setId_role('5');
+                            $user->setId_user_group('1');
                             $user->save();
 
                             //récupération de l'id du user depuis email
