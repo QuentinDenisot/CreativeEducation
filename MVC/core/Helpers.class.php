@@ -31,4 +31,67 @@
 
             return false;
         }
+        
+                public static function listCourseCategoryTableDropdown()
+        {
+            //récupération de toutes les catégories
+            $course_category = new Course_category();
+            $categories = $course_category->getAll();
+
+            //création d'un tableau à fournir au modal
+            $arrayCategories = [];
+
+            foreach($categories as $category)
+            {
+
+                //récupération du nombre de cours liés à la category
+                $queryConditions = [
+                    "select"=>[
+                        "course_category.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`status` = '1'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $idCategory = $category->getId();
+                $arrayCategories[$idCategory]['name'] = $category->getName();
+            }
+            return $arrayCategories;
+        }
     }

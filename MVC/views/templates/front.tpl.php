@@ -36,19 +36,21 @@
                 <ul>
                     <li class="active"><a href="#onglet1">Accueil<span class="hoverBorder"></span></a></li>
                     <li class="item-list">
-                        <a href="#onglet2">Onglet 2 Liste<img src="<?php echo DIRNAME; ?>public/images/arrow-down.svg" alt="arrow-down" class="dropdown-arrow"><span class="hoverBorder"></span></a>
+                        <a href="#onglet2">Mes cours<img src="<?php echo DIRNAME; ?>public/images/arrow-down.svg" alt="arrow-down" class="dropdown-arrow"><span class="hoverBorder"></span></a>
                         <div class="dropdown-container">
                             <div class="triangle"></div>
-                            <ul class="dropdown-list hidden-dropdown">
-                                <li><a href="#onglet2-item1">Ajouter utilisateur</a></li>
-                                <li><a href="#onglet2-item2">Création page</a></li>
-                                <li><a href="#onglet2-item3">Accéder aux cours</a></li>
-                                <li><a href="#onglet2-item4">Suppression utilisateur</a></li>
-                            </ul>
+                                <ul class="dropdown-list hidden-dropdown">
+                                    <?php 
+                                        $arrayCategories = Helpers::listCourseCategoryTableDropdown();
+                                                var_dump($arrayCategories);
+
+                                        foreach ($arrayCategories as $keys => $value){
+                                            echo '<li><a href="#onglet2-item1">'.$value.'</a></li>';
+                                        }
+                                    ?>
+                                </ul>
                         </div>
                     </li>
-                    <li><a href="#onglet3">Onglet 3<span class="hoverBorder"></span></a></li>
-                    <li><a href="#onglet4">Onglet 4<span class="hoverBorder"></span></a></li>
                     <li class="navbar-right">
                         <form method="POST" action="<?php echo DIRNAME.'index/logout';?>">
                             <button name="button" class="btn btn-red">
