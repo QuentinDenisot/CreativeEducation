@@ -2032,8 +2032,7 @@ form .form-footer .checkbox {
 
 .dropdown .dropdown-menu,
 .timeline .dropdown .dropdown-menu,
-.dropdown-menu.bootstrap-datetimepicker-widget,
-.bootstrap-table .dropdown-menu {
+.dropdown-menu {
   -webkit-transition: all 150ms linear;
   -moz-transition: all 150ms linear;
   -o-transition: all 150ms linear;

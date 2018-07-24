@@ -68,8 +68,7 @@
 
 .dropdown .dropdown-menu,
 .timeline .dropdown .dropdown-menu,
-.dropdown-menu.bootstrap-datetimepicker-widget,
-.bootstrap-table .dropdown-menu{
+.dropdown-menu{
     @include transition($fast-transition-time, $transition-linear);
     @include transform-translate-y(-20px);
     @include opacity(0);
