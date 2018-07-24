@@ -75,7 +75,7 @@
                                     "right_join"=>[]
                                 ],
                                 "where"=>[
-                                    "clause"=>"LOWER(`course_category`.`name`) = '".mb_strtolower($params['POST']['name'])."'",
+                                    "clause"=>"LOWER(`course_category`.`name`) = '".mb_strtolower(addslashes($params['POST']['name']))."'",
                                     "and"=>[],
                                     "or"=>[]
                                 ],
@@ -208,7 +208,7 @@
                                     "right_join"=>[]
                                 ],
                                 "where"=>[
-                                    "clause"=>"LOWER(`course_category`.`name`) = '".mb_strtolower($params['POST']['name'])."'",
+                                    "clause"=>"LOWER(`course_category`.`name`) = '".mb_strtolower(addslashes($params['POST']['name']))."'",
                                     "and"=>[],
                                     "or"=>[]
                                 ],

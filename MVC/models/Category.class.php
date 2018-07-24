@@ -40,12 +40,12 @@
 
         public function getName()
         {
-            return $this->name;
+            return htmlspecialchars($this->name);
         }
 
         public function getStatus()
         {
-            return $this->status;
+            return htmlspecialchars($this->status);
         }
 
         public function getInsertedDate()

@@ -1179,7 +1179,7 @@
             ];
         }
 
-        //liste des user à charger sur le dashboard 
+        //liste des apprenants à charger sur le dashboard 
         public function listStudentsDashTable()
         {
             //récupération de tous les apprenants (max 10)
@@ -1234,7 +1234,7 @@
             $users = $user->getAll($queryConditions);
 
             //création tableau à fournir au modal
-            $arrayUsers = [];
+            $arrayStudents = [];
 
             foreach($users as $user)
             {
@@ -1285,6 +1285,12 @@
 
                 $user_group = new User_group();
                 $targetedGroup = $user_group->getAll($queryConditions)[0];
+
+                $idUser = $user->getId();
+                $arrayStudents[$idUser]['lastname'] = Helpers::cleanLastname($user->getLastname());
+                $arrayStudents[$idUser]['firstname'] = Helpers::cleanFirstname($user->getFirstname());
+                $arrayStudents[$idUser]['email'] = $user->getEmail();
+                $arrayStudents[$idUser]['group'] = $targetedGroup->getName();
             }
 
             return [
@@ -1295,6 +1301,131 @@
                     "Groupe"
                 ],
                 "content" => $arrayStudents
+            ];
+        }
+
+        //liste des professeurs à charger sur le dashboard 
+        public function listProfessorsDashTable()
+        {
+            //récupération de tous les professeurs (max 10)
+            $queryConditions = [
+                "select"=>[
+                    "user.*"
+                ],
+                "join"=>[
+                    "inner_join"=>[],
+                    "left_join"=>[],
+                    "right_join"=>[]
+                ],
+                "where"=>[
+                    "clause"=>"`user`.`id_role` = '4'",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "and"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "or"=>[
+                    [
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ]
+                ],
+                "group_by"=>[],
+                "having"=>[
+                    "clause"=>"",
+                    "and"=>[],
+                    "or"=>[]
+                ],
+                "order_by"=>[
+                    "asc"=>[
+                        "`user`.`lastname`",
+                        "`user`.`firstname`"
+                    ],
+                    "desc"=>[]
+                ],
+                "limit"=>[
+                    "offset"=>"0",
+                    "range"=>"10"
+                ]
+            ];
+
+            $user = new User();
+            $users = $user->getAll($queryConditions);
+
+            //création tableau à fournir au modal
+            $arrayProfessors = [];
+
+            foreach($users as $user)
+            {
+                //récupération du group
+                $queryConditions = [
+                    "select"=>[
+                        "user_group.*"
+                    ],
+                    "join"=>[
+                        "inner_join"=>[],
+                        "left_join"=>[],
+                        "right_join"=>[]
+                    ],
+                    "where"=>[
+                        "clause"=>"`user_group`.`id` = '".$user->getId_user_group()."'",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "and"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "or"=>[
+                        [
+                            "clause"=>"",
+                            "and"=>[],
+                            "or"=>[]
+                        ]
+                    ],
+                    "group_by"=>[],
+                    "having"=>[
+                        "clause"=>"",
+                        "and"=>[],
+                        "or"=>[]
+                    ],
+                    "order_by"=>[
+                        "asc"=>[],
+                        "desc"=>[]
+                    ],
+                    "limit"=>[
+                        "offset"=>"",
+                        "range"=>""
+                    ]
+                ];
+
+                $user_group = new User_group();
+                $targetedGroup = $user_group->getAll($queryConditions)[0];
+
+                $idUser = $user->getId();
+                $arrayProfessors[$idUser]['lastname'] = Helpers::cleanLastname($user->getLastname());
+                $arrayProfessors[$idUser]['firstname'] = Helpers::cleanFirstname($user->getFirstname());
+                $arrayProfessors[$idUser]['email'] = $user->getEmail();
+                $arrayProfessors[$idUser]['group'] = $targetedGroup->getName();
+            }
+
+            return [
+                "thead" => [
+                    "Nom",
+                    "Prénom",
+                    "Email",
+                    "Groupe"
+                ],
+                "content" => $arrayProfessors
             ];
         }
     }

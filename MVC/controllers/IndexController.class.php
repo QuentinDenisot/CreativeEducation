@@ -454,8 +454,11 @@
             //si utilisateur connecté on renvoie vers la page d'accueil
             if($user->isConnected() && ($user->isAdmin() || $user->isProfessor()))
             {
+                $studentsList = $user->listStudentsDashTable();
+                $professorsList = $user->listProfessorsDashTable();
                 $v = new View('back-dashboard', 'back');
-                //var_dump($user->isProfessor());
+                $v->assign('studentsList', $studentsList);
+                $v->assign('professorsList', $professorsList);
             }
             //sinon on renvoie vers la page de login
             else
